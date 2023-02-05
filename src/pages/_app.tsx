@@ -1,3 +1,4 @@
+import "@/src/styles/colours.css";
 import "@/src/styles/globals.css";
 import "@/src/styles/grids.css";
 import "@/src/styles/utils.css";

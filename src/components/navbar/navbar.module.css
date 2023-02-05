@@ -1,0 +1,8 @@
+.navbar {
+    background-color: var(--colour-background);
+}
+
+.navbar > a {
+    border: 0.1em solid var(--colour-background-accent);
+    cursor: pointer;
+}
