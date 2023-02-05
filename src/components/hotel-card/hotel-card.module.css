@@ -1,0 +1,14 @@
+.hotelCard > img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.hotelCard > div {
+    width: 100%;
+    height: 20%;
+}
+
+.hotelCard {
+    border: red;
+}

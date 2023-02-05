@@ -4,7 +4,8 @@ export interface Hotel {
     stars: number;
     address: string;
     nRooms: number;
-    phonenumbers: [string];
-    emails: [string];
+    phonenumbers: string[];
+    emails: string[];
     chainId: number;
+    photos: string[];
 }
