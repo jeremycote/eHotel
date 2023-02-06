@@ -1,7 +1,6 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
 import styles from "@/src/styles/Home.module.css";
+import { Inter } from "@next/font/google";
+import Head from "next/head";
 import HotelGrid from "../components/hotel-grid/hotel-grid";
 import NavBar from "../components/navbar/navbar";
 
@@ -18,7 +17,9 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <NavBar />
-        <HotelGrid />
+        <div className={styles.content}>
+          <HotelGrid />
+        </div>
       </main>
     </>
   );

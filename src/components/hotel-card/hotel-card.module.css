@@ -1,14 +1,19 @@
-.hotelCard > img {
-    width: 100%;
-    height: 80%;
-    object-fit: cover;
-}
-
-.hotelCard > div {
+.description {
     width: 100%;
     height: 20%;
 }
 
 .hotelCard {
-    border: red;
+    border: solid red 0.01em;
+}
+
+.imageCarousel {
+    width: 100%;
+    height: 80%;
+}
+
+.imageCarousel > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

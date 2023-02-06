@@ -1,5 +1,9 @@
 .navbar {
     background-color: var(--colour-background);
+    position: -webkit-sticky;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .navbar > a {
