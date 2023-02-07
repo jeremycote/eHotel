@@ -2,6 +2,8 @@
     :root {
         --colour-background: #222222;
         --colour-background-accent: #ca0505;
+        --nav-button-background: #a68eeb;
+        --nav-button-background-hover: #4a1e74;
     }
 }
 
@@ -9,5 +11,7 @@
     :root {
         --colour-background: #FFFFFF;
         --colour-background-accent: #7e7e7e;
+        --nav-button-background: #a68eeb;
+        --nav-button-background-hover: #4a1e74;
     }
 }

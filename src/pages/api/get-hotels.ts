@@ -17,6 +17,8 @@ const hotels: Hotel[] = [
       "https://source.unsplash.com/random/?hotel,warm",
       "https://source.unsplash.com/random/?hotel,beach",
     ],
+
+    minPrice: 1000,
   },
   {
     name: "Canadian Hotel",
@@ -32,6 +34,7 @@ const hotels: Hotel[] = [
       "https://source.unsplash.com/random/?hotel,cold",
       "https://source.unsplash.com/random/?hotel,dark",
     ],
+    minPrice: 1000,
   },
   {
     name: "French Hotel",
@@ -47,6 +50,7 @@ const hotels: Hotel[] = [
       "https://source.unsplash.com/random/?hotel,trees",
       "https://source.unsplash.com/random/?hotel,plants",
     ],
+    minPrice: 1000,
   },
   {
     name: "English Hotel",
@@ -62,6 +66,7 @@ const hotels: Hotel[] = [
       "https://source.unsplash.com/random/?hotel,tea",
       "https://source.unsplash.com/random/?hotel,english",
     ],
+    minPrice: 1000,
   },
   {
     name: "Spanish Hotel",
@@ -76,132 +81,7 @@ const hotels: Hotel[] = [
       "https://source.unsplash.com/random/?hotel,coastal",
       "https://source.unsplash.com/random/?hotel,spanish",
     ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
-  },
-  {
-    name: "Belgian Hotel",
-    id: 2,
-    stars: 5,
-    address: "",
-    nRooms: 64,
-    phonenumbers: ["613 123 4567"],
-    emails: ["email@example.com"],
-    chainId: 0,
-    photos: [
-      "https://source.unsplash.com/random/?hotel,waffle",
-      "https://source.unsplash.com/random/?hotel,belgian",
-    ],
+    minPrice: 1000,
   },
   {
     name: "Belgian Hotel",
@@ -223,5 +103,5 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Hotel[]>
 ) {
-  res.status(200).json(hotels);
+  res.status(200).json(hotels.concat(hotels).concat(hotels));
 }

@@ -8,4 +8,5 @@ export interface Hotel {
     emails: string[];
     chainId: number;
     photos: string[];
+    minPrice: number;
 }

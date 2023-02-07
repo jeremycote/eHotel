@@ -14,6 +14,7 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
       </div>
       <div className={styles.description}>
         <h1>{hotel.name}</h1>
+        <p>{`${hotel.minPrice} per night`}</p>
       </div>
     </div>
   );

@@ -3,6 +3,11 @@
     height: 20%;
 }
 
+.description > h1 {
+    font-size: 1em;
+    font-size-adjust: auto;
+}
+
 .hotelCard {
     border: solid red 0.01em;
 }

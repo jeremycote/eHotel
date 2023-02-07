@@ -3,10 +3,24 @@
     position: -webkit-sticky;
     position: fixed;
     width: 100%;
+    height: 4em;
     top: 0;
 }
 
-.navbar > a {
-    border: 0.1em solid var(--colour-background-accent);
+.navbar > ul {
     cursor: pointer;
+    height: 100%;
+    list-style-type: none;
+}
+
+.navbar > ul > li {
+    float: left;
+    width: 4em;
+    margin-right: 0.5em;
+    font-size: 1.25em;
+    background-color: var(--nav-button-background);
+}
+
+.navbar > ul > li:hover {
+    background-color: var(--nav-button-background-hover);
 }
