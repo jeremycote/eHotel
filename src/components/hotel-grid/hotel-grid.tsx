@@ -22,7 +22,7 @@ const HotelGrid = () => {
   return (
     <div className="results-grid">
       {hotels.map((hotel) => (
-        <HotelCard className="result" hotel={hotel} />
+        <HotelCard className="result" hotel={hotel}  />
       ))}
     </div>
   );

@@ -1,3 +1,4 @@
+import SearchBar from "../searchbar/searchbar";
 import styles from "./navbar.module.css";
 
 const NavBar = () => {
@@ -6,6 +7,7 @@ const NavBar = () => {
       <ul>
         <li>Home</li>
         <li>Other</li>
+        <SearchBar />
       </ul>
     </nav>
   );

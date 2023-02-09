@@ -4,6 +4,8 @@
         --colour-background-accent: #ca0505;
         --nav-button-background: #a68eeb;
         --nav-button-background-hover: #4a1e74;
+        --searchbar-color: #b8b8b8;
+        --searchbar-shadow-opacity: 0.8;
     }
 }
 
@@ -13,5 +15,7 @@
         --colour-background-accent: #7e7e7e;
         --nav-button-background: #a68eeb;
         --nav-button-background-hover: #4a1e74;
+        --searchbar-color: #b8b8b8;
+        --searchbar-shadow-opacity: 0.8;
     }
 }
