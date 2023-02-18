@@ -5,7 +5,15 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Hotel[]>
+  res: NextApiResponse<Hotel>
 ) {
-  res.status(200).json(hotels);
+  const { hotelId } = req.query;
+
+  hotels.forEach((hotel) => {
+    if (hotel.id.toString() === hotelId) {
+      res.status(200).json(hotel);
+    }
+  });
+
+  res.status(404);
 }

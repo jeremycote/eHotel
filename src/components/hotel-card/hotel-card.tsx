@@ -1,4 +1,5 @@
 import { Hotel } from "@/src/types/hotel";
+import { useRouter } from "next/router";
 import styles from "./hotel-card.module.css";
 
 interface HotelCardProps {
@@ -7,8 +8,16 @@ interface HotelCardProps {
 }
 
 const HotelCard = ({ className, hotel }: HotelCardProps) => {
+  const router = useRouter();
+
   return (
-    <div className={`${className} ${styles.hotelCard}`}>
+    <div
+      className={`${className} ${styles.hotelCard}`}
+      onClick={(e) => {
+        e.preventDefault();
+        router.push(`/hotel/${hotel.id}`);
+      }}
+    >
       <div className={styles.imageCarousel}>
         <img src={hotel.photos[0]}></img>
       </div>
