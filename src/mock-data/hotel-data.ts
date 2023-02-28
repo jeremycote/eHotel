@@ -1,8 +1,6 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { Hotel } from '@/src/types/hotel';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { Hotel } from '../types/hotel';
 
-const hotels: Hotel[] = [
+export const hotels: Hotel[] = [
   {
     name: 'American Hotel',
     id: 0,
@@ -96,12 +94,6 @@ const hotels: Hotel[] = [
       'https://source.unsplash.com/random/?hotel,waffle',
       'https://source.unsplash.com/random/?hotel,belgian',
     ],
+    minPrice: 1000,
   },
 ];
-
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Hotel[]>,
-) {
-  res.status(200).json(hotels);
-}
