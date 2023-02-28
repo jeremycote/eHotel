@@ -1,0 +1,13 @@
+*.json
+
+# Build Directories
+dist
+deps
+devops
+
+# Assets and vendor stuff
+assets
+src/assets
+
+node_modules
+.next

@@ -1,6 +1,6 @@
-import { Hotel } from "@/src/types/hotel";
-import { useRouter } from "next/router";
-import styles from "./hotel-card.module.css";
+import { Hotel } from '@/src/types/hotel';
+import { useRouter } from 'next/router';
+import styles from './hotel-card.module.css';
 
 interface HotelCardProps {
   className: string;

@@ -1,24 +1,24 @@
 .description {
-    width: 100%;
-    height: 20%;
+  width: 100%;
+  height: 20%;
 }
 
 .description > h1 {
-    font-size: 1em;
-    font-size-adjust: auto;
+  font-size: 1em;
+  font-size-adjust: auto;
 }
 
 .hotelCard {
-    border: solid red 0.01em;
+  border: solid red 0.01em;
 }
 
 .imageCarousel {
-    width: 100%;
-    height: 80%;
+  width: 100%;
+  height: 80%;
 }
 
 .imageCarousel > img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

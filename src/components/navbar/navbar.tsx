@@ -1,5 +1,5 @@
-import SearchBar from "../searchbar/searchbar";
-import styles from "./navbar.module.css";
+import SearchBar from '../searchbar/searchbar';
+import styles from './navbar.module.css';
 
 const NavBar = () => {
   return (
