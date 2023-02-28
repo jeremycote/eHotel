@@ -1,5 +1,5 @@
-import { Hotel } from "@/src/types/hotel";
-import styles from "./hotel-card.module.css";
+import { Hotel } from '@/src/types/hotel';
+import styles from './hotel-card.module.css';
 
 interface HotelCardProps {
   className: string;

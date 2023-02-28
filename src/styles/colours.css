@@ -1,21 +1,21 @@
 @media (prefers-color-scheme: dark) {
-    :root {
-        --colour-background: #222222;
-        --colour-background-accent: #ca0505;
-        --nav-button-background: #a68eeb;
-        --nav-button-background-hover: #4a1e74;
-        --searchbar-color: #b8b8b8;
-        --searchbar-shadow-opacity: 0.8;
-    }
+  :root {
+    --colour-background: #222222;
+    --colour-background-accent: #ca0505;
+    --nav-button-background: #a68eeb;
+    --nav-button-background-hover: #4a1e74;
+    --searchbar-color: #b8b8b8;
+    --searchbar-shadow-opacity: 0.8;
+  }
 }
 
 @media (prefers-color-scheme: light) {
-    :root {
-        --colour-background: #FFFFFF;
-        --colour-background-accent: #7e7e7e;
-        --nav-button-background: #a68eeb;
-        --nav-button-background-hover: #4a1e74;
-        --searchbar-color: #b8b8b8;
-        --searchbar-shadow-opacity: 0.8;
-    }
+  :root {
+    --colour-background: #ffffff;
+    --colour-background-accent: #7e7e7e;
+    --nav-button-background: #a68eeb;
+    --nav-button-background-hover: #4a1e74;
+    --searchbar-color: #b8b8b8;
+    --searchbar-shadow-opacity: 0.8;
+  }
 }

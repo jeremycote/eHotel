@@ -5,6 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 Make sure you have yarn, postgres and nodeJS (min. v16) installed.
 
 First, install all dependencies:
+
 ```bash
 yarn install
 ```
@@ -12,6 +13,7 @@ yarn install
 Second, configure your database by creating a `.env.local` file and adding your PostgreSQL config inside.
 
 Third, load the migrations into your database with
+
 ```bash
 yarn migrate:up
 ```

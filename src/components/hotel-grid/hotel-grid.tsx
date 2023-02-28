@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Hotel } from "@/src/types/hotel";
-import HotelCard from "../hotel-card/hotel-card";
+import React, { useEffect, useState } from 'react';
+import { Hotel } from '@/src/types/hotel';
+import HotelCard from '../hotel-card/hotel-card';
 
 const HotelGrid = () => {
   const [hotels, setHotels] = useState<Hotel[] | null>(null);
@@ -8,7 +8,7 @@ const HotelGrid = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("api/get-hotels")
+    fetch('api/get-hotels')
       .then((res) => res.json())
       .then((data) => {
         setHotels(data);
@@ -20,9 +20,9 @@ const HotelGrid = () => {
   if (!hotels) return <p>No hotels found</p>;
 
   return (
-    <div className="results-grid">
+    <div className='results-grid'>
       {hotels.map((hotel) => (
-        <HotelCard className="result" hotel={hotel}  />
+        <HotelCard className='result' hotel={hotel} />
       ))}
     </div>
   );
