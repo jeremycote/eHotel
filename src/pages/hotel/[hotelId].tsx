@@ -1,6 +1,6 @@
-import { Hotel } from "@/src/types/hotel";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Hotel } from '@/src/types/hotel';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 export default function HotelPage() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function HotelPage() {
 
   return (
     <div>
-      <h1>{`Hotel id: ${hotel != null ? hotel.name : "null"}`}</h1>
+      <h1>{`Hotel id: ${hotel != null ? hotel.name : 'null'}`}</h1>
     </div>
   );
 }
