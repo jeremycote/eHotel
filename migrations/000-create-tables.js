@@ -113,7 +113,6 @@ exports.up = async function (sql) {
             capacity INT NOT NULL CHECK (capacity >= 0),
             extendable BOOLEAN NOT NULL DEFAULT false,
             damages  VARCHAR,
-            zone     VARCHAR,
             view VARCHAR(50) NOT NULL
         );
     `;

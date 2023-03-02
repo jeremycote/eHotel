@@ -1,4 +1,4 @@
-import { Hotel } from '@/src/types/hotel';
+import { Hotel } from '@/src/types/Hotel';
 import { useRouter } from 'next/router';
 import styles from './hotel-card.module.css';
 

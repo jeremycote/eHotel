@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Hotel } from '@/src/types/hotel';
+import { Hotel } from '@/src/types/Hotel';
 import HotelCard from '../hotel-card/hotel-card';
 
 const HotelGrid = () => {
