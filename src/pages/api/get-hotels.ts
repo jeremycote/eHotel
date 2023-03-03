@@ -16,7 +16,7 @@ export default async function handler(
       .json(
         await sql<
           Hotel[]
-        >`SELECT *, ARRAY_AGG(hotel_images.url) AS images FROM hotels LEFT JOIN hotel_images ON hotels.hotel_id = hotel_images.hotel_id GROUP BY hotels.hotel_id, hotel_images.hotel_image_id`,
+        >`SELECT hotels.*, COALESCE(ARRAY_AGG(hotel_images.url) FILTER (WHERE hotel_images.url IS NOT NULL), '{}') AS images FROM hotels LEFT JOIN hotel_images ON hotels.hotel_id = hotel_images.hotel_id GROUP BY hotels.hotel_id ORDER BY hotels.hotel_id`,
       );
   } else {
     res
