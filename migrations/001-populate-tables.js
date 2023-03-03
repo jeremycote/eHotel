@@ -37,6 +37,14 @@ exports.up = async function (sql) {
     `;
 
   await sql`
+    INSERT INTO hotel_images (hotel_id, url) VALUES
+        (1, 'https://unsplash.it/'),
+        (1, 'https://unsplash.it/500/500'),
+        (2, 'https://unsplash.it/'),
+        (3, 'https://unsplash.it/');
+  `;
+
+  await sql`
         INSERT INTO amenities (name) VALUES
             ('Coffee');
     `;

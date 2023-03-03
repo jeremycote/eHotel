@@ -5,4 +5,5 @@ export interface Hotel {
   stars: number;
   address: string;
   zone: string;
+  images?: string[];
 }

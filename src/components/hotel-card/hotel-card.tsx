@@ -19,11 +19,11 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
       }}
     >
       <div className={styles.imageCarousel}>
-        <img src={hotel.photos[0]}></img>
+        <img src={hotel.images?.length ? hotel.images[0] : '/vercel.svg'}></img>
       </div>
       <div className={styles.description}>
         <h1>{hotel.name}</h1>
-        <p>{`${hotel.minPrice} per night`}</p>
+        <p>{`0 per night`}</p>
       </div>
     </div>
   );

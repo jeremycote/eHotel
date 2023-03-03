@@ -216,6 +216,19 @@ exports.up = async function (sql) {
             archived BOOLEAN NOT NULL DEFAULT false
         );
     `;
+
+  await sql`
+        DROP TABLE IF EXISTS hotel_images CASCADE;
+    `;
+
+  await sql`
+        CREATE TABLE hotel_images
+        (
+            hotel_image_id serial primary key,
+            hotel_id INTEGER references hotels (hotel_id) on delete restrict not null,
+            url TEXT NOT NULL
+        );
+    `;
 };
 
 exports.down = async function (sql) {
@@ -282,4 +295,8 @@ exports.down = async function (sql) {
   await sql`
         DROP TABLE IF EXISTS leases CASCADE;
     `;
+
+  await sql`
+    DROP TABLE IF EXISTS hotel_images CASCADE;
+`;
 };
