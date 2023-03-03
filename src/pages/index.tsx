@@ -1,10 +1,7 @@
 import styles from '@/src/styles/Home.module.css';
-import { Inter } from '@next/font/google';
 import Head from 'next/head';
 import HotelGrid from '../components/hotel-grid/hotel-grid';
 import NavBar from '../components/navbar/navbar';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   return (
