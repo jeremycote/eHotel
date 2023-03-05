@@ -8,7 +8,7 @@ const HotelGrid = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('api/get-hotels')
+    fetch('api/get-hotels?getImages=true')
       .then((res) => res.json())
       .then((data) => {
         setHotels(data);
