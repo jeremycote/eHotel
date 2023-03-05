@@ -1,9 +1,13 @@
 import SearchBar from '../searchbar/searchbar';
 import styles from './navbar.module.css';
 
-const NavBar = () => {
+interface NavbarProps {
+  height: string;
+}
+
+const NavBar = ({ height }: NavbarProps) => {
   return (
-    <nav className={styles.navbar}>
+    <nav className={styles.navbar} style={{ height: height }}>
       <ul>
         <li>Home</li>
         <li>Other</li>

@@ -51,7 +51,17 @@ exports.up = async function (sql) {
 
   await sql`
     INSERT INTO categories (name) VALUES
-        ('Business');
+        ('Business'),
+        ('Beach'),
+        ('Downtown'),
+        ('Popular'),
+        ('Alpha'),
+        ('Beta'),
+        ('Charlie'),
+        ('Delta'),
+        ('Echo'),
+        ('Fox'),
+        ('Gamma');
     `;
 
   await sql`

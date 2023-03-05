@@ -1,0 +1,28 @@
+.categoryFilter {
+  padding: 0.5em 0;
+  list-style: none;
+  display: flex;
+  overflow: hidden;
+}
+
+.categoryFilter > li {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.categoryFilter > li > a {
+  height: 100%;
+}
+
+.categoryFilter > li:hover {
+  background-color: red;
+}
+
+.categoryFilter > li > a > img {
+  object-fit: contain;
+  width: 50%;
+  height: auto;
+}

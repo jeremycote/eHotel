@@ -4,6 +4,8 @@ import HotelGrid from '../components/hotel-grid/hotel-grid';
 import NavBar from '../components/navbar/navbar';
 
 export default function Home() {
+  const navbarHeight = '3em';
+
   return (
     <>
       <Head>
@@ -13,8 +15,8 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className={styles.main}>
-        <NavBar />
-        <div className={styles.content}>
+        <NavBar height={navbarHeight} />
+        <div className={styles.content} style={{ marginTop: navbarHeight }}>
           <HotelGrid />
         </div>
       </main>
