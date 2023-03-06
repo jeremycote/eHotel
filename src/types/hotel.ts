@@ -6,4 +6,6 @@ export interface Hotel {
   address: string;
   zone: string;
   images?: string[];
+  emails?: string[];
+  phone_numbers?: string[];
 }
