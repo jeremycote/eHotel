@@ -65,6 +65,13 @@ exports.up = async function (sql) {
     `;
 
   await sql`
+    INSERT INTO room_types (name) VALUES
+        ('Suite'),
+        ('Presendential Suite'),
+        ('Classic');
+    `;
+
+  await sql`
     INSERT INTO chain_emails (email, chain_id) VALUES
         ('contact@hilton.com', 1);
     `;
@@ -105,8 +112,8 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-    INSERT INTO rooms (hotel_id, price, capacity, extendable, damages, view) VALUES
-        (1, 100, 1, False, NULL, 'Ocean View');
+    INSERT INTO rooms (hotel_id, price, capacity, extendable, damages, view, room_type_id) VALUES
+        (1, 100, 1, False, NULL, 'Ocean View', 1);
     `;
 
   await sql`

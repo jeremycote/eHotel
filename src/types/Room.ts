@@ -4,6 +4,7 @@ export interface Room {
   price: number;
   capacity: number;
   extendable: boolean;
-  damages: string;
+  damages?: string;
   view: string;
+  room_type_id: number;
 }

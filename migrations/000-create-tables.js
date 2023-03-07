@@ -101,8 +101,20 @@ exports.up = async function (sql) {
     `;
 
   await sql`
+         DROP TABLE IF EXISTS rooms_types CASCADE;
+  `;
+
+  await sql`
+        CREATE TABLE room_types
+        (
+            room_type_id serial primary key,
+            name        VARCHAR(255) NOT NULL
+        );
+      `;
+
+  await sql`
         DROP TABLE IF EXISTS rooms CASCADE;
-    `;
+  `;
 
   await sql`
         CREATE TABLE rooms
@@ -113,7 +125,8 @@ exports.up = async function (sql) {
             capacity INT NOT NULL CHECK (capacity >= 0),
             extendable BOOLEAN NOT NULL DEFAULT false,
             damages  VARCHAR,
-            view VARCHAR(50) NOT NULL
+            view VARCHAR(50) NOT NULL,
+            room_type_id INT NOT NULL references room_types (room_type_id) on delete restrict not null
         );
     `;
 
@@ -249,6 +262,10 @@ exports.down = async function (sql) {
   await sql`
         DROP TABLE IF EXISTS categories CASCADE;
     `;
+
+  await sql`
+    DROP TABLE IF EXISTS room_types CASCADE;
+`;
 
   await sql`
         DROP TABLE IF EXISTS hotels CASCADE;

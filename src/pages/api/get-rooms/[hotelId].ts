@@ -10,7 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Room[]>,
 ) {
-  const { hotelId, available, startDate, endDate } = req.query;
+  const { hotelId, available, startDate, endDate, roomTypeId } = req.query;
 
   let where = `rooms.hotel_id = ${hotelId}`;
 
@@ -20,8 +20,11 @@ export default async function handler(
     where += `(SELECT rooms.room_id FROM rooms JOIN reservations ON rooms.room_id = reservations.room_id WHERE reservations.start_date >= '${startDate}' AND (reservations.end_date IS NULL OR reservations.end_date <= '${endDate}'))`;
   }
 
+  if (roomTypeId) {
+    where += ` AND rooms.room_type_id = ${roomTypeId}`;
+  }
+
   if (hotelId) {
-    debug(`SELECT * FROM rooms WHERE ${where} ORDER BY rooms.room_id`);
     res
       .status(200)
       .json(
