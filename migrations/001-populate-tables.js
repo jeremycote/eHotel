@@ -110,8 +110,8 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-    INSERT INTO reservations (client_id, room_id, price, archived, number_guests) VALUES
-        (1, 1, 100, False, 1);
+    INSERT INTO reservations (client_id, room_id, price, archived, number_guests, start_date) VALUES
+        (1, 1, 100, False, 1, '2023-03-08');
     `;
 
   await sql`

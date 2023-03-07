@@ -198,7 +198,9 @@ exports.up = async function (sql) {
             room_id INTEGER references rooms (room_id) on delete restrict not null,
             price    INT NOT NULL CHECK (price >= 0),
             archived BOOLEAN NOT NULL DEFAULT false,
-            number_guests INT NOT NULL
+            number_guests INT NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE
         );
     `;
 
