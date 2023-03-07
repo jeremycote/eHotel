@@ -2,11 +2,12 @@ import ImageCarousel from '@/src/components/image-carousel/image-carousel';
 import { Hotel } from '@/src/types/Hotel';
 import RoomAvailability from '@/src/types/RoomAvailability';
 import { RoomType } from '@/src/types/RoomType';
-import { useRouter } from 'next/router';
+import { useRouter, withRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function HotelPage() {
   const router = useRouter();
+
   const { hotelId } = router.query;
 
   const [hotel, setHotel] = useState<Hotel | null>(null);
@@ -88,6 +89,15 @@ export default function HotelPage() {
             ))}
         </tbody>
       </table>
+      <button
+        className='cta-button'
+        onClick={(e) => {
+          e.preventDefault();
+          router.push(`/book/${hotelId}`);
+        }}
+      >
+        Book
+      </button>
     </div>
   );
 }
