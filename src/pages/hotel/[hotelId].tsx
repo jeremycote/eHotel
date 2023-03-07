@@ -47,6 +47,13 @@ export default function HotelPage() {
         images={hotel?.images ?? []}
         isLoading={isLoading}
       />
+
+      <table>
+        <tr>
+          <th></th>
+        </tr>
+      </table>
+
       {!isLoadingRooms &&
         rooms.map((room, i) => (
           <div>
