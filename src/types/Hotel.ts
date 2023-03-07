@@ -7,5 +7,6 @@ export interface Hotel {
   zone: string;
   images?: string[];
   emails?: string[];
+  category_ids?: number[];
   phone_numbers?: string[];
 }
