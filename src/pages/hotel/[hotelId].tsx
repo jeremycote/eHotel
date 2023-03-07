@@ -1,3 +1,4 @@
+import ImageCarousel from '@/src/components/image-carousel/image-carousel';
 import { Hotel } from '@/src/types/Hotel';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -24,6 +25,12 @@ export default function HotelPage() {
   return (
     <div>
       <h1>{`Hotel id: ${hotel != null ? hotel.name : 'null'}`}</h1>
+      <ImageCarousel
+        height='24em'
+        width='48em'
+        images={hotel?.images ?? []}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
