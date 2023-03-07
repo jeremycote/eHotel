@@ -1,6 +1,7 @@
 import ImageCarousel from '@/src/components/image-carousel/image-carousel';
 import { Hotel } from '@/src/types/Hotel';
-import { Room } from '@/src/types/Room';
+import RoomAvailability from '@/src/types/RoomAvailability';
+import { RoomType } from '@/src/types/RoomType';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
@@ -11,8 +12,14 @@ export default function HotelPage() {
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [isLoading, setLoading] = useState(false);
 
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [isLoadingRooms, setLoadingRooms] = useState(false);
+  const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
+  const [isLoadingRoomTypes, setLoadingRoomTypes] = useState(false);
+
+  const [roomAvailabilities, setRoomAvailabilities] = useState<
+    RoomAvailability[]
+  >([]);
+  const [isLoadingRoomAvailabilities, setLoadingRoomAvailabilties] =
+    useState(false);
 
   useEffect(() => {
     if (hotelId != null) {
@@ -28,15 +35,27 @@ export default function HotelPage() {
 
   useEffect(() => {
     if (hotelId != null) {
-      setLoadingRooms(true);
-      fetch(`/api/get-rooms/${hotelId}`)
+      setLoadingRoomAvailabilties(true);
+      fetch(
+        `/api/get-room-availability/${hotelId}?startDate=2023-02-02&endDate=2023-06-01&available=false`,
+      )
         .then((res) => res.json())
         .then((data) => {
-          setRooms(data);
-          setLoadingRooms(false);
+          setRoomAvailabilities(data);
+          setLoadingRoomAvailabilties(false);
         });
     }
   }, [hotelId]);
+
+  useEffect(() => {
+    setLoadingRoomTypes(true);
+    fetch('/api/get-room-types')
+      .then((res) => res.json())
+      .then((data) => {
+        setRoomTypes(data);
+        setLoadingRoomTypes(false);
+      });
+  }, []);
 
   return (
     <div>
@@ -49,17 +68,26 @@ export default function HotelPage() {
       />
 
       <table>
-        <tr>
-          <th></th>
-        </tr>
+        <thead>
+          <tr>
+            <th>room type</th>
+            <th>count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {!isLoadingRoomAvailabilities &&
+            roomAvailabilities.map((availabiltity, i) => (
+              <tr>
+                <td>
+                  {roomTypes.length > availabiltity.room_type_id + 1
+                    ? roomTypes[availabiltity.room_type_id].name
+                    : 'loading'}
+                </td>
+                <td>{availabiltity.count}</td>
+              </tr>
+            ))}
+        </tbody>
       </table>
-
-      {!isLoadingRooms &&
-        rooms.map((room, i) => (
-          <div>
-            <p>{room.room_id}</p>
-          </div>
-        ))}
     </div>
   );
 }
