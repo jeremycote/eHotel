@@ -3,6 +3,9 @@ exports.up = async function (sql) {
   // await sql`
   //     DROP TABLE IF EXISTS hotel_chains CASCADE;
   // `;
+  await sql`
+        CREATE EXTENSION IF NOT EXISTS pgcrypto;
+  `;
 
   await sql`
         INSERT INTO hotel_chains (name, address) VALUES
@@ -82,13 +85,13 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-    INSERT INTO clients (name, address, nas, email, phone_number, created_at) VALUES
-        ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20');
+    INSERT INTO clients (name, address, nas, email, phone_number, created_at, password) VALUES
+        ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20', crypt('change-in-prod', gen_salt('bf')));
     `;
 
   await sql`
-    INSERT INTO employees (hotel_id, name, address, nas) VALUES
-        (1, 'George Do', '10 example st', '1111111');
+    INSERT INTO employees (hotel_id, name, address, nas, password) VALUES
+        (1, 'George Do', '10 example st', '1111111', crypt('change-in-prod', gen_salt('bf')));
     `;
 
   await sql`

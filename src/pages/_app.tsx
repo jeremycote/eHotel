@@ -4,6 +4,7 @@ import '@/src/styles/grids.css';
 import '@/src/styles/utils.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import 'swiper/css/navigation';
@@ -15,7 +16,10 @@ import NavBar from '../components/navbar/navbar';
 
 config.autoAddCss = false;
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   const navbarHeight = '3em';
 
   return (
@@ -26,12 +30,14 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='main'>
-        <NavBar height={navbarHeight} />
-        <div style={{ marginTop: navbarHeight }}>
-          <Component {...pageProps} />
-        </div>
-      </main>
+      <SessionProvider session={session}>
+        <main className='main'>
+          <NavBar height={navbarHeight} />
+          <div style={{ marginTop: navbarHeight }}>
+            <Component {...pageProps} />
+          </div>
+        </main>
+      </SessionProvider>
     </>
   );
 }

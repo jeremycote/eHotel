@@ -165,7 +165,8 @@ exports.up = async function (sql) {
             hotel_id INTEGER references hotels (hotel_id) on delete restrict not null,
             name    VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
-            nas VARCHAR(50) NOT NULL
+            nas VARCHAR(50) NOT NULL,
+            password TEXT NOT NULL
         );
     `;
 
@@ -195,7 +196,8 @@ exports.up = async function (sql) {
             nas VARCHAR(50) NOT NULL,
             email VARCHAR(320) NOT NULL,
             phone_number VARCHAR(20) NOT NULL,
-            created_at timestamp not null default(now())
+            created_at timestamp not null default(now()),
+            password TEXT NOT NULL
         );
     `;
 
