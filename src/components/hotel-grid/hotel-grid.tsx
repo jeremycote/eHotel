@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import { Hotel } from '@/src/types/Hotel';
-import HotelCard from '../hotel-card/hotel-card';
-import { Category } from '@/src/types/Category';
+import { useEffect, useState } from 'react';
 import CategoryFilter from '../category-filter/category-filter';
+import HotelCard from '../hotel-card/hotel-card';
 
 const HotelGrid = () => {
   const [hotels, setHotels] = useState<Hotel[]>([]);
@@ -24,7 +23,7 @@ const HotelGrid = () => {
   return (
     <div>
       <div>
-        <CategoryFilter height='5em' itemWidth='6em' itemSpacing='1em' />
+        <CategoryFilter height='5em' itemWidth={6} itemSpacing={0.5} />
       </div>
 
       <div className='results-grid'>
