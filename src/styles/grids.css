@@ -1,7 +1,7 @@
 .results-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 20vw);
+  grid-auto-rows: 20vw;
   gap: 1em;
 }
 
