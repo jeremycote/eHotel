@@ -1,10 +1,11 @@
 .searchbar {
   border: solid 0.1em var(--searchbar-color);
-  width: 32em;
+  width: 20em;
   border-radius: 2em;
   display: grid;
-  grid-template-areas: '1fr 1fr 1fr 0.5fr';
+  grid-template-areas: '1fr 1fr 1fr 1frfr';
   box-shadow: 0.1em 0.1em 0.1em var(--searchbar-color);
+  cursor: pointer;
 }
 
 .searchbar > a {
@@ -22,6 +23,11 @@
   height: 70%;
   width: 100%;
   border-right: 0.1em solid var(--searchbar-color);
-  /* border-right: solid 0.1em var(--searchbar-color);
-    margin-top: 0.5em; */
+}
+
+.expanded {
+  height: 8em;
+}
+
+.collapsed {
 }

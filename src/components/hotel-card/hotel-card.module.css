@@ -9,7 +9,6 @@
 }
 
 .hotelCard {
-  border: solid red 0.01em;
 }
 
 .imageCarousel {
@@ -21,4 +20,5 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 1em;
 }

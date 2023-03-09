@@ -6,24 +6,21 @@
   display: flex;
 }
 
-.navbar > ul {
-  height: 100%;
-  width: 100%;
-  list-style-type: none;
-}
-
-.navbar > ul > * {
+.navbar > a {
   cursor: pointer;
   height: 100%;
 }
 
-.navbar > ul > li {
-  float: left;
+.navbar > a {
   width: 4em;
   margin-right: 0.5em;
   font-size: 1.25em;
   background-color: var(--nav-button-background);
 }
-.navbar > ul > li:hover {
+.navbar > a:hover {
   background-color: var(--nav-button-background-hover);
+}
+
+.navbar > span {
+  margin-inline: auto;
 }

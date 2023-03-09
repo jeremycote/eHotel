@@ -29,6 +29,7 @@
     "ley": "^0.8.1",
     "lint-staged": "^13.1.2",
     "next": "13.1.6",
+    "next-auth": "^4.20.1",
     "pg-connection-string": "^2.5.0",
     "postgres": "^3.3.3",
     "prettier": "^2.8.4",

@@ -101,8 +101,20 @@ exports.up = async function (sql) {
     `;
 
   await sql`
+         DROP TABLE IF EXISTS rooms_types CASCADE;
+  `;
+
+  await sql`
+        CREATE TABLE room_types
+        (
+            room_type_id serial primary key,
+            name        VARCHAR(255) NOT NULL
+        );
+      `;
+
+  await sql`
         DROP TABLE IF EXISTS rooms CASCADE;
-    `;
+  `;
 
   await sql`
         CREATE TABLE rooms
@@ -113,7 +125,8 @@ exports.up = async function (sql) {
             capacity INT NOT NULL CHECK (capacity >= 0),
             extendable BOOLEAN NOT NULL DEFAULT false,
             damages  VARCHAR,
-            view VARCHAR(50) NOT NULL
+            view VARCHAR(50) NOT NULL,
+            room_type_id INT NOT NULL references room_types (room_type_id) on delete restrict not null
         );
     `;
 
@@ -150,9 +163,11 @@ exports.up = async function (sql) {
         (
             employee_id serial primary key,
             hotel_id INTEGER references hotels (hotel_id) on delete restrict not null,
+            email VARCHAR(320) NOT NULL,
             name    VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
-            nas VARCHAR(50) NOT NULL
+            nas VARCHAR(50) NOT NULL,
+            password TEXT NOT NULL
         );
     `;
 
@@ -182,7 +197,8 @@ exports.up = async function (sql) {
             nas VARCHAR(50) NOT NULL,
             email VARCHAR(320) NOT NULL,
             phone_number VARCHAR(20) NOT NULL,
-            created_at timestamp not null default(now())
+            created_at timestamp not null default(now()),
+            password TEXT NOT NULL
         );
     `;
 
@@ -198,7 +214,9 @@ exports.up = async function (sql) {
             room_id INTEGER references rooms (room_id) on delete restrict not null,
             price    INT NOT NULL CHECK (price >= 0),
             archived BOOLEAN NOT NULL DEFAULT false,
-            number_guests INT NOT NULL
+            number_guests INT NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE
         );
     `;
 
@@ -247,6 +265,10 @@ exports.down = async function (sql) {
   await sql`
         DROP TABLE IF EXISTS categories CASCADE;
     `;
+
+  await sql`
+    DROP TABLE IF EXISTS room_types CASCADE;
+`;
 
   await sql`
         DROP TABLE IF EXISTS hotels CASCADE;

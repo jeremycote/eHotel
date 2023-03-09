@@ -11,17 +11,22 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  border: red solid 0.1em;
 }
 
-.categoryFilter > li > a {
+.categoryFilter > li {
   height: 100%;
+}
+
+.categoryFilter > li > i {
+  cursor: pointer;
 }
 
 .categoryFilter > li:hover {
   background-color: red;
 }
 
-.categoryFilter > li > a > img {
+.categoryFilter > li > img {
   object-fit: contain;
   width: 50%;
   height: auto;
