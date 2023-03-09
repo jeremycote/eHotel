@@ -1,8 +1,8 @@
-import { Client } from '@/src/types/Client';
-import { Room } from '@/src/types/Room';
-export interface Reservation {
+import Room from '@/src/types/Room';
+import User from './User';
+export default interface Reservation {
   reservation_id: number;
-  client: Client[];
+  client: User[];
   room: Room[];
   price: number;
   archived: boolean;

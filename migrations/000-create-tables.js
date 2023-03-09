@@ -155,19 +155,32 @@ exports.up = async function (sql) {
     `;
 
   await sql`
+        DROP TABLE IF EXISTS users CASCADE;
+    `;
+
+  await sql`
+        CREATE TABLE users
+        (
+            user_id serial primary key,
+            name    VARCHAR(255) NOT NULL,
+            address VARCHAR(255) NOT NULL,
+            nas VARCHAR(50) NOT NULL,
+            email VARCHAR(320) NOT NULL,
+            phone_number VARCHAR(20),
+            created_at timestamp NOT NULL default(now()),
+            password TEXT NOT NULL
+        );
+    `;
+
+  await sql`
         DROP TABLE IF EXISTS employees CASCADE;
     `;
 
   await sql`
         CREATE TABLE employees
         (
-            employee_id serial primary key,
-            hotel_id INTEGER references hotels (hotel_id) on delete restrict not null,
-            email VARCHAR(320) NOT NULL,
-            name    VARCHAR(255) NOT NULL,
-            address VARCHAR(255) NOT NULL,
-            nas VARCHAR(50) NOT NULL,
-            password TEXT NOT NULL
+            employee_id INTEGER primary key references users (user_id) on delete restrict not null,
+            hotel_id INTEGER references hotels (hotel_id) on delete restrict not null
         );
     `;
 
@@ -185,24 +198,6 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-        DROP TABLE IF EXISTS clients CASCADE;
-    `;
-
-  await sql`
-        CREATE TABLE clients
-        (
-            client_id serial primary key,
-            name    VARCHAR(255) NOT NULL,
-            address VARCHAR(255) NOT NULL,
-            nas VARCHAR(50) NOT NULL,
-            email VARCHAR(320) NOT NULL,
-            phone_number VARCHAR(20) NOT NULL,
-            created_at timestamp not null default(now()),
-            password TEXT NOT NULL
-        );
-    `;
-
-  await sql`
         DROP TABLE IF EXISTS reservations CASCADE;
     `;
 
@@ -210,7 +205,7 @@ exports.up = async function (sql) {
         CREATE TABLE reservations
         (
             reservation_id serial primary key,
-            client_id INTEGER references clients (client_id) on delete restrict not null,
+            user_id INTEGER references users (user_id) on delete restrict not null,
             room_id INTEGER references rooms (room_id) on delete restrict not null,
             price    INT NOT NULL CHECK (price >= 0),
             archived BOOLEAN NOT NULL DEFAULT false,
@@ -307,7 +302,7 @@ exports.down = async function (sql) {
     `;
 
   await sql`
-        DROP TABLE IF EXISTS clients CASCADE;
+        DROP TABLE IF EXISTS users CASCADE;
     `;
 
   await sql`

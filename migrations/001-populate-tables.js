@@ -85,13 +85,14 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-    INSERT INTO clients (name, address, nas, email, phone_number, created_at, password) VALUES
-        ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20', crypt('change-in-prod', gen_salt('bf')));
+    INSERT INTO users (name, address, nas, email, phone_number, created_at, password) VALUES
+        ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'yogourt@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf')));
     `;
 
   await sql`
-    INSERT INTO employees (hotel_id, name, email, address, nas, password) VALUES
-        (1, 'George Do', 'george@example.com', '10 example st', '1111111', crypt('change-in-prod', gen_salt('bf')));
+    INSERT INTO employees (employee_id, hotel_id) VALUES
+        (1, 1);
     `;
 
   await sql`
@@ -125,7 +126,7 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-    INSERT INTO reservations (client_id, room_id, price, archived, number_guests, start_date) VALUES
+    INSERT INTO reservations (user_id, room_id, price, archived, number_guests, start_date) VALUES
         (1, 1, 100, False, 1, '2023-03-08');
     `;
 

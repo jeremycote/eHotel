@@ -1,6 +1,5 @@
 import sql from '@/src/lib/db';
-import { Client } from '@/src/types/Client';
-import { Employee } from '@/src/types/Employee';
+import User from '@/src/types/User';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
@@ -27,10 +26,6 @@ export const authOptions = {
           placeholder: 'traveler@example.com',
         },
         password: { label: 'Password', type: 'password' },
-        employee: {
-          label: 'Employee',
-          type: 'checkbox',
-        },
       },
       async authorize(credentials, req) {
         // You need to provide your own logic here that takes the credentials
@@ -48,18 +43,9 @@ export const authOptions = {
           return null;
         }
 
-        const users =
-          credentials?.employee === 'on'
-            ? await sql<Employee[]>`SELECT * FROM employees WHERE email = ${
-                credentials!.username
-              } AND password = crypt(${
-                credentials!.password
-              }, password) LIMIT 1`
-            : await sql<Client[]>`SELECT * FROM clients WHERE email = ${
-                credentials!.username
-              } AND password = crypt(${
-                credentials!.password
-              }, password) LIMIT 1`;
+        const users = await sql<User[]>`SELECT * FROM users WHERE email = ${
+          credentials!.username
+        } AND password = crypt(${credentials!.password}, password) LIMIT 1`;
         console.log(users);
 
         if (users.length > 0) {
