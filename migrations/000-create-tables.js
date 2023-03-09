@@ -163,6 +163,7 @@ exports.up = async function (sql) {
         (
             employee_id serial primary key,
             hotel_id INTEGER references hotels (hotel_id) on delete restrict not null,
+            email VARCHAR(320) NOT NULL,
             name    VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
             nas VARCHAR(50) NOT NULL,

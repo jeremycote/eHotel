@@ -1,4 +1,4 @@
-import { getHomeRoute } from '@/src/config/routes';
+import { getClientDashboardRoute, getHomeRoute } from '@/src/config/routes';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import SearchBar from '../searchbar/searchbar';
@@ -14,18 +14,24 @@ const NavBar = ({ height }: NavbarProps) => {
 
   return (
     <nav className={styles.navbar} style={{ height: height }}>
-      <ul>
-        <li
-          onClick={(e) => {
-            e.preventDefault();
-            router.push(getHomeRoute());
-          }}
-        >
-          Home
-        </li>
-        <li>Signed in as {session?.user?.name ?? 'NULL'}</li>
-        <SearchBar />
-      </ul>
+      <a
+        onClick={(e) => {
+          e.preventDefault();
+          router.push(getHomeRoute());
+        }}
+      >
+        Home
+      </a>
+      <SearchBar />
+      <a
+        onClick={(e) => {
+          e.preventDefault();
+          router.push(getClientDashboardRoute());
+        }}
+      >
+        {(session != null && `Signed in as ${session?.user?.name ?? 'NULL'}`) ||
+          'Sign In'}
+      </a>
     </nav>
   );
 };

@@ -1,3 +1,6 @@
+import sql from '@/src/lib/db';
+import { Client } from '@/src/types/Client';
+import { Employee } from '@/src/types/Employee';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
@@ -20,9 +23,13 @@ export const authOptions = {
         username: {
           label: 'Username',
           type: 'text',
-          placeholder: 'artistic zombie',
+          placeholder: 'traveler@example.com',
         },
         password: { label: 'Password', type: 'password' },
+        employee: {
+          label: 'Employee',
+          type: 'checkbox',
+        },
       },
       async authorize(credentials, req) {
         // You need to provide your own logic here that takes the credentials
@@ -35,17 +42,29 @@ export const authOptions = {
         // We are storing our passwords in postgres. See this blog for how it's done.
         // https://x-team.com/blog/storing-secure-passwords-with-postgresql/
 
-        const res = await fetch('/your/endpoint', {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { 'Content-Type': 'application/json' },
-        });
-        const user = await res.json();
-
-        // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user;
+        if (credentials === null) {
+          console.log('No creds provided');
+          return null;
         }
+
+        const users =
+          credentials?.employee === 'on'
+            ? await sql<Employee[]>`SELECT * FROM employees WHERE email = ${
+                credentials!.username
+              } AND password = crypt(${
+                credentials!.password
+              }, password) LIMIT 1`
+            : await sql<Client[]>`SELECT * FROM clients WHERE email = ${
+                credentials!.username
+              } AND password = crypt(${
+                credentials!.password
+              }, password) LIMIT 1`;
+        console.log(users);
+
+        if (users.length > 0) {
+          return users[0];
+        }
+
         // Return null if user data could not be retrieved
         return null;
       },

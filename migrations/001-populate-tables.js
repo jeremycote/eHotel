@@ -90,8 +90,8 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-    INSERT INTO employees (hotel_id, name, address, nas, password) VALUES
-        (1, 'George Do', '10 example st', '1111111', crypt('change-in-prod', gen_salt('bf')));
+    INSERT INTO employees (hotel_id, name, email, address, nas, password) VALUES
+        (1, 'George Do', 'george@example.com', '10 example st', '1111111', crypt('change-in-prod', gen_salt('bf')));
     `;
 
   await sql`
