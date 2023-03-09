@@ -6,4 +6,5 @@ export default interface User {
   is_employee: boolean;
   created_at: string;
   nas: string;
+  phone_number?: string;
 }
