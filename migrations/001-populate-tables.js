@@ -86,7 +86,8 @@ exports.up = async function (sql) {
 
   await sql`
     INSERT INTO users (name, address, nas, email, phone_number, created_at, password) VALUES
-        ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20', crypt('hello', gen_salt('bf')));
+        ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'yogourt@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf')));
     `;
 
   await sql`
