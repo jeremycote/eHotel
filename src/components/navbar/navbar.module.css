@@ -20,3 +20,7 @@
 .navbar > a:hover {
   background-color: var(--nav-button-background-hover);
 }
+
+.navbar > span {
+  margin-inline: auto;
+}

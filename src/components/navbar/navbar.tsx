@@ -13,7 +13,7 @@ const NavBar = ({ height }: NavbarProps) => {
   const { data: session } = useSession();
 
   return (
-    <nav className={styles.navbar} style={{ height: height }}>
+    <nav className={styles.navbar}>
       <a
         onClick={(e) => {
           e.preventDefault();
@@ -22,7 +22,9 @@ const NavBar = ({ height }: NavbarProps) => {
       >
         Home
       </a>
-      <SearchBar />
+      <span />
+      <SearchBar defaultHeight={height} />
+      <span />
       <a
         onClick={(e) => {
           e.preventDefault();
