@@ -1,4 +1,4 @@
-export interface Hotel {
+export default interface Hotel {
   hotel_id: number;
   chain_id: number;
   name: string;

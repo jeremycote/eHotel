@@ -1,9 +1,5 @@
-export interface Client {
-  client_id: number;
-  name: string;
-  address: string;
-  nas: string;
-  email: string;
+import User from './User';
+
+export default interface Client extends User {
   phone_number: string;
-  created_at: string;
 }

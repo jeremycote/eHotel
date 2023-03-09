@@ -1,8 +1,3 @@
-export interface Employee {
-  employee_id: number;
+export default interface Employee {
   hotel_id: number;
-  name: string;
-  address: string;
-  nas: string;
-  email: string;
 }

@@ -1,4 +1,4 @@
-export interface Room {
+export default interface Room {
   room_id: number;
   hotel_id: number;
   price: number;

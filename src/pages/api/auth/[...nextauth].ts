@@ -1,6 +1,7 @@
 import sql from '@/src/lib/db';
 import { Client } from '@/src/types/Client';
 import { Employee } from '@/src/types/Employee';
+import { User } from '@/src/types/User';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
@@ -63,6 +64,11 @@ export const authOptions = {
         console.log(users);
 
         if (users.length > 0) {
+          if (credentials?.employee === 'on') {
+            const user: User = { id: users[0].user_id };
+          } else {
+          }
+
           return users[0];
         }
 
