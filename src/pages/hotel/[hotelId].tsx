@@ -39,7 +39,7 @@ export default function HotelPage() {
     if (hotelId != null) {
       setLoadingRoomAvailabilties(true);
       fetch(
-        `/api/get-room-availability/${hotelId}?startDate=2023-02-02&endDate=2023-06-01&available=false`,
+        `/api/get-room-availability/${hotelId}?startDate=2023-02-02&endDate=2023-06-01&available=true`,
       )
         .then((res) => res.json())
         .then((data) => {
