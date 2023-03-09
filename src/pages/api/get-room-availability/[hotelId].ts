@@ -13,24 +13,26 @@ export default async function handler(
   if (!(startDate && endDate && available && hotelId)) {
     res.status(404).json([]);
   } else {
-    let where = `rooms.hotel_id = ${hotelId}`;
+    let where = `r.hotel_id = ${hotelId}`;
 
     if (startDate && endDate) {
-      where += ' AND rooms.room_id ';
+      where += ' AND r.room_id ';
       where += available === 'true' ? 'NOT IN ' : 'IN ';
       where += `(SELECT rooms.room_id FROM rooms JOIN reservations ON rooms.room_id = reservations.room_id WHERE reservations.start_date >= '${startDate}' AND (reservations.end_date IS NULL OR reservations.end_date <= '${endDate}'))`;
     }
 
     if (roomTypeId) {
-      where += ` AND rooms.room_type_id = ${roomTypeId}`;
+      where += ` AND r.room_type_id = ${roomTypeId}`;
     }
 
-    res
-      .status(200)
-      .json(
-        await sql.unsafe(
-          `SELECT hotel_id, room_type_id, count(room_id) FROM rooms WHERE ${where} GROUP BY hotel_id, room_type_id ORDER BY room_type_id`,
-        ),
-      );
+    res.status(200).json(
+      await sql.unsafe(
+        `SELECT hotel_id, r.room_type_id, rt.name as room_type_name, count(room_id), min(r.price) as lowest_price
+                    FROM rooms r
+                    INNER JOIN room_types rt on rt.room_type_id = r.room_type_id
+                    WHERE ${where} GROUP BY hotel_id, r.room_type_id, rt.name ORDER BY room_type_id
+            `,
+      ),
+    );
   }
 }

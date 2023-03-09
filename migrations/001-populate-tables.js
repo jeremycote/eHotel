@@ -69,9 +69,9 @@ exports.up = async function (sql) {
 
   await sql`
     INSERT INTO room_types (name) VALUES
+        ('Classic'),
         ('Suite'),
-        ('Presendential Suite'),
-        ('Classic');
+        ('Presidential Suite');
     `;
 
   await sql`
@@ -116,7 +116,12 @@ exports.up = async function (sql) {
 
   await sql`
     INSERT INTO rooms (hotel_id, price, capacity, extendable, damages, view, room_type_id) VALUES
-        (1, 100, 1, False, NULL, 'Ocean View', 1);
+        (1, 100, 2, False, NULL, 'Ocean View', 1),
+        (1, 110, 2, False, NULL, 'Ocean View', 1),
+        (1, 130, 2, False, NULL, 'Ocean View', 2),
+        (1, 150, 2, False, NULL, 'Ocean View', 2),
+        (1, 250, 4, False, TRUE, 'Ocean View', 3),
+        (1, 270, 4, False, TRUE, 'Ocean View', 3);
     `;
 
   await sql`
