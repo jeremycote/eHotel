@@ -8,6 +8,7 @@ import GithubProvider from 'next-auth/providers/github';
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
+    // For Github to work, we need to populate the table with a new client to represent the user. Pending endpoints to do so.
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
