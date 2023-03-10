@@ -17,3 +17,15 @@ export function getLoginRoute() {
 export function getClientDashboardRoute() {
   return '/client-dashboard';
 }
+
+export function getUserRolesRoute(email: string) {
+  return `/api/get-user-roles/${email}`;
+}
+
+export function getUserRoute() {
+  return '/api/get-user';
+}
+
+export function getEmployeeDashboardRoute() {
+  return '/employee-dashboard';
+}

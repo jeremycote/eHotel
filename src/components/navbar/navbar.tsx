@@ -1,4 +1,10 @@
-import { getClientDashboardRoute, getHomeRoute } from '@/src/config/routes';
+import {
+  getClientDashboardRoute,
+  getEmployeeDashboardRoute,
+  getHomeRoute,
+} from '@/src/config/routes';
+import useRoles from '@/src/hooks/use-roles';
+import UserRole from '@/src/types/UserRole';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import SearchBar from '../searchbar/searchbar';
@@ -11,6 +17,8 @@ interface NavbarProps {
 const NavBar = ({ height }: NavbarProps) => {
   const router = useRouter();
   const { data: session } = useSession();
+
+  const roles = useRoles();
 
   return (
     <nav className={styles.navbar}>
@@ -25,6 +33,16 @@ const NavBar = ({ height }: NavbarProps) => {
       <span />
       <SearchBar defaultHeight={height} />
       <span />
+      {roles.status === 'success' && roles.data.includes(UserRole.Employee) && (
+        <a
+          onClick={(e) => {
+            e.preventDefault();
+            router.push(getEmployeeDashboardRoute());
+          }}
+        >
+          Employee Dashboard
+        </a>
+      )}
       <a
         onClick={(e) => {
           e.preventDefault();
