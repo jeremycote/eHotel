@@ -37,6 +37,7 @@
     "postgres": "^3.3.3",
     "prettier": "^2.8.4",
     "react": "18.2.0",
+    "react-collapsed": "^3.6.0",
     "react-dom": "18.2.0",
     "react-id-swiper": "^4.0.0",
     "sql-template-strings": "^2.2.2",

@@ -10,8 +10,8 @@ export function getBookHotelRoute(hotelId: number | string) {
   return `/book/${hotelId}`;
 }
 
-export function getLoginRoute() {
-  return '/api/auth/signin';
+export function getLoginRoute(callbackUrl?: string) {
+  return `/api/auth/signin${callbackUrl ? `?callbackUrl=${callbackUrl}` : ''}`;
 }
 
 export function getClientDashboardRoute() {

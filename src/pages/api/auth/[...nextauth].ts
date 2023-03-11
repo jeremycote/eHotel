@@ -39,14 +39,13 @@ export const authOptions = {
         // https://x-team.com/blog/storing-secure-passwords-with-postgresql/
 
         if (credentials === null) {
-          console.log('No creds provided');
+          console.error('No creds provided');
           return null;
         }
 
         const users = await sql<User[]>`SELECT * FROM users WHERE email = ${
           credentials!.username
         } AND password = crypt(${credentials!.password}, password) LIMIT 1`;
-        console.log(users);
 
         if (users.length > 0) {
           return users[0];
