@@ -1,4 +1,4 @@
-import {signOut, useSession} from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { getLoginRoute } from '../config/routes';
 
@@ -15,9 +15,11 @@ export default function ClientDashboard() {
   }
 
   return (
-      <div className="pt-10">
-        <h1>Client Dashboard</h1>
-        <button type="button" onClick={() => signOut()}>Sign Out</button>
-      </div>
+    <div className='pt-10'>
+      <h1>Client Dashboard</h1>
+      <button type='button' onClick={() => signOut()}>
+        Sign Out
+      </button>
+    </div>
   );
 }

@@ -42,14 +42,19 @@ exports.up = async function (sql) {
   await sql`
     INSERT INTO hotel_images (hotel_id, url) VALUES
         (1, 'https://unsplash.it/400/400'),
-        (1, 'https://unsplash.it/500/500'),
-        (2, 'https://unsplash.it/600/600'),
-        (3, 'https://unsplash.it/700/700');
+        (1, 'https://unsplash.it/400/400'),
+        (2, 'https://unsplash.it/400/400'),
+        (3, 'https://unsplash.it/400/400');
   `;
 
   await sql`
         INSERT INTO amenities (name) VALUES
-            ('Coffee');
+            ('Double Size Bed'),
+            ('Queen Size Bed'),
+            ('King Size Bed'),
+            ('Twin Size Bed'),
+            ('Mini Bar'),
+            ('Coffee Machine');
     `;
 
   await sql`
@@ -58,13 +63,10 @@ exports.up = async function (sql) {
         ('Beach'),
         ('Downtown'),
         ('Popular'),
-        ('Alpha'),
-        ('Beta'),
-        ('Charlie'),
-        ('Delta'),
-        ('Echo'),
-        ('Fox'),
-        ('Gamma');
+        ('Family Friendly'),
+        ('All-Inclusive'),
+        ('Luxury'),
+        ('Cottage');
     `;
 
   await sql`

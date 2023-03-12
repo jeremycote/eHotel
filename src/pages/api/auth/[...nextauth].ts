@@ -7,13 +7,13 @@ import GithubProvider from 'next-auth/providers/github';
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
-    // For Github to work, we need to populate the table with a new client to represent the user. Pending endpoints to do so.
+    // For GitHub to work, we need to populate the table with a new client to represent the user. Pending endpoints to do so.
     GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. 'Sign in with...')
+      // The name to display on the sign-in form (e.g. 'Sign in with...')
       name: 'Credentials',
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted.

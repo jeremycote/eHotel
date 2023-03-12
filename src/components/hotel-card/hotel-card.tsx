@@ -25,7 +25,11 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
       </div>
       <div className={styles.description}>
         <h1>{hotel.name}</h1>
-        <p>{hotel.lowest_price ? `Starting at $${hotel.lowest_price}/night` : 'Price not available'}</p>
+        <p>
+          {hotel.lowest_price
+            ? `Starting at $${hotel.lowest_price}/night`
+            : 'Price not available'}
+        </p>
       </div>
     </div>
   );

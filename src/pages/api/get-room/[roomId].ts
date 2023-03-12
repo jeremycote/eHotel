@@ -22,7 +22,7 @@ export default async function handler(
   }
 
   if (roomId && startDate && endDate) {
-    const finalPrice = Math.round(
+    const numberOfDays = Math.round(
       dayjs(String(endDate)).diff(String(startDate), 'days'),
     );
     res.status(200).json(
@@ -33,7 +33,7 @@ export default async function handler(
                                 h.stars as hotel_stars, 
                                 h.address as hotel_address, 
                                 r.price, 
-                                r.price * ${finalPrice} as full_price, 
+                                r.price * ${numberOfDays} as full_price, 
                                 r.capacity, 
                                 r.extendable, 
                                 r.damages, 

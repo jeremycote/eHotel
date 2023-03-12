@@ -10,8 +10,9 @@ export function getBookHotelRoute(
   hotelId: number | string,
   startDate: string,
   endDate: string,
+  expandedRoomType?: number,
 ) {
-  return `/book/${hotelId}?startDate=${startDate}&endDate=${endDate}`;
+  return `/book/${hotelId}?startDate=${startDate}&endDate=${endDate}&expandedRoomType=${expandedRoomType}`;
 }
 
 export function getBookHotelRoomRoute(

@@ -21,8 +21,6 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  const [navbarHeight, setNavbarHeight] = useState<number>(0);
-
   return (
     <>
       <Head>
@@ -33,8 +31,8 @@ export default function App({
       </Head>
       <SessionProvider session={session}>
         <main className='main'>
-          <NavBar onHeightChange={setNavbarHeight} />
-          <div style={{ marginTop: navbarHeight }}>
+          <NavBar />
+          <div>
             <Component {...pageProps} />
           </div>
         </main>

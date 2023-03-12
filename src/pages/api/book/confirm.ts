@@ -57,11 +57,9 @@ export default async function handler(
             res.status(200).json(reservation[0]);
           }
         } else {
-          res
-            .status(422)
-            .json({
-              error: 'The room not available at this price for these dates...',
-            });
+          res.status(422).json({
+            error: 'The room not available at this price for these dates...',
+          });
         }
         return;
       }

@@ -93,13 +93,7 @@ const CategoryFilter = ({
           (category, index) =>
             index >= categoryIndex &&
             categoryIndex + nCategoriesOnScreen > index && (
-              <li
-                key={category.category_id}
-                style={{
-                  marginInline: convertToEm(itemSpacing),
-                  width: convertToEm(itemWidth),
-                }}
-              >
+              <li key={category.category_id}>
                 <img src='/favicon.ico' />
                 <p>{category.name}</p>
               </li>
