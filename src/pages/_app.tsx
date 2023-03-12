@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useState } from 'react';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/swiper-bundle.min.css';
@@ -20,7 +21,7 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
-  const navbarHeight = '3em';
+  const [navbarHeight, setNavbarHeight] = useState<number>(0);
 
   return (
     <>
@@ -32,7 +33,7 @@ export default function App({
       </Head>
       <SessionProvider session={session}>
         <main className='main'>
-          <NavBar height={navbarHeight} />
+          <NavBar onHeightChange={setNavbarHeight} />
           <div style={{ marginTop: navbarHeight }}>
             <Component {...pageProps} />
           </div>
