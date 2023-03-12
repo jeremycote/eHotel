@@ -137,7 +137,8 @@ exports.up = async function (sql) {
 
   await sql`
     INSERT INTO room_amenities (room_id, amenity_id) VALUES
-        (1, 1);
+        (1, 1),
+        (2, 1);
     `;
 };
 

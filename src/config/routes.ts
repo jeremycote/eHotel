@@ -6,8 +6,28 @@ export function getHotelRoute(hotelId: number | string) {
   return `/hotel/${hotelId}`;
 }
 
-export function getBookHotelRoute(hotelId: number | string) {
-  return `/book/${hotelId}`;
+export function getBookHotelRoute(
+  hotelId: number | string,
+  startDate: string,
+  endDate: string,
+) {
+  return `/book/${hotelId}?startDate=${startDate}&endDate=${endDate}`;
+}
+
+export function getBookHotelRoomRoute(
+  roomId: number | string,
+  startDate: string,
+  endDate: string,
+) {
+  return `/book/confirm/${roomId}?startDate=${startDate}&endDate=${endDate}`;
+}
+
+export function getPostBookRoute(
+  roomId: number | string,
+  startDate: string,
+  endDate: string,
+) {
+  return `/api/book/confirm/${roomId}?startDate=${startDate}&endDate=${endDate}`;
 }
 
 export function getLoginRoute(callbackUrl?: string) {

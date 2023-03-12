@@ -1,17 +1,10 @@
 import sql from '@/src/lib/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-interface CreateResponse {
-  created: number;
-}
-
-interface UpdatedResponse {
-  updated: number;
-}
+import { CreateResponse, ErrorResponse } from '@/src/types/Response';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<CreateResponse | undefined>,
+  res: NextApiResponse<CreateResponse | ErrorResponse | undefined>,
 ) {
   const { query, method } = req;
 
@@ -31,7 +24,7 @@ export default async function handler(
         }
       }
     default:
-      res.setHeader('Allow', ['GET', 'PUT']);
+      res.setHeader('Allow', ['POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 

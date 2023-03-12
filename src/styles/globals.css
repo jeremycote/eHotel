@@ -44,3 +44,15 @@ body {
   width: 4em;
   display: inline-block;
 }
+
+.nav-link {
+  @apply block lg:inline-block font-bold lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-gray-600 mr-2;
+}
+
+#menu-toggle:checked {
+  background: #ca0505;
+}
+
+#menu-toggle:checked + #menu {
+  display: flex;
+}

@@ -1,26 +1,26 @@
-.navbar {
-  background-color: var(--colour-background);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  display: flex;
-}
+/*.navbar {*/
+/*  background-color: var(--colour-background);*/
+/*  position: fixed;*/
+/*  width: 100%;*/
+/*  top: 0;*/
+/*  display: flex;*/
+/*}*/
 
-.navbar > a {
-  cursor: pointer;
-  height: 100%;
-}
+/*.navbar > a {*/
+/*  cursor: pointer;*/
+/*  height: 100%;*/
+/*}*/
 
-.navbar > a {
-  width: 4em;
-  margin-right: 0.5em;
-  font-size: 1.25em;
-  background-color: var(--nav-button-background);
-}
-.navbar > a:hover {
-  background-color: var(--nav-button-background-hover);
-}
+/*.navbar > a {*/
+/*  width: 4em;*/
+/*  margin-right: 0.5em;*/
+/*  font-size: 1.25em;*/
+/*  background-color: var(--nav-button-background);*/
+/*}*/
+/*.navbar > a:hover {*/
+/*  background-color: var(--nav-button-background-hover);*/
+/*}*/
 
-.navbar > span {
-  margin-inline: auto;
-}
+/*.navbar > span {*/
+/*  margin-inline: auto;*/
+/*}*/

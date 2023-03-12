@@ -33,7 +33,7 @@ const SearchBar = ({ defaultHeight }: SearchBarProps) => {
         toggleExpand();
       }}
       className={`${styles.searchbar} ${currentStyles}`}
-      style={{ height: expanded ? '8em' : defaultHeight }}
+      style={{ height: expanded ? '5em' : defaultHeight }}
     >
       <a>Anywhere</a>
       <a>Any week</a>

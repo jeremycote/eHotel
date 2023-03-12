@@ -10,7 +10,8 @@ export default async function handler(
 ) {
   const { getImages, getCategories, getPhoneNumbers, getEmails } = req.query;
 
-  let columns = 'hotels.*';
+  let columns =
+    'hotels.*, (select min(price) from rooms where hotel_id = hotels.hotel_id) as lowest_price';
   let from = 'hotels';
 
   if (getImages === 'true') {

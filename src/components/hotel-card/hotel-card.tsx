@@ -14,8 +14,7 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
   return (
     <div
       className={`${className} ${styles.hotelCard}`}
-      onClick={(e) => {
-        e.preventDefault();
+      onClick={() => {
         router.push(getHotelRoute(hotel.hotel_id));
       }}
     >
@@ -26,7 +25,7 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
       </div>
       <div className={styles.description}>
         <h1>{hotel.name}</h1>
-        <p>{`0 per night`}</p>
+        <p>{hotel.lowest_price ? `Starting at $${hotel.lowest_price}/night` : 'Price not available'}</p>
       </div>
     </div>
   );

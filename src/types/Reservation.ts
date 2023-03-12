@@ -1,4 +1,4 @@
-import Room from '@/src/types/Room';
+import { Room } from '@/src/types/Room';
 import User from './User';
 export default interface Reservation {
   reservation_id: number;

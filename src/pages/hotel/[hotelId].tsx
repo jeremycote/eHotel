@@ -39,7 +39,7 @@ export default function HotelPage() {
     if (hotelId != null) {
       setLoadingRoomAvailabilties(true);
       fetch(
-        `/api/get-room-availability/${hotelId}?startDate=2023-02-02&endDate=2023-06-01&available=true`,
+        `/api/get-room-availability/${hotelId}?startDate=2023-02-02&endDate=2023-02-04&available=true`,
       )
         .then((res) => res.json())
         .then((data) => {
@@ -79,7 +79,7 @@ export default function HotelPage() {
         <tbody>
           {!isLoadingRoomAvailabilities &&
             roomAvailabilities.map((availabiltity, i) => (
-              <tr>
+              <tr key={availabiltity.room_type_id}>
                 <td>
                   {roomTypes.length > availabiltity.room_type_id + 1
                     ? roomTypes[availabiltity.room_type_id].name
@@ -92,9 +92,9 @@ export default function HotelPage() {
       </table>
       <button
         className='cta-button'
-        onClick={(e) => {
-          e.preventDefault();
-          router.push(getBookHotelRoute(`${hotelId}`));
+        type="button"
+        onClick={() => {
+          router.push(getBookHotelRoute(`${hotelId}`, '2023-02-02', '2023-02-04'));
         }}
       >
         Book

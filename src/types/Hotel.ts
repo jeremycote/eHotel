@@ -9,4 +9,5 @@ export interface Hotel {
   emails?: string[];
   category_ids?: number[];
   phone_numbers?: string[];
+  lowest_price: number;
 }

@@ -6,6 +6,7 @@
   grid-template-areas: '1fr 1fr 1fr 1frfr';
   box-shadow: 0.1em 0.1em 0.1em var(--searchbar-color);
   cursor: pointer;
+  @apply text-gray-700;
 }
 
 .searchbar > a {
