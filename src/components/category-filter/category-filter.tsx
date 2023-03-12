@@ -77,14 +77,17 @@ const CategoryFilter = ({
       style={{ height: height }}
       ref={componentRef}
     >
-      <li
-        onClick={(e) => {
-          e.preventDefault;
-          paginate(-nCategoriesOnScreen);
-        }}
-      >
-        <i>Back</i>
-      </li>
+      {categoryIndex > 0 && (
+        <li
+          onClick={(e) => {
+            e.preventDefault;
+            paginate(-nCategoriesOnScreen);
+          }}
+        >
+          <i>Back</i>
+        </li>
+      )}
+
       {!isLoading &&
         categories.map(
           (category, index) =>
@@ -102,14 +105,16 @@ const CategoryFilter = ({
               </li>
             ),
         )}
-      <li
-        onClick={(e) => {
-          e.preventDefault;
-          paginate(nCategoriesOnScreen);
-        }}
-      >
-        <i>Next</i>
-      </li>
+      {categoryIndex + nCategoriesOnScreen < categories.length && (
+        <li
+          onClick={(e) => {
+            e.preventDefault;
+            paginate(nCategoriesOnScreen);
+          }}
+        >
+          <i>Next</i>
+        </li>
+      )}
     </ul>
   );
 };

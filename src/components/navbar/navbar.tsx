@@ -2,10 +2,12 @@ import {
   getClientDashboardRoute,
   getEmployeeDashboardRoute,
 } from '@/src/config/routes';
+import useResizeObserver from '@/src/hooks/use-resize-observer';
 import useRoles from '@/src/hooks/use-roles';
 import UserRole from '@/src/types/UserRole';
 import {signOut, useSession} from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import SearchBar from '../searchbar/searchbar';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons";
@@ -13,18 +15,24 @@ import Link from "next/link";
 import {useState} from "react";
 
 interface NavbarProps {
-  height: string;
+  onHeightChange: (height: number) => void;
 }
 
-const NavBar = ({ height }: NavbarProps) => {
+const NavBar = ({ onHeightChange }: NavbarProps) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [navHidden, setNavHidden] = useState(false);
 
   const roles = useRoles();
 
+  const onResize = useCallback((target: HTMLDivElement) => {
+    onHeightChange(target.clientHeight);
+  }, []);
+
+  const ref = useResizeObserver(onResize);
+
   return (
-      <nav className="flex items-center justify-between flex-wrap bg-white py-3 lg:px-12 shadow border-solid rounded-b-md">
+      <nav  ref={ref} className="flex items-center justify-between flex-wrap bg-white py-3 lg:px-12 shadow border-solid rounded-b-md">
           <div className={`${navHidden ? '' : 'border-b-2 pb-5'} flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-gray-300 lg:pb-0`}>
               <div className="flex items-center flex-shrink-0 text-gray-800 mr-16">
                   <span className="font-semibold text-xl">eHotel</span>
@@ -45,7 +53,7 @@ const NavBar = ({ height }: NavbarProps) => {
               <div className="hidden lg:flex">
                   <SearchBar defaultHeight='2.5em' />
               </div>
-              <div className="flex text-gray-800 text-md">
+              <div className="text-gray-800 text-md">
                   {roles.status === 'success' && roles.data.includes(UserRole.Employee) && (
                       <Link className="nav-link" href={getEmployeeDashboardRoute()}>Employee Dashboard</Link>
                   )}
