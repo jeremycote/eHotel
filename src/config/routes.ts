@@ -50,3 +50,7 @@ export function getUserRoute() {
 export function getEmployeeDashboardRoute() {
   return '/employee-dashboard';
 }
+
+export function getEmployeeDashboardStatsRoute() {
+  return '/api/employees/get-dashboard-stats';
+}

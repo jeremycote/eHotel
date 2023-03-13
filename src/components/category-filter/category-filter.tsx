@@ -1,6 +1,5 @@
 import useContainerDimensions from '@/src/hooks/use-container-dimensions';
 import Category from '@/src/types/Category';
-import convertToEm from '@/src/utils/css-utils';
 import { useEffect, useRef, useState } from 'react';
 import styles from './category-filter.module.css';
 
