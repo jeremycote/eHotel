@@ -49,6 +49,14 @@ body {
   @apply block lg:inline-block font-bold lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-gray-600 mr-2;
 }
 
+.form-input {
+  @apply block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600;
+}
+
+.form-label {
+  @apply font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0];
+}
+
 #menu-toggle:checked {
   background: #ca0505;
 }
