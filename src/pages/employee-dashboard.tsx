@@ -5,6 +5,7 @@ import useRoles from '../hooks/use-roles';
 import useUser from '../hooks/use-user';
 import { AsyncStateStates } from '../types/AsyncState';
 import UserRole from '../types/UserRole';
+import Link from "next/link";
 
 export default function EmployeeDashboard() {
   const router = useRouter();
@@ -34,7 +35,12 @@ export default function EmployeeDashboard() {
   }, [user]);
 
   return (
-    <div>
+    <div className="p-3">
+      <div className="my-3">
+        <Link href="/admin/hotel_chains" className="rounded p-3 bg-gray-800 text-slate-50">
+          Edit Hotel Chains
+        </Link>
+      </div>
       {user.status === AsyncStateStates.Success && (
         <>
           <h1>{`Employee id: ${user.data.name}`}</h1>
