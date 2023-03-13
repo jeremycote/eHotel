@@ -1,9 +1,12 @@
 import Reservation from '@/src/types/Reservation';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import DashboardStatCell from '../components/dashboard-stat-cell/dashboard-stat-cell';
+import { getEmployeeDashboardStatsRoute } from '../config/routes';
 import useRoles from '../hooks/use-roles';
 import useUser from '../hooks/use-user';
 import { AsyncStateStates } from '../types/AsyncState';
+import EmployeeDashboardStats from '../types/EmployeeDashboardStats';
 import UserRole from '../types/UserRole';
 import Link from "next/link";
 
@@ -34,6 +37,19 @@ export default function EmployeeDashboard() {
       });
   }, [user]);
 
+  const [stats, setStats] = useState<EmployeeDashboardStats | null>(null);
+  const [isLoadingStats, setLoadingStats] = useState(false);
+
+  useEffect(() => {
+    setLoadingStats(true);
+    fetch(getEmployeeDashboardStatsRoute())
+      .then((res) => res.json())
+      .then((data) => {
+        setStats(data);
+        setLoadingStats(false);
+      });
+  }, [user]);
+
   return (
     <div className="p-3">
       <div className="my-3">
@@ -43,6 +59,19 @@ export default function EmployeeDashboard() {
       </div>
       {user.status === AsyncStateStates.Success && (
         <>
+          <div className='w-100 grid h-64 grid-cols-6 gap-4 m-8'>
+            <DashboardStatCell
+              isLoading={isLoading}
+              label={'Handeld Leases'}
+              value={stats?.leases ?? 0}
+            />
+            <DashboardStatCell
+              isLoading={isLoading}
+              label={'Pending Reservations'}
+              value={stats?.reservations ?? 0}
+            />
+          </div>
+
           <h1>{`Employee id: ${user.data.name}`}</h1>
           <p>{JSON.stringify(reservations)}</p>
         </>
