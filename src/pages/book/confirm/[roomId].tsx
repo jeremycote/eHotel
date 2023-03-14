@@ -1,13 +1,17 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import {getBookHotelRoute, getLoginRoute, getPostBookRoute} from '@/src/config/routes';
+import {
+  getBookHotelRoute,
+  getLoginRoute,
+  getPostBookRoute,
+} from '@/src/config/routes';
 import { useEffect, useState } from 'react';
 import { FullRoomData } from '@/src/types/Room';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
-import dayjs from "dayjs";
-import Link from "next/link";
+import dayjs from 'dayjs';
+import Link from 'next/link';
 
 interface BookingFormData {
   numberGuests: number;
@@ -73,9 +77,9 @@ export default function ClientDashboard() {
     }
   }, [roomId]);
 
-    const numberOfDays = Math.round(
-        dayjs(String(endDate)).diff(String(startDate), 'days'),
-    );
+  const numberOfDays = Math.round(
+    dayjs(String(endDate)).diff(String(startDate), 'days'),
+  );
 
   return loading ? (
     <p>Loading...</p>
@@ -92,66 +96,70 @@ export default function ClientDashboard() {
         </div>
         <p className='text-base'>{room?.hotel_address}</p>
       </div>
-        <div className="p-4 rounded-lg border grid lg:grid-cols-2">
-            <div>
-                <h3 className="text-xl font-bold">Room: {room?.room_type} (${room?.price}/night)</h3>
-                <h4 className="text-md">Max Capacity: {room?.capacity}</h4>
-                <h4 className="text-md">Expandable: {room?.extendable ? 'Yes' : 'No'}</h4>
-                <h4 className="text-md">View: {room?.view}</h4>
-                <h4 className="text-md">Amenities:</h4>
-                { room?.room_amenities.length ? (
-                    <ul className="list-disc pl-4">
-                        { room.room_amenities.map((a) => (
-                            <li key={a}>{a}</li>
-                        )) }
-                    </ul>
-                ) : (
-                    <div>The list of amentities is unavailable.</div>
-                )
-                }
-            </div>
-            <div className="flex flex-col items-end justify-end pt-3 lg:pt-0">
-                <p className='text-md'>
-                    {startDate} to {endDate}
-                </p>
-                <p className='text-md'>
-                    ({numberOfDays} Nights)
-                </p>
-                <p className='text-lg'>
-                    Total: ${room?.full_price}
-                </p>
-            </div>
+      <div className='p-4 rounded-lg border grid lg:grid-cols-2'>
+        <div>
+          <h3 className='text-xl font-bold'>
+            Room: {room?.room_type} (${room?.price}/night)
+          </h3>
+          <h4 className='text-md'>Max Capacity: {room?.capacity}</h4>
+          <h4 className='text-md'>
+            Expandable: {room?.extendable ? 'Yes' : 'No'}
+          </h4>
+          <h4 className='text-md'>View: {room?.view}</h4>
+          <h4 className='text-md'>Amenities:</h4>
+          {room?.room_amenities.length ? (
+            <ul className='list-disc pl-4'>
+              {room.room_amenities.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          ) : (
+            <div>The list of amentities is unavailable.</div>
+          )}
         </div>
-        <div className="mt-2 rounded-lg">
-            <form onSubmit={onSubmit}>
-                <div className="flex justify-between w-full items-center">
-                    <div className="flex">
-                        <label className="bg-slate-50 text-gray-700 flex p-2 h-10 rounded-l-lg" htmlFor='guest_numbers'>Number of guests</label>
-                        <input
-                            {...register('numberGuests')}
-                            id="guest_numbers"
-                            type="number"
-                            min="1"
-                            max={room?.capacity}
-                            className="border border-slate-50 rounded-r-lg pl-4 h-10"
-                            required
-                        />
+        <div className='flex flex-col items-end justify-end pt-3 lg:pt-0'>
+          <p className='text-md'>
+            {startDate} to {endDate}
+          </p>
+          <p className='text-md'>({numberOfDays} Nights)</p>
+          <p className='text-lg'>Total: ${room?.full_price}</p>
+        </div>
+      </div>
+      <div className='mt-2 rounded-lg'>
+        <form onSubmit={onSubmit}>
+          <div className='flex justify-between w-full items-center'>
+            <div className='flex'>
+              <label
+                className='bg-slate-50 text-gray-700 flex p-2 h-10 rounded-l-lg'
+                htmlFor='guest_numbers'
+              >
+                Number of guests
+              </label>
+              <input
+                {...register('numberGuests')}
+                id='guest_numbers'
+                type='number'
+                min='1'
+                max={room?.capacity}
+                className='border border-slate-50 rounded-r-lg pl-4 h-10'
+                required
+              />
 
-                        {errors.numberGuests && (
-                            <p role='alert'>{errors.numberGuests?.message}</p>
-                        )}
-                    </div>
-                    <div>
-                        <button
-                            type="submit"
-                            className='text-gray-700 bg-white hover:bg-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-                        >
-                            Book for ${room?.full_price}
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+              {errors.numberGuests && (
+                <p role='alert'>{errors.numberGuests?.message}</p>
+              )}
+            </div>
+            <div>
+              <button
+                type='submit'
+                className='text-gray-700 bg-white hover:bg-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              >
+                Book for ${room?.full_price}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

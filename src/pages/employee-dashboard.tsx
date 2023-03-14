@@ -8,7 +8,7 @@ import useUser from '../hooks/use-user';
 import { AsyncStateStates } from '../types/AsyncState';
 import EmployeeDashboardStats from '../types/EmployeeDashboardStats';
 import UserRole from '../types/UserRole';
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function EmployeeDashboard() {
   const router = useRouter();
@@ -51,9 +51,12 @@ export default function EmployeeDashboard() {
   }, [user]);
 
   return (
-    <div className="p-3">
-      <div className="my-3">
-        <Link href="/admin/hotel_chains" className="rounded p-3 bg-gray-800 text-slate-50">
+    <div className='p-3'>
+      <div className='my-3'>
+        <Link
+          href='/admin/hotel_chains'
+          className='rounded p-3 bg-gray-800 text-slate-50'
+        >
           Edit Hotel Chains
         </Link>
       </div>
