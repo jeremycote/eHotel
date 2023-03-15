@@ -1,11 +1,11 @@
-.categoryFilter {
+.resultFilter {
   padding: 0.5em 0;
   list-style: none;
   display: flex;
   overflow: hidden;
 }
 
-.categoryFilter > li {
+.resultFilter > li {
   height: 100%;
   display: flex;
   justify-content: center;
@@ -14,19 +14,19 @@
   border: red solid 0.1em;
 }
 
-.categoryFilter > li {
+.resultFilter > li {
   height: 100%;
 }
 
-.categoryFilter > li > i {
+.resultFilter > li > i {
   cursor: pointer;
 }
 
-.categoryFilter > li:hover {
+.resultFilter > li:hover {
   background-color: red;
 }
 
-.categoryFilter > li > img {
+.resultFilter > li > img {
   object-fit: contain;
   width: 50%;
   height: auto;
