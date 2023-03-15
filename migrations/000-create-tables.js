@@ -53,16 +53,28 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-        CREATE TABLE hotels
+     DROP TABLE IF EXISTS zones CASCADE;
+    `;
+
+  await sql`
+        CREATE TABLE zones
         (
-            hotel_id serial primary key,
-            chain_id INTEGER references hotel_chains (chain_id) on delete restrict not null,
-            name     VARCHAR(255) NOT NULL,
-            stars    INTEGER NOT NULL CHECK (stars between 0 and 5),
-            address  VARCHAR(255) NOT NULL,
-            zone     VARCHAR(50) NOT NULL
+            zone_id serial primary key,
+            name VARCHAR(50) NOT NULL
         );
     `;
+
+  await sql`
+    CREATE TABLE hotels
+    (
+        hotel_id serial primary key,
+        chain_id INTEGER references hotel_chains (chain_id) on delete restrict not null,
+        name     VARCHAR(255) NOT NULL,
+        stars    INTEGER NOT NULL CHECK (stars between 0 and 5),
+        address  VARCHAR(255) NOT NULL,
+        zone_id     INTEGER references zones
+    );
+  `;
 
   await sql`
         DROP TABLE IF EXISTS hotel_categories CASCADE;
@@ -126,7 +138,8 @@ exports.up = async function (sql) {
             extendable BOOLEAN NOT NULL DEFAULT false,
             damages  VARCHAR,
             view VARCHAR(50) NOT NULL,
-            room_type_id INT NOT NULL references room_types (room_type_id) on delete restrict not null
+            room_type_id INT NOT NULL references room_types (room_type_id) on delete restrict not null,
+            area  INT CHECK (area >= 0)
         );
     `;
 

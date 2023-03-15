@@ -4,7 +4,7 @@ export interface Hotel {
   name: string;
   stars: number;
   address: string;
-  zone: string;
+  zone_id: number;
   images?: string[];
   emails?: string[];
   category_ids?: number[];

@@ -57,11 +57,9 @@ export default function EmployeeDashboard() {
     hotelChain,
   }: HotelChainCollapseProps) => {
     const { getToggleProps, getCollapseProps, isExpanded } = useCollapse();
-    const {
-      register,
-      handleSubmit,
-      reset,
-    } = useForm<FullHotelChain>({ defaultValues: hotelChain });
+    const { register, handleSubmit, reset } = useForm<FullHotelChain>({
+      defaultValues: hotelChain,
+    });
 
     const [phoneNumbers, setPhoneNumbers] = useState<string[]>(
       hotelChain?.phone_numbers ?? [''],
@@ -132,166 +130,166 @@ export default function EmployeeDashboard() {
         });
     });
 
-    return (
-        isLoading ? <div>Loading...</div> : (
-            <div className='my-2'>
-              <button className='w-full' {...getToggleProps()}>
-                <div className='border rounded p-3 my-1 flex items-center'>
-                  <div className='mr-5'>
-                    <FontAwesomeIcon
-                        icon={newChain ? faPlus : isExpanded ? faCaretUp : faCaretDown}
-                    />
-                  </div>
-                  <div className='text-left'>
-                    <h2 className='text-xl'>
-                      {hotelChain?.name ?? 'New Hotel Chain'}
-                    </h2>
-                  </div>
-                </div>
-              </button>
-              <section className='p-3' {...getCollapseProps()}>
-                <form onSubmit={onSubmit}>
-                  <div className='relative z-0 w-full mb-6 group'>
-                    <input
-                        type='text'
-                        id='name'
-                        {...register('name')}
-                        className='form-input peer'
-                        placeholder=' '
-                        required
-                    />
-                    <label
-                        htmlFor='name'
-                        className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-                    >
-                      Chain Name
-                    </label>
-                  </div>
-                  <div className='relative z-0 w-full mb-6 group'>
-                    <input
-                        type='text'
-                        id='address'
-                        {...register('address')}
-                        className='form-input peer'
-                        placeholder=' '
-                        required
-                    />
-                    <label
-                        htmlFor='name'
-                        className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-                    >
-                      Address
-                    </label>
-                  </div>
-                  <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
-                    <div>
-                      {phoneNumbers?.map((p, i) => (
-                          <div key={i} className='relative z-0 w-full mb-4 group'>
-                            <div className='flex'>
-                              <div className='flex-grow'>
-                                <input
-                                    type='tel'
-                                    {...register(`phone_numbers.${i}`)}
-                                    id={`phone-${i}`}
-                                    className='form-input peer'
-                                    placeholder=' '
-                                    required
-                                />
-                                <label
-                                    htmlFor={`phone-${i}`}
-                                    className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-                                >
-                                  Phone number (613-613-6136)
-                                </label>
-                              </div>
-                              <div className='ml-2'>
-                                <button
-                                    onClick={() =>
-                                        setPhoneNumbers(
-                                            phoneNumbers.filter((pn) => pn != p),
-                                        )
-                                    }
-                                    type='button'
-                                    className='text-red-600 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-auto px-3 py-2 text-center'
-                                >
-                                  <FontAwesomeIcon icon={faTrash} />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                      ))}
-                      <button
-                          onClick={() => setPhoneNumbers([...(phoneNumbers ?? []), ''])}
-                          type='button'
-                          className='text-gray-700 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-3 py-2 text-center'
-                      >
-                        <FontAwesomeIcon icon={faPlus} /> Add a new Phone Number
-                      </button>
-                    </div>
-                    <div>
-                      {emails.map((e, i) => (
-                          <div key={i} className='flex'>
-                            <div className='flex-grow'>
-                              <div key={i} className='relative z-0 w-full mb-4 group'>
-                                <input
-                                    type='email'
-                                    id={`email-${i}`}
-                                    {...register(`emails.${i}`)}
-                                    className='form-input peer'
-                                    placeholder=' '
-                                    required
-                                />
-                                <label
-                                    htmlFor={`email-${i}`}
-                                    className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-                                >
-                                  Email
-                                </label>
-                              </div>
-                            </div>
-                            <div className='ml-2'>
-                              <button
-                                  onClick={() =>
-                                      setEmails(emails.filter((em) => em != e))
-                                  }
-                                  type='button'
-                                  className='text-red-600 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-auto px-3 py-2 text-center'
-                              >
-                                <FontAwesomeIcon icon={faTrash} />
-                              </button>
-                            </div>
-                          </div>
-                      ))}
-                      <button
-                          onClick={() => setEmails([...(emails ?? []), ''])}
-                          type='button'
-                          className='text-gray-700 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-3 py-2 text-center'
-                      >
-                        <FontAwesomeIcon icon={faPlus} /> Add a new Email
-                      </button>
-                    </div>
-                  </div>
-                  <div className='flex justify-end gap-2'>
-                    {hotelChain?.chain_id && (
-                        <button
-                            type='button'
-                            onClick={() => deleteChain(hotelChain?.chain_id)}
-                            className='hover:bg-slate-300 focus:ring-4 focus:outline-none focus:bg-slate-200 bg-slate-50 text-red-600 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
-                        >
-                          Delete
-                        </button>
-                    )}
-                    <button
-                        type='submit'
-                        className='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'
-                    >
-                      Save
-                    </button>
-                  </div>
-                </form>
-              </section>
+    return isLoading ? (
+      <div>Loading...</div>
+    ) : (
+      <div className='my-2'>
+        <button className='w-full' {...getToggleProps()}>
+          <div className='border rounded p-3 my-1 flex items-center'>
+            <div className='mr-5'>
+              <FontAwesomeIcon
+                icon={newChain ? faPlus : isExpanded ? faCaretUp : faCaretDown}
+              />
             </div>
-        )
+            <div className='text-left'>
+              <h2 className='text-xl'>
+                {hotelChain?.name ?? 'New Hotel Chain'}
+              </h2>
+            </div>
+          </div>
+        </button>
+        <section className='p-3' {...getCollapseProps()}>
+          <form onSubmit={onSubmit}>
+            <div className='relative z-0 w-full mb-6 group'>
+              <input
+                type='text'
+                id='name'
+                {...register('name')}
+                className='form-input peer'
+                placeholder=' '
+                required
+              />
+              <label
+                htmlFor='name'
+                className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+              >
+                Chain Name
+              </label>
+            </div>
+            <div className='relative z-0 w-full mb-6 group'>
+              <input
+                type='text'
+                id='address'
+                {...register('address')}
+                className='form-input peer'
+                placeholder=' '
+                required
+              />
+              <label
+                htmlFor='name'
+                className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+              >
+                Address
+              </label>
+            </div>
+            <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
+              <div>
+                {phoneNumbers?.map((p, i) => (
+                  <div key={i} className='relative z-0 w-full mb-4 group'>
+                    <div className='flex'>
+                      <div className='flex-grow'>
+                        <input
+                          type='tel'
+                          {...register(`phone_numbers.${i}`)}
+                          id={`phone-${i}`}
+                          className='form-input peer'
+                          placeholder=' '
+                          required
+                        />
+                        <label
+                          htmlFor={`phone-${i}`}
+                          className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                        >
+                          Phone number (613-613-6136)
+                        </label>
+                      </div>
+                      <div className='ml-2'>
+                        <button
+                          onClick={() =>
+                            setPhoneNumbers(
+                              phoneNumbers.filter((pn) => pn != p),
+                            )
+                          }
+                          type='button'
+                          className='text-red-600 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-auto px-3 py-2 text-center'
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setPhoneNumbers([...(phoneNumbers ?? []), ''])}
+                  type='button'
+                  className='text-gray-700 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-3 py-2 text-center'
+                >
+                  <FontAwesomeIcon icon={faPlus} /> Add a new Phone Number
+                </button>
+              </div>
+              <div>
+                {emails.map((e, i) => (
+                  <div key={i} className='flex'>
+                    <div className='flex-grow'>
+                      <div key={i} className='relative z-0 w-full mb-4 group'>
+                        <input
+                          type='email'
+                          id={`email-${i}`}
+                          {...register(`emails.${i}`)}
+                          className='form-input peer'
+                          placeholder=' '
+                          required
+                        />
+                        <label
+                          htmlFor={`email-${i}`}
+                          className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
+                        >
+                          Email
+                        </label>
+                      </div>
+                    </div>
+                    <div className='ml-2'>
+                      <button
+                        onClick={() =>
+                          setEmails(emails.filter((em) => em != e))
+                        }
+                        type='button'
+                        className='text-red-600 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-auto px-3 py-2 text-center'
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setEmails([...(emails ?? []), ''])}
+                  type='button'
+                  className='text-gray-700 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-3 py-2 text-center'
+                >
+                  <FontAwesomeIcon icon={faPlus} /> Add a new Email
+                </button>
+              </div>
+            </div>
+            <div className='flex justify-end gap-2'>
+              {hotelChain?.chain_id && (
+                <button
+                  type='button'
+                  onClick={() => deleteChain(hotelChain?.chain_id)}
+                  className='hover:bg-slate-300 focus:ring-4 focus:outline-none focus:bg-slate-200 bg-slate-50 text-red-600 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
+                >
+                  Delete
+                </button>
+              )}
+              <button
+                type='submit'
+                className='hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
     );
   };
 
