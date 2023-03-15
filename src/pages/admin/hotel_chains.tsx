@@ -17,6 +17,8 @@ import FullHotelChain from '@/src/types/HotelChain';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TextInput from "@/src/components/forms/TextInput";
+import MultiTextInputWithDelete from "@/src/components/forms/MultiTextInputWithDelete";
 
 interface HotelChainCollapseProps {
   newChain?: boolean;
@@ -157,139 +159,15 @@ export default function HotelChains() {
             </div>
           </div>
         </button>
-        <section className='p-3' {...getCollapseProps()}>
-          <form onSubmit={onSubmit}>
-            <div className='relative z-0 w-full mb-6 group'>
-              <input
-                type='text'
-                id='name'
-                {...register('name')}
-                className='form-input peer'
-                placeholder=' '
-                required
-              />
-              <label
-                htmlFor='name'
-                className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-              >
-                Chain Name
-              </label>
-            </div>
-            <div className='relative z-0 w-full mb-6 group'>
-              <input
-                type='text'
-                id='address'
-                {...register('address')}
-                className='form-input peer'
-                placeholder=' '
-                required
-              />
-              <label
-                htmlFor='name'
-                className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-              >
-                Address
-              </label>
-            </div>
+        <section className='px-4 py-3 bg-slate-50 rounded' {...getCollapseProps()}>
+          <form className="py-3" onSubmit={onSubmit}>
+            <TextInput register={register} name={'name'} label={'Chain Name'} />
+            <TextInput register={register} name={'address'} label={'Address'} />
             <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
-              <div>
-                {phoneNumbers?.map((p, i) => (
-                  <div key={i} className='relative z-0 w-full mb-4 group'>
-                    <div className='flex'>
-                      <div className='flex-grow'>
-                        <input
-                          type='tel'
-                          {...register(`phone_numbers.${i}`)}
-                          id={`phone-${i}`}
-                          className='form-input peer'
-                          placeholder=' '
-                          required
-                        />
-                        <label
-                          htmlFor={`phone-${i}`}
-                          className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-                        >
-                          Phone number (613-613-6136)
-                        </label>
-                      </div>
-                      <div className='ml-2'>
-                        <button
-                          onClick={() => {
-                            const newPhoneNumbers = phoneNumbers.filter(
-                              (pn) => pn != p,
-                            );
-                            setPhoneNumbers(newPhoneNumbers);
-                            setValue('phone_numbers', newPhoneNumbers);
-                          }}
-                          type='button'
-                          className='text-red-600 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-auto px-3 py-2 text-center'
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    const newPhoneNumbers = [...(phoneNumbers ?? []), ''];
-                    setPhoneNumbers(newPhoneNumbers);
-                    setValue('phone_numbers', newPhoneNumbers);
-                  }}
-                  type='button'
-                  className='text-gray-700 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-3 py-2 text-center'
-                >
-                  <FontAwesomeIcon icon={faPlus} /> Add a new Phone Number
-                </button>
-              </div>
-              <div>
-                {emails.map((e, i) => (
-                  <div key={i} className='flex'>
-                    <div className='flex-grow'>
-                      <div key={i} className='relative z-0 w-full mb-4 group'>
-                        <input
-                          type='email'
-                          id={`email-${i}`}
-                          {...register(`emails.${i}`)}
-                          className='form-input peer'
-                          placeholder=' '
-                          required
-                        />
-                        <label
-                          htmlFor={`email-${i}`}
-                          className='peer-focus:font-medium form-label peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6'
-                        >
-                          Email
-                        </label>
-                      </div>
-                    </div>
-                    <div className='ml-2'>
-                      <button
-                        onClick={() => {
-                          const newEmails = emails.filter((em) => em != e);
-                          setEmails(newEmails);
-                          setValue('emails', newEmails);
-                        }}
-                        type='button'
-                        className='text-red-600 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-auto px-3 py-2 text-center'
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    const newEmails = [...(emails ?? []), ''];
-                    setEmails(newEmails);
-                    setValue('emails', newEmails);
-                  }}
-                  type='button'
-                  className='text-gray-700 bg-white hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-3 py-2 text-center'
-                >
-                  <FontAwesomeIcon icon={faPlus} /> Add a new Email
-                </button>
-              </div>
+              { /* @ts-expect-error */ }
+              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'phone_numbers'} label={'Phone Number'} array={phoneNumbers} />
+              { /* @ts-expect-error */ }
+              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'emails'} label={'Email Address'} array={emails} />
             </div>
             <div className='flex justify-end gap-2'>
               {hotelChain?.chain_id && (
