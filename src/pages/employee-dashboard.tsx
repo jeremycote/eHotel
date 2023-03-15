@@ -52,12 +52,18 @@ export default function EmployeeDashboard() {
 
   return (
     <div className='p-3'>
-      <div className='my-3'>
+      <div className='my-3 flex gap-3'>
         <Link
           href='/admin/hotel_chains'
           className='rounded p-3 bg-gray-800 text-slate-50'
         >
           Edit Hotel Chains
+        </Link>
+        <Link
+          href='/admin/hotels'
+          className='rounded p-3 bg-gray-800 text-slate-50'
+        >
+          Edit Hotels
         </Link>
       </div>
       {user.status === AsyncStateStates.Success && (
