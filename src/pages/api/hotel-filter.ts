@@ -1,7 +1,6 @@
 import sql from '@/src/lib/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ErrorResponse } from '@/src/types/Response';
-import Zone from '@/src/types/Zone';
 import HotelFilterOptions from '@/src/types/HotelFilterOptions';
 
 export default async function handler(
@@ -22,7 +21,7 @@ export default async function handler(
           MAX(r.price) AS max_price
           
           FROM zones z, rooms r, hotel_chains ch, categories ca, (SELECT COUNT(room_id) AS size FROM rooms GROUP BY hotel_id) AS sizes
-  `;
+    `;
 
       if (filters.length) {
         res.status(200).json(filters[0]);

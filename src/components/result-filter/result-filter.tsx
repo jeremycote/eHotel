@@ -9,6 +9,7 @@ import { ReactElement, useEffect, useRef, useState } from 'react';
 import ResultFilterSelect from './result-filter-select';
 import styles from './result-filter.module.css';
 import DatePicker from 'react-datepicker';
+import { calcEndDate } from '@/src/utils/date-utils';
 
 interface ResultFilterProps {
   height: string; // css style
@@ -36,18 +37,12 @@ const ResultFilter = ({
     onFilterChange(f);
   };
 
-  // TODO: Merge into a single endpoint?
-
   const [capacityOptions, setCapacityOptions] = useState<number[]>([]);
   const [zoneOptions, setZoneOptions] = useState<Zone[]>([]);
   const [areaOptions, setAreaOptions] = useState<number[]>([]);
   const [chainOptions, setChainOptions] = useState<HotelChain[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<Category[]>([]);
   const [sizeOptions, setSizeOptions] = useState<number[]>([]);
-
-  // const [isOpen, setIsOpen] = useState(false);
-  // const [startDate, setStartDate] = useState<Date | null>(null);
-  // const [endDate, setEndDate] = useState<Date | null>(null);
 
   const [filterDirty, setFilterDirty] = useState(false);
 
@@ -57,12 +52,6 @@ const ResultFilter = ({
     filter.endDate = end;
     setFilter(filter);
     setFilterDirty(true);
-  };
-
-  const calcEndDate = () => {
-    let d = new Date();
-    d.setMonth(new Date().getMonth() + 6);
-    return d;
   };
 
   const createNumberOptions = (n: number, increment: number, start: number) => {
@@ -200,7 +189,7 @@ const ResultFilter = ({
           placeholderText='Any Dates'
           closeOnScroll
           minDate={new Date()}
-          maxDate={calcEndDate()}
+          maxDate={calcEndDate(6)}
           // withPortal
         />
       </li>,

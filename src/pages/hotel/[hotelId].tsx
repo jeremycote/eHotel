@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import DatePicker from 'react-datepicker';
+import { calcEndDate } from '@/src/utils/date-utils';
 
 export default function HotelPage() {
   const router = useRouter();
@@ -25,6 +27,9 @@ export default function HotelPage() {
   const [isLoadingRoomAvailabilities, setLoadingRoomAvailabilties] =
     useState(false);
 
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+
   useEffect(() => {
     if (hotelId != null) {
       setLoading(true);
@@ -38,10 +43,10 @@ export default function HotelPage() {
   }, [hotelId]);
 
   useEffect(() => {
-    if (hotelId != null) {
+    if (hotelId != null && startDate != null && endDate != null) {
       setLoadingRoomAvailabilties(true);
       fetch(
-        `/api/get-room-availability/${hotelId}?startDate=2023-02-02&endDate=2023-02-04&available=true`,
+        `/api/get-room-availability/${hotelId}?startDate=${startDate.toDateString()}&endDate=${endDate.toDateString()}&available=true`,
       )
         .then((res) => res.json())
         .then((data) => {
@@ -49,7 +54,7 @@ export default function HotelPage() {
           setLoadingRoomAvailabilties(false);
         });
     }
-  }, [hotelId]);
+  }, [hotelId, startDate, endDate]);
 
   useEffect(() => {
     setLoading(true);
@@ -87,6 +92,22 @@ export default function HotelPage() {
           <h2 className='text-xl font-semibold mb-2'>
             Available Room Types for selected dates
           </h2>
+          <DatePicker
+            selected={startDate}
+            startDate={startDate}
+            endDate={endDate}
+            onChange={(dates) => {
+              const [start, end] = dates;
+              setStartDate(start);
+              setEndDate(end);
+            }}
+            selectsRange={true}
+            placeholderText='Choose Dates'
+            closeOnScroll
+            minDate={new Date()}
+            maxDate={calcEndDate(6)}
+            // withPortal
+          />
           {roomAvailabilities.length ? (
             <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
               <table className='w-full text-sm text-left text-gray-500'>
@@ -126,8 +147,8 @@ export default function HotelPage() {
                         <Link
                           href={getBookHotelRoute(
                             `${hotelId}`,
-                            '2023-02-02',
-                            '2023-02-04',
+                            `${startDate!.toDateString()}`,
+                            `${endDate!.toDateString()}`,
                             avail.room_type_id,
                           )}
                           className='text-gray-700 bg-white hover:bg-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none'
