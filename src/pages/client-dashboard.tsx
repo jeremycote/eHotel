@@ -20,6 +20,11 @@ export default function ClientDashboard() {
   //   return <h1>Unauthenticated</h1>;
   // }
 
+  const reloadSession = () => {
+    const event = new Event('visibilitychange');
+    document.dispatchEvent(event);
+  };
+
   const [user, setUser] = useState<User | null>(null);
   const [userDirty, setUserDirty] = useState(false);
 
@@ -35,6 +40,7 @@ export default function ClientDashboard() {
           toast.success('Fetched account!');
           setUser(data);
           console.log(data);
+          reloadSession();
         }
       })
       .catch(() => {

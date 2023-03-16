@@ -15,13 +15,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import { useState } from 'react';
+import useUser from '@/src/hooks/use-user';
+import { AsyncStateStates } from '@/src/types/AsyncState';
 
 const NavBar = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const [navHidden, setNavHidden] = useState(false);
 
   const roles = useRoles();
+  const user = useUser();
+
   return (
     <nav className='flex items-center justify-between flex-wrap bg-white py-3 lg:px-12 shadow border-solid rounded-b-md'>
       <div
@@ -66,10 +69,10 @@ const NavBar = () => {
               </Link>
             )}
 
-          {session?.user ? (
+          {user.status === AsyncStateStates.Success ? (
             <>
               <Link className='nav-link' href={getClientDashboardRoute()}>
-                {`Hello, ${session?.user?.name ?? 'NULL'}`}
+                {`Hello, ${user.data.name ?? 'NULL'}`}
               </Link>
               <button
                 type='button'

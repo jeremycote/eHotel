@@ -48,7 +48,7 @@ const UserAccountForm = ({ user, onSubmit }: UserAccountFormProps) => {
             <section className='px-4 py-3 bg-slate-50 rounded'>
               <TextInput register={register} name={'name'} label='Full name' />
               <TextInput register={register} name={'address'} label='address' />
-              <TextInput register={register} name={'email'} label='email' />
+              {/* <TextInput register={register} name={'email'} label='email' /> */}
               <TextInput register={register} name={'nas'} label='nas' />
               <TextInput
                 register={register}

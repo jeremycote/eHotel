@@ -49,6 +49,8 @@ export default async function handler(
 
         if (user.length) {
           res.status(200).json(user[0]);
+        } else {
+          res.status(422).json({ error: 'error while getting' });
         }
       }
       break;
@@ -78,6 +80,4 @@ export default async function handler(
       res.setHeader('Allow', ['POST', 'GET', 'PUT']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-
-  res.status(500).json({ error: true });
 }
