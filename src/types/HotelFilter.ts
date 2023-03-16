@@ -7,16 +7,33 @@ export default interface HotelFilter {
   size?: number;
   minPrice?: number;
   maxPrice?: number;
-  startDate?: string;
-  endDate?: string;
+  startDate?: Date;
+  endDate?: Date;
 }
 
-export function hotelFilterToString(filter: HotelFilter) {
+export type HotelFilterAttribute =
+  | 'zone'
+  | 'capacity'
+  | 'area'
+  | 'chain'
+  | 'category'
+  | 'size'
+  | 'minPrice'
+  | 'maxPrice'
+  | 'startDate'
+  | 'endDate';
+
+export function hotelFilterToString(filter: HotelFilter | null) {
   let s = '';
+
+  if (!filter) {
+    return s;
+  }
+
   if (filter.zone) {
     s += `zone=${filter.zone}&`;
   }
-  if (filter.capacity) {
+  if (filter.capacity != undefined) {
     s += `capacity=${filter.capacity}&`;
   }
   if (filter.area) {
@@ -38,10 +55,10 @@ export function hotelFilterToString(filter: HotelFilter) {
     s += `maxPrice=${filter.maxPrice}&`;
   }
   if (filter.startDate) {
-    s += `startDate=${filter.startDate}&`;
+    s += `startDate=${filter.startDate.toDateString()}&`;
   }
   if (filter.endDate) {
-    s += `endDate=${filter.endDate}&`;
+    s += `endDate=${filter.endDate.toDateString()}&`;
   }
 
   return s.slice(0, -1);

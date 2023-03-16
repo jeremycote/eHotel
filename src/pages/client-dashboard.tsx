@@ -1,25 +1,30 @@
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { getLoginRoute } from '../config/routes';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import UserAccountForm from '../components/user-account-form/user-account-form';
+import User from '../types/User';
 
 export default function ClientDashboard() {
-  const { data, status } = useSession();
-  const router = useRouter();
+  // useEffect(() => {}, []);
 
-  if (status === 'loading') {
-    return <h1>Loading</h1>;
-  }
+  // const { data, status } = useSession();
+  // const router = useRouter();
 
-  if (status === 'unauthenticated') {
-    router.push(getLoginRoute());
-  }
+  // if (status === 'loading') {
+  //   return <h1>Loading</h1>;
+  // }
+
+  // if (status === 'unauthenticated') {
+  //   return <h1>Unauthenticated</h1>;
+  // }
 
   return (
     <div className='pt-10'>
       <h1>Client Dashboard</h1>
-      <button type='button' onClick={() => signOut()}>
-        Sign Out
-      </button>
+
+      <UserAccountForm />
     </div>
   );
 }

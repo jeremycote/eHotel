@@ -14,11 +14,11 @@ export default async function handler(
     const statRows = await sql<EmployeeDashboardStats[]>`
         SELECT lAgg.*, rAgg.reservations FROM (
             SELECT COUNT(l) AS leases, e.employee_id  FROM leases as l, employees AS e
-            WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = 'art@example.com')
+            WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = '${session?.user?.email}')
             AND (l.employee_id = e.employee_id) GROUP BY e.employee_id) AS lAgg
         JOIN (
             SELECT COUNT(r) as reservations, e.employee_id  FROM reservations as r, employees AS e
-            WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = 'art@example.com')
+            WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = '${session?.user?.email}')
             AND r.room_id IN (SELECT room_id FROM rooms WHERE hotel_id = e.hotel_id)
             AND r.reservation_id NOT IN (SELECT reservation_id FROM leases) GROUP BY e.employee_id) AS rAgg
         ON lAgg.employee_id = rAgg.employee_id;

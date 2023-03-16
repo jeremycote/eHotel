@@ -11,6 +11,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import NavBar from '../components/navbar/navbar';
 

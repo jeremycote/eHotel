@@ -386,6 +386,11 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
             rt={defaultRoomTypes}
           />
         </div>
+        <div className="flex justify-end">
+          <button onClick={closeModal} className="button-dark">
+            Close
+          </button>
+        </div>
       </div>
     </Modal>
   );

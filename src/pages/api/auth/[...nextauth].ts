@@ -8,10 +8,10 @@ export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     // For GitHub to work, we need to populate the table with a new client to represent the user. Pending endpoints to do so.
-    GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
+    // GithubProvider({
+    //   clientId: process.env.GITHUB_ID!,
+    //   clientSecret: process.env.GITHUB_SECRET!,
+    // }),
     CredentialsProvider({
       // The name to display on the sign-in form (e.g. 'Sign in with...')
       name: 'Credentials',

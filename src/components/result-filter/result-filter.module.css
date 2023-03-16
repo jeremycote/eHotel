@@ -11,7 +11,6 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  border: red solid 0.1em;
 }
 
 .resultFilter > li {
@@ -20,10 +19,6 @@
 
 .resultFilter > li > i {
   cursor: pointer;
-}
-
-.resultFilter > li:hover {
-  background-color: red;
 }
 
 .resultFilter > li > img {

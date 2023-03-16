@@ -22,7 +22,7 @@ export default async function handler(
     name,
     address,
     stars,
-    zone,
+    zone_id,
     chain_id,
     phone_numbers,
     emails,
@@ -53,7 +53,7 @@ export default async function handler(
       ) {
         const hotel: UpdatedResponse[] = await sql<
           UpdatedResponse[]
-        >`UPDATE hotels SET name = ${name}, address = ${address}, zone = ${zone}, stars = ${stars}, chain_id = ${chain_id} WHERE hotel_id = ${hotel_id} RETURNING hotel_id as updated`;
+        >`UPDATE hotels SET name = ${name}, address = ${address}, zone_id = ${zone_id}, stars = ${stars}, chain_id = ${chain_id} WHERE hotel_id = ${hotel_id} RETURNING hotel_id as updated`;
 
         if (hotel[0].updated) {
           await sql`DELETE FROM hotel_phone_numbers WHERE hotel_id = ${hotel_id}`;
@@ -117,14 +117,14 @@ export default async function handler(
         name &&
         address &&
         chain_id &&
-        zone &&
+        zone_id &&
         stars &&
         phone_numbers.length &&
         emails.length
       ) {
         const hotel: CreateResponse[] = await sql<
           CreateResponse[]
-        >`INSERT INTO hotels (name, address, zone, stars, chain_id) VALUES (${name}, ${address}, ${zone}, ${stars}, ${chain_id}) RETURNING hotel_id as created`;
+        >`INSERT INTO hotels (name, address, zone_id, stars, chain_id) VALUES (${name}, ${address}, ${zone_id}, ${stars}, ${chain_id}) RETURNING hotel_id as created`;
 
         if (hotel[0].created) {
           const phoneNumbersResponse: CreateResponse[] = await sql<
@@ -201,7 +201,7 @@ export default async function handler(
             h.name, 
             h.address,
             h.stars,
-            h.zone,
+            h.zone_id,
             COALESCE(ARRAY_AGG(DISTINCT ce.email) FILTER (WHERE ce.email IS NOT NULL), '{}') AS emails,
             COALESCE(ARRAY_AGG(DISTINCT cpn.phone_number) FILTER (WHERE cpn.phone_number IS NOT NULL), '{}') AS phone_numbers,
             COALESCE(ARRAY_AGG(DISTINCT hi.url) FILTER (WHERE hi.url IS NOT NULL), '{}') AS images
@@ -209,7 +209,7 @@ export default async function handler(
         LEFT JOIN hotel_emails ce on ce.hotel_id = h.hotel_id
         LEFT JOIN hotel_phone_numbers cpn on cpn.hotel_id = h.hotel_id
         LEFT JOIN hotel_images hi on h.hotel_id = hi.hotel_id
-        GROUP BY h.hotel_id, h.chain_id, h.name, h.address, h.stars, h.zone
+        GROUP BY h.hotel_id, h.chain_id, h.name, h.address, h.stars, h.zone_id
         ORDER BY hotel_id`,
       );
       break;

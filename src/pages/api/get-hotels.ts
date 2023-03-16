@@ -13,7 +13,7 @@ export default async function handler(
     getCategories,
     getPhoneNumbers,
     getEmails,
-    zone,
+    zone_id,
     capacity,
     area,
     chain,
@@ -59,8 +59,8 @@ export default async function handler(
       ' LEFT JOIN hotel_emails ON hotels.hotel_id = hotel_emails.hotel_id';
   }
 
-  if (zone != null) {
-    where += ` AND hotels.zone_id IN (SELECT zone_id FROM zones WHERE name = '${zone}')`;
+  if (zone_id != null) {
+    where += ` AND hotels.zone_id IN (SELECT zone_id FROM zones WHERE name = '${zone_id}')`;
   }
 
   if (capacity != null) {

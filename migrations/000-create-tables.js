@@ -57,12 +57,12 @@ exports.up = async function (sql) {
     `;
 
   await sql`
-        CREATE TABLE zones
-        (
-            zone_id serial primary key,
-            name VARCHAR(50) NOT NULL
-        );
-    `;
+    CREATE TABLE zones
+    (
+      zone_id serial primary key,
+      name VARCHAR(50) NOT NULL
+    );
+  `;
 
   await sql`
     CREATE TABLE hotels
@@ -72,7 +72,7 @@ exports.up = async function (sql) {
         name     VARCHAR(255) NOT NULL,
         stars    INTEGER NOT NULL CHECK (stars between 0 and 5),
         address  VARCHAR(255) NOT NULL,
-        zone_id     INTEGER references zones
+        zone_id  INTEGER references zones (zone_id)
     );
   `;
 
@@ -178,7 +178,7 @@ exports.up = async function (sql) {
             name    VARCHAR(255) NOT NULL,
             address VARCHAR(255) NOT NULL,
             nas VARCHAR(50) NOT NULL,
-            email VARCHAR(320) NOT NULL,
+            email VARCHAR(320) UNIQUE NOT NULL,
             phone_number VARCHAR(20),
             created_at timestamp NOT NULL default(now()),
             password TEXT NOT NULL

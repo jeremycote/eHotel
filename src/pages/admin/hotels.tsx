@@ -21,6 +21,7 @@ import TextInput from '@/src/components/forms/TextInput';
 import SimpleSelect from '@/src/components/forms/SimpleSelect';
 import MultiTextInputWithDelete from '@/src/components/forms/MultiTextInputWithDelete';
 import RoomsModal from '@/src/components/rooms/RoomsModal';
+import Zone from "@/src/types/Zone";
 
 interface HotelCollapseProps {
   newHotel?: boolean;
@@ -42,6 +43,7 @@ export default function Hotels() {
 
   const [hotelsChains, setHotelsChains] = useState<HotelChain[]>([]);
   const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [zones, setZones] = useState<Zone[]>([]);
   const [isLoading, setLoading] = useState(false);
 
   const refreshHotelData = () => {
@@ -64,9 +66,20 @@ export default function Hotels() {
       });
   };
 
+  const refreshHotelZones = () => {
+    setLoading(true);
+    fetch(`/api/zones`)
+        .then((res) => res.json())
+        .then((data) => {
+          setZones(data);
+          setLoading(false);
+        });
+  };
+
   useEffect(() => {
     refreshHotelData();
     refreshHotelChainsData();
+    refreshHotelZones();
   }, [user]);
 
   const HotelCollapse = ({ newHotel, hotel }: HotelCollapseProps) => {
@@ -127,7 +140,7 @@ export default function Hotels() {
           phone_numbers: data.phone_numbers?.filter((p) => p),
           emails: data.emails?.filter((e) => e),
           stars: data.stars,
-          zone: data.zone,
+          zone_id: data.zone_id,
           images: data.images,
         }),
       })
@@ -189,7 +202,14 @@ export default function Hotels() {
             />
             <TextInput register={register} name={'name'} label={'Name'} />
             <TextInput register={register} name={'address'} label={'Address'} />
-            <TextInput register={register} name={'zone'} label={'Zone'} />
+            <SimpleSelect
+                register={register}
+                name={'zone_id'}
+                label={'Zone'}
+                array={zones.map((z) => {
+                  return { id: z.zone_id, value: z.name };
+                })}
+            />
             <TextInput
               register={register}
               name={'stars'}
