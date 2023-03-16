@@ -1,7 +1,8 @@
-import HotelFilter, { HotelFilterAttribute } from '@/src/types/HotelFilter';
+import { HotelFilterAttribute } from '@/src/types/HotelFilter';
 import { ChangeEvent, ReactElement } from 'react';
 
 interface ResultFilterSelectProps {
+  minWidth?: string;
   label: string;
   includeAny?: boolean;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -9,13 +10,14 @@ interface ResultFilterSelectProps {
 }
 
 const ResultFilterSelect = ({
+  minWidth,
   label,
   onChange,
   includeAny = true,
   options,
 }: ResultFilterSelectProps) => {
   return (
-    <li>
+    <li style={{ minWidth }}>
       <p>{label}</p>
       <select onChange={onChange}>
         {includeAny && (

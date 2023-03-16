@@ -85,6 +85,7 @@ const ResultFilter = ({
         setChainOptions(data.chains);
         setCategoryOptions(data.categories);
         setSizeOptions(createNumberOptions(data.max_size, 1, 1));
+        setFilterDirty(true);
       });
   }, []);
 
@@ -111,72 +112,84 @@ const ResultFilter = ({
   useEffect(() => {
     setFilters([
       <ResultFilterSelect
+        key='zoneFilter'
+        minWidth={`${itemWidth}em`}
         label={'Zone: '}
         onChange={(e) => {
           onChangeStringFilterOption('zone', e.currentTarget.value);
         }}
         options={zoneOptions.map((zone, i) => (
-          <option key={i} value={zone.name}>
+          <option key={zone.name} value={zone.name}>
             {zone.name}
           </option>
         ))}
       />,
       <ResultFilterSelect
+        key='capacityFilter'
+        minWidth={`${itemWidth}em`}
         label={'Min Capacity: '}
         onChange={(e) => {
           onChangeNumberFilterOption('capacity', e.currentTarget.value);
         }}
         options={capacityOptions.map((v, i) => (
-          <option key={i} value={v}>
+          <option key={`${i}capacity`} value={v}>
             {v}
           </option>
         ))}
       />,
       <ResultFilterSelect
+        key='areaFilter'
+        minWidth={`${itemWidth}em`}
         label={'Min Area: '}
         onChange={(e) => {
           onChangeNumberFilterOption('area', e.currentTarget.value);
         }}
         options={areaOptions.map((v, i) => (
-          <option key={i} value={v}>
+          <option key={`${v}area`} value={v}>
             {v}m^2
           </option>
         ))}
       />,
       <ResultFilterSelect
+        key='chainFilter'
+        minWidth={`${itemWidth}em`}
         label={'Chain: '}
         onChange={(e) => {
           onChangeNumberFilterOption('chain', e.currentTarget.value);
         }}
         options={chainOptions.map((v, i) => (
-          <option key={i} value={v.chain_id}>
+          <option key={`${v.chain_id}chain`} value={v.chain_id}>
             {v.name}
           </option>
         ))}
       />,
       <ResultFilterSelect
+        key='categoryFilter'
+        minWidth={`${itemWidth}em`}
         label={'Category: '}
         onChange={(e) => {
           onChangeNumberFilterOption('category', e.currentTarget.value);
         }}
         options={categoryOptions.map((v, i) => (
-          <option key={i} value={v.category_id}>
+          <option key={`${i}category`} value={v.category_id}>
             {v.name}
           </option>
         ))}
       />,
       <ResultFilterSelect
+        key='sizeFilter'
+        minWidth={`${itemWidth}em`}
         label={'Min Size: '}
         onChange={(e) => {
           onChangeNumberFilterOption('size', e.currentTarget.value);
         }}
         options={sizeOptions.map((v, i) => (
-          <option key={i} value={v}>
+          <option key={`${i}size`} value={v}>
             {v}
           </option>
         ))}
       />,
-      <li>
+      <li style={{ width: itemWidth }} key={'dateFilter'}>
         <DatePicker
           selected={filter.startDate}
           startDate={filter.startDate}
@@ -184,7 +197,7 @@ const ResultFilter = ({
           onChange={onChange}
           isClearable
           selectsRange={true}
-          placeholderText='Any'
+          placeholderText='Any Dates'
           closeOnScroll
           minDate={new Date()}
           maxDate={calcEndDate()}
@@ -193,15 +206,7 @@ const ResultFilter = ({
       </li>,
     ]);
     setFilterDirty(false);
-  }, [
-    zoneOptions,
-    capacityOptions,
-    areaOptions,
-    chainOptions,
-    categoryOptions,
-    sizeOptions,
-    filterDirty,
-  ]);
+  }, [filterDirty]);
 
   // Updates to reflect current filter dimensions
   const { width: actualWidth, height: actualHeight } =

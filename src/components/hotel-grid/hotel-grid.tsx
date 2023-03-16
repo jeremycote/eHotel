@@ -13,6 +13,7 @@ const HotelGrid = () => {
   const [filterDirty, setFilterDirty] = useState(false);
 
   const onFilterChange = (f: HotelFilter) => {
+    console.log('onFilterChange grid');
     setFilter(f);
     setFilterDirty(true);
   };
@@ -43,7 +44,11 @@ const HotelGrid = () => {
       {!isLoading && (
         <div className='results-grid'>
           {hotels.map((hotel) => (
-            <HotelCard className='result' hotel={hotel} key={hotel.hotel_id} />
+            <HotelCard
+              className='result'
+              hotel={hotel}
+              key={`${hotel.hotel_id}hotel`}
+            />
           ))}
         </div>
       )}
