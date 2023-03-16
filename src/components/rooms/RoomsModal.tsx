@@ -62,7 +62,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
 
   const RoomCollapse = ({ newRoom, room, rt, a }: RoomCollapseProps) => {
     const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<number | null>(
-      null,
+        {value: room?.room_type_id, label: rt.find(t => t.room_type_id === room?.room_type_id)?.name},
     );
     const [selectedAmentitiesId, setSelectedAmentitiesId] = useState<
       { label: string; value: string }[]
@@ -82,7 +82,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
     const [amenities, setAmenities] = useState(a);
     const { getToggleProps, getCollapseProps, isExpanded } = useCollapse();
     const { register, handleSubmit, reset, setValue } = useForm<Room>({
-      defaultValues: room,
+      defaultValues: {...room},
     });
 
     const deleteRoom = (room_id: number) => {
@@ -177,6 +177,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                 setRoomTypes(data);
                 setLoadingRoomTypes(false);
               });
+            setSelectedRoomTypeId({value: data.created, label: inputValue})
             setValue('room_type_id', data.created);
           }
         })
@@ -219,7 +220,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                 label: inputValue,
               },
             ]);
-            setValue('amenities', [...selectedAmentitiesId, data.created]);
+            setValue('amenities', [...selectedAmentitiesId.map(sa => sa.value), data.created]);
           }
         })
         .catch(() => {

@@ -25,8 +25,17 @@ export default async function handler(
 ) {
   const { method } = req;
   const { hotelId } = req.query;
-  const { room_id, hotel_id, price, capacity, extendable, view, room_type_id } =
-    req.body;
+  const {
+    room_id,
+    hotel_id,
+    price,
+    capacity,
+    extendable,
+    damages,
+    view,
+    room_type_id,
+    amenities,
+  } = req.body;
   const session = await getServerSession(req, res, authOptions);
 
   if (!session?.user?.email) {
@@ -44,132 +53,67 @@ export default async function handler(
   switch (method) {
     case 'PUT': {
       if (
+        room_id &&
         hotel_id &&
-        name &&
-        address &&
-        phone_numbers.length &&
-        emails.length
+        price &&
+        capacity &&
+        (extendable != null || extendable != undefined) &&
+        view &&
+        room_type_id
       ) {
-        const hotel: UpdatedResponse[] = await sql<
+        const room: UpdatedResponse[] = await sql<
           UpdatedResponse[]
-        >`UPDATE hotels SET name = ${name}, address = ${address}, zone = ${zone}, stars = ${stars}, chain_id = ${chain_id} WHERE hotel_id = ${hotel_id} RETURNING hotel_id as updated`;
+        >`UPDATE rooms SET hotel_id = ${hotel_id}, price = ${price}, capacity = ${capacity}, extendable = ${extendable}, damages = ${
+          damages ?? ''
+        }, view = ${view}, room_type_id = ${room_type_id} WHERE room_id = ${room_id} RETURNING room_id as updated`;
 
-        if (hotel[0].updated) {
-          await sql`DELETE FROM hotel_phone_numbers WHERE hotel_id = ${hotel_id}`;
-          const phoneNumbersResponse: UpdatedResponse[] = await sql<
+        if (room[0].updated && amenities.length) {
+          await sql`DELETE FROM room_amenities WHERE room_id = ${room_id}`;
+          const amenitiesResponse: UpdatedResponse[] = await sql<
             UpdatedResponse[]
           >`
-                        INSERT INTO hotel_phone_numbers ${sql(
-                          phone_numbers.map((p: string) => {
-                            return {
-                              phone_number: p,
-                              hotel_id: hotel[0].updated,
-                            };
-                          }),
-                        )};
+              INSERT INTO room_amenities ${sql(
+                amenities.map((p: string) => {
+                  return {
+                    room_id: room_id,
+                    amenity_id: p,
+                  };
+                }),
+              )};
                     `;
 
-          await sql`DELETE FROM hotel_emails WHERE hotel_id = ${hotel_id}`;
-          const emailsResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
-                    INSERT INTO hotel_emails ${sql(
-                      emails.map((e: string) => {
-                        return {
-                          email: e,
-                          hotel_id: hotel[0].updated,
-                        };
-                      }),
-                    )};
-                `;
-
-          await sql`DELETE FROM hotel_images WHERE hotel_id = ${hotel_id}`;
-          const imagesResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
-                    INSERT INTO hotel_images ${sql(
-                      images.map((e: string) => {
-                        return {
-                          url: e,
-                          hotel_id: hotel[0].updated,
-                        };
-                      }),
-                    )};
-                `;
-
-          if (
-            hotel.length &&
-            phoneNumbersResponse &&
-            emailsResponse &&
-            imagesResponse
-          ) {
-            res.status(200).json(hotel[0]);
+          if (room.length && (!amenities.length || amenitiesResponse)) {
+            res.status(200).json(room[0]);
+          } else {
+            res.status(500).json({ error: 'Cannot save' });
           }
         } else {
           res.status(422).json({ error: 'error while saving' });
         }
+      } else {
+        res.status(422).json({ error: 'Missing params' });
       }
       break;
     }
     case 'POST': {
-      if (
-        name &&
-        address &&
-        chain_id &&
-        zone &&
-        stars &&
-        phone_numbers.length &&
-        emails.length
-      ) {
-        const hotel: CreateResponse[] = await sql<
+      if (hotel_id && price && capacity && extendable && view && room_type_id) {
+        const room: CreateResponse[] = await sql<
           CreateResponse[]
-        >`INSERT INTO hotels (name, address, zone, stars, chain_id) VALUES (${name}, ${address}, ${zone}, ${stars}, ${chain_id}) RETURNING hotel_id as created`;
+        >`INSERT INTO rooms (hotel_id, price, capacity, extendable, damages, view, room_type_id) VALUES (${hotel_id}, ${price}, ${capacity}, ${extendable}, ${damages}, ${view}, ${room_type_id}) RETURNING room_id as created`;
 
-        if (hotel[0].created) {
-          const phoneNumbersResponse: CreateResponse[] = await sql<
-            CreateResponse[]
-          >`
-                        INSERT INTO hotel_phone_numbers ${sql(
-                          phone_numbers.map((p: string) => {
+        if (room[0].created && amenities.length) {
+          const roomAmentities: CreateResponse[] = await sql<CreateResponse[]>`
+                        INSERT INTO room_amenities ${sql(
+                          amenities.map((p: string) => {
                             return {
-                              phone_number: p,
-                              hotel_id: hotel[0].created,
+                              room_id: room[0].created,
+                              amenity_id: p,
                             };
                           }),
                         )};
                     `;
-
-          const emailsResponse: CreateResponse[] = await sql<CreateResponse[]>`
-                    INSERT INTO hotel_emails ${sql(
-                      emails.map((e: string) => {
-                        return {
-                          email: e,
-                          hotel_id: hotel[0].created,
-                        };
-                      }),
-                    )};
-                `;
-
-          const imagesResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
-                    INSERT INTO hotel_images ${sql(
-                      images.map((e: string) => {
-                        return {
-                          url: e,
-                          hotel_id: hotel[0].created,
-                        };
-                      }),
-                    )};
-                `;
-
-          if (
-            hotel.length &&
-            phoneNumbersResponse &&
-            emailsResponse &&
-            imagesResponse
-          ) {
-            res.status(200).json(hotel[0]);
+          if (room.length && (roomAmentities || !amenities.length)) {
+            res.status(200).json(room[0]);
           }
         } else {
           res.status(422).json({ error: 'error while saving' });
@@ -203,6 +147,8 @@ export default async function handler(
             r.extendable,
             r.capacity,
             rt.name,
+            r.room_type_id,
+            r.room_type_id,
             COALESCE(ARRAY_AGG(DISTINCT a.amenity_id) FILTER (WHERE a.amenity_id IS NOT NULL), '{}') AS amenities
         FROM rooms r
         LEFT JOIN room_types rt on rt.room_type_id = r.room_type_id
