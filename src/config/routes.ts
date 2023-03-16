@@ -62,3 +62,7 @@ export function getZonesRoute() {
 export function getHotelFilterOptionsRoute() {
   return '/api/hotel-filter';
 }
+
+export function getSignupRoute() {
+  return '/signup';
+}

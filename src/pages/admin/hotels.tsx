@@ -18,9 +18,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Hotel } from '@/src/types/Hotel';
 import HotelChain from '@/src/types/HotelChain';
-import TextInput from "@/src/components/forms/TextInput";
-import SimpleSelect from "@/src/components/forms/SimpleSelect";
-import MultiTextInputWithDelete from "@/src/components/forms/MultiTextInputWithDelete";
+import TextInput from '@/src/components/forms/TextInput';
+import SimpleSelect from '@/src/components/forms/SimpleSelect';
+import MultiTextInputWithDelete from '@/src/components/forms/MultiTextInputWithDelete';
 
 interface HotelCollapseProps {
   newHotel?: boolean;
@@ -126,7 +126,7 @@ export default function Hotels() {
           phone_numbers: data.phone_numbers?.filter((p) => p),
           emails: data.emails?.filter((e) => e),
           stars: data.stars,
-          zone: data.zone,
+          zone: data.zone_id,
           images: data.images,
         }),
       })
@@ -173,22 +173,55 @@ export default function Hotels() {
             </div>
           </div>
         </button>
-        <section className='px-4 py-3 bg-slate-50 rounded' {...getCollapseProps()}>
-          <form className="pb-5 pt-3" onSubmit={onSubmit}>
-            <SimpleSelect register={register} name={'chain_id'} label={'Chain'} array={hotelsChains.map(hc => {
-              return {id: hc.chain_id, value: hc.name}
-            })} />
+        <section
+          className='px-4 py-3 bg-slate-50 rounded'
+          {...getCollapseProps()}
+        >
+          <form className='pb-5 pt-3' onSubmit={onSubmit}>
+            <SimpleSelect
+              register={register}
+              name={'chain_id'}
+              label={'Chain'}
+              array={hotelsChains.map((hc) => {
+                return { id: hc.chain_id, value: hc.name };
+              })}
+            />
             <TextInput register={register} name={'name'} label={'Name'} />
             <TextInput register={register} name={'address'} label={'Address'} />
             <TextInput register={register} name={'zone'} label={'Zone'} />
-            <TextInput register={register} name={'stars'} label={'Stars'} type={'number'} min={1} max={5} />
-            { /* @ts-expect-error */ }
-            <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'images'} label={'Image URL'} array={images} />
+            <TextInput
+              register={register}
+              name={'stars'}
+              label={'Stars'}
+              type={'number'}
+              min={1}
+              max={5}
+            />
+            {/* @ts-expect-error */}
+            <MultiTextInputWithDelete
+              register={register}
+              setValue={(n, a) => setValue(n, a)}
+              name={'images'}
+              label={'Image URL'}
+              array={images}
+            />
             <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
-              { /* @ts-expect-error */ }
-              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'phone_numbers'} label={'Phone Number'} array={phoneNumbers} />
-              { /* @ts-expect-error */ }
-              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'emails'} label={'Email Address'} array={emails} />
+              {/* @ts-expect-error */}
+              <MultiTextInputWithDelete
+                register={register}
+                setValue={(n, a) => setValue(n, a)}
+                name={'phone_numbers'}
+                label={'Phone Number'}
+                array={phoneNumbers}
+              />
+              {/* @ts-expect-error */}
+              <MultiTextInputWithDelete
+                register={register}
+                setValue={(n, a) => setValue(n, a)}
+                name={'emails'}
+                label={'Email Address'}
+                array={emails}
+              />
             </div>
             <div className='flex justify-end gap-2'>
               {hotel?.hotel_id && (
@@ -208,10 +241,8 @@ export default function Hotels() {
               </button>
             </div>
           </form>
-          <div className="flex">
-            <button className="button-dark w-full">
-              Edit Rooms
-            </button>
+          <div className='flex'>
+            <button className='button-dark w-full'>Edit Rooms</button>
           </div>
         </section>
       </div>

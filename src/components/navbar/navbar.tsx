@@ -1,6 +1,8 @@
 import {
   getClientDashboardRoute,
   getEmployeeDashboardRoute,
+  getLoginRoute,
+  getSignupRoute,
 } from '@/src/config/routes';
 import useResizeObserver from '@/src/hooks/use-resize-observer';
 import useRoles from '@/src/hooks/use-roles';
@@ -63,23 +65,29 @@ const NavBar = () => {
                 Employee Dashboard
               </Link>
             )}
-          <Link className='nav-link' href={getClientDashboardRoute()}>
-            {session?.user?.name
-              ? `Hello, ${session?.user?.name ?? 'NULL'}`
-              : 'Sign-In'}
-          </Link>
-          {!session?.user ? (
-            <Link className='nav-link' href='/'>
-              Sign-Up
-            </Link>
+
+          {session?.user ? (
+            <>
+              <Link className='nav-link' href={getClientDashboardRoute()}>
+                {`Hello, ${session?.user?.name ?? 'NULL'}`}
+              </Link>
+              <button
+                type='button'
+                className='nav-link'
+                onClick={() => signOut({ callbackUrl: '/' })}
+              >
+                Sign-Out
+              </button>
+            </>
           ) : (
-            <button
-              type='button'
-              className='nav-link'
-              onClick={() => signOut({ callbackUrl: '/' })}
-            >
-              Sign-Out
-            </button>
+            <>
+              <Link className='nav-link' href={getLoginRoute('/')}>
+                Sign-In
+              </Link>
+              <Link className='nav-link' href={getSignupRoute()}>
+                Sign-Up
+              </Link>
+            </>
           )}
         </div>
         <div className='lg:hidden flex'>
