@@ -1,12 +1,25 @@
 import sql from '@/src/lib/db';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { CreateResponse, ErrorResponse } from '@/src/types/Response';
+import {
+  CreateResponse,
+  ErrorResponse,
+  UpdatedResponse,
+} from '@/src/types/Response';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './[...nextauth]';
+import User from '@/src/types/User';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<CreateResponse | ErrorResponse>,
+  res: NextApiResponse<CreateResponse | ErrorResponse | UpdatedResponse | User>,
 ) {
   const { method } = req;
+
+  const session = await getServerSession(req, res, authOptions);
+
+  if (method != 'POST' && !session?.user?.email) {
+    res.status(403).json({ error: 'unauthorized' });
+  }
 
   // TODO: Pass password in a more secure manor.
   const { name, address, nas, email, phone_number, password } = req.body;
@@ -28,8 +41,41 @@ export default async function handler(
 
       break;
     }
+    case 'GET': {
+      if (session?.user?.email) {
+        const user = await sql<
+          User[]
+        >`SELECT * FROM users WHERE email = ${session.user.email}`;
+
+        if (user.length) {
+          res.status(200).json(user[0]);
+        }
+      }
+      break;
+    }
+    case 'PUT': {
+      if (
+        session?.user?.email &&
+        name &&
+        address &&
+        nas &&
+        email &&
+        phone_number
+      ) {
+        const user: UpdatedResponse[] = await sql<
+          UpdatedResponse[]
+        >`UPDATE users SET name = ${name}, address = ${address}, nas = ${nas}, email = ${email}, phone_number = ${phone_number} WHERE email = ${session.user.email} RETURNING user_id as updated`;
+
+        if (user.length) {
+          res.status(200).json(user[0]);
+        } else {
+          res.status(422).json({ error: 'error while saving' });
+        }
+      }
+      break;
+    }
     default:
-      res.setHeader('Allow', ['POST']);
+      res.setHeader('Allow', ['POST', 'GET', 'PUT']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 
