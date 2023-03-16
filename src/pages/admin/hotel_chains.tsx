@@ -17,8 +17,8 @@ import FullHotelChain from '@/src/types/HotelChain';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import TextInput from "@/src/components/forms/TextInput";
-import MultiTextInputWithDelete from "@/src/components/forms/MultiTextInputWithDelete";
+import TextInput from '@/src/components/forms/TextInput';
+import MultiTextInputWithDelete from '@/src/components/forms/MultiTextInputWithDelete';
 
 interface HotelChainCollapseProps {
   newChain?: boolean;
@@ -159,15 +159,30 @@ export default function HotelChains() {
             </div>
           </div>
         </button>
-        <section className='px-4 py-3 bg-slate-50 rounded' {...getCollapseProps()}>
-          <form className="py-3" onSubmit={onSubmit}>
+        <section
+          className='px-4 py-3 bg-slate-50 rounded'
+          {...getCollapseProps()}
+        >
+          <form className='py-3' onSubmit={onSubmit}>
             <TextInput register={register} name={'name'} label={'Chain Name'} />
             <TextInput register={register} name={'address'} label={'Address'} />
             <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
-              { /* @ts-expect-error */ }
-              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'phone_numbers'} label={'Phone Number'} array={phoneNumbers} />
-              { /* @ts-expect-error */ }
-              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'emails'} label={'Email Address'} array={emails} />
+              {/* @ts-expect-error */}
+              <MultiTextInputWithDelete
+                register={register}
+                setValue={(n, a) => setValue(n, a)}
+                name={'phone_numbers'}
+                label={'Phone Number'}
+                array={phoneNumbers}
+              />
+              {/* @ts-expect-error */}
+              <MultiTextInputWithDelete
+                register={register}
+                setValue={(n, a) => setValue(n, a)}
+                name={'emails'}
+                label={'Email Address'}
+                array={emails}
+              />
             </div>
             <div className='flex justify-end gap-2'>
               {hotelChain?.chain_id && (

@@ -11,16 +11,16 @@ import {
   faCaretUp,
   faMinus,
   faPlus,
-  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Hotel } from '@/src/types/Hotel';
 import HotelChain from '@/src/types/HotelChain';
-import TextInput from "@/src/components/forms/TextInput";
-import SimpleSelect from "@/src/components/forms/SimpleSelect";
-import MultiTextInputWithDelete from "@/src/components/forms/MultiTextInputWithDelete";
+import TextInput from '@/src/components/forms/TextInput';
+import SimpleSelect from '@/src/components/forms/SimpleSelect';
+import MultiTextInputWithDelete from '@/src/components/forms/MultiTextInputWithDelete';
+import RoomsModal from '@/src/components/rooms/RoomsModal';
 
 interface HotelCollapseProps {
   newHotel?: boolean;
@@ -80,6 +80,7 @@ export default function Hotels() {
     );
     const [emails, setEmails] = useState<string[]>(hotel?.emails ?? ['']);
     const [images, setImages] = useState<string[]>(hotel?.images ?? []);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const deleteHotel = (hotel_id: number) => {
       fetch('/api/admin/hotels', {
@@ -173,22 +174,55 @@ export default function Hotels() {
             </div>
           </div>
         </button>
-        <section className='px-4 py-3 bg-slate-50 rounded' {...getCollapseProps()}>
-          <form className="pb-5 pt-3" onSubmit={onSubmit}>
-            <SimpleSelect register={register} name={'chain_id'} label={'Chain'} array={hotelsChains.map(hc => {
-              return {id: hc.chain_id, value: hc.name}
-            })} />
+        <section
+          className='px-4 py-3 bg-slate-50 rounded'
+          {...getCollapseProps()}
+        >
+          <form className='pb-5 pt-3' onSubmit={onSubmit}>
+            <SimpleSelect
+              register={register}
+              name={'chain_id'}
+              label={'Chain'}
+              array={hotelsChains.map((hc) => {
+                return { id: hc.chain_id, value: hc.name };
+              })}
+            />
             <TextInput register={register} name={'name'} label={'Name'} />
             <TextInput register={register} name={'address'} label={'Address'} />
             <TextInput register={register} name={'zone'} label={'Zone'} />
-            <TextInput register={register} name={'stars'} label={'Stars'} type={'number'} min={1} max={5} />
-            { /* @ts-expect-error */ }
-            <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'images'} label={'Image URL'} array={images} />
+            <TextInput
+              register={register}
+              name={'stars'}
+              label={'Stars'}
+              type={'number'}
+              min={1}
+              max={5}
+            />
+            <MultiTextInputWithDelete
+              register={register}
+              /* @ts-ignore */
+              setValue={(n, a) => setValue(n, a)}
+              name={'images'}
+              label={'Image URL'}
+              array={images}
+            />
             <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
-              { /* @ts-expect-error */ }
-              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'phone_numbers'} label={'Phone Number'} array={phoneNumbers} />
-              { /* @ts-expect-error */ }
-              <MultiTextInputWithDelete register={register} setValue={(n, a) => setValue(n, a)} name={'emails'} label={'Email Address'} array={emails} />
+              <MultiTextInputWithDelete
+                register={register}
+                /* @ts-expect-error */
+                setValue={(n, a) => setValue(n, a)}
+                name={'phone_numbers'}
+                label={'Phone Number'}
+                array={phoneNumbers}
+              />
+              <MultiTextInputWithDelete
+                register={register}
+                /* @ts-expect-error */
+                setValue={(n, a) => setValue(n, a)}
+                name={'emails'}
+                label={'Email Address'}
+                array={emails}
+              />
             </div>
             <div className='flex justify-end gap-2'>
               {hotel?.hotel_id && (
@@ -208,12 +242,22 @@ export default function Hotels() {
               </button>
             </div>
           </form>
-          <div className="flex">
-            <button className="button-dark w-full">
+          <div className='flex'>
+            <button
+              onClick={() => setModalIsOpen(true)}
+              className='button-dark w-full'
+            >
               Edit Rooms
             </button>
           </div>
         </section>
+        {hotel && (
+          <RoomsModal
+            isOpen={modalIsOpen}
+            closeModal={() => setModalIsOpen(false)}
+            hotelId={hotel.hotel_id}
+          />
+        )}
       </div>
     );
   };

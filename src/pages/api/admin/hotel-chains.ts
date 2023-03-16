@@ -152,11 +152,10 @@ export default async function handler(
         ORDER BY chain_id
       `,
       );
+      break;
     }
     default:
       res.setHeader('Allow', ['POST', 'PUT', 'DELETE', 'GET']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-
-  res.status(500).json({ error: true });
 }

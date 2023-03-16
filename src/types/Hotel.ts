@@ -3,6 +3,7 @@ export interface Hotel {
   chain_id: number;
   name: string;
   stars: number;
+  zone: string;
   address: string;
   zone_id: number;
   images?: string[];

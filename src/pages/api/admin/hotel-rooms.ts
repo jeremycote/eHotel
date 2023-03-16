@@ -8,26 +8,25 @@ import {
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/src/pages/api/auth/[...nextauth]';
 import Employee from '@/src/types/Employee';
-import { Hotel } from '@/src/types/Hotel';
+import { Room } from '@/src/types/Room';
+
+export interface RoomData {
+  rooms: Room[];
+  hotels: { hotel_id: number; name: string }[];
+  amenities: { amenity_id: number; name: string }[];
+  room_types: { room_type_id: number; name: string }[];
+}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<
-    CreateResponse | UpdatedResponse | ErrorResponse | Hotel[]
+    CreateResponse | UpdatedResponse | ErrorResponse | RoomData
   >,
 ) {
   const { method } = req;
-  const {
-    hotel_id,
-    name,
-    address,
-    stars,
-    zone,
-    chain_id,
-    phone_numbers,
-    emails,
-    images,
-  } = req.body;
+  const { hotelId } = req.query;
+  const { room_id, hotel_id, price, capacity, extendable, view, room_type_id } =
+    req.body;
   const session = await getServerSession(req, res, authOptions);
 
   if (!session?.user?.email) {
@@ -179,13 +178,11 @@ export default async function handler(
       break;
     }
     case 'DELETE': {
-      if (hotel_id) {
+      if (room_id) {
         try {
-          await sql`DELETE FROM hotel_phone_numbers WHERE hotel_id = ${hotel_id}`;
-          await sql`DELETE FROM hotel_emails WHERE hotel_id = ${hotel_id}`;
-          await sql`DELETE FROM hotel_images WHERE hotel_id = ${hotel_id}`;
-          await sql`DELETE FROM hotels WHERE hotel_id = ${hotel_id}`;
-          res.status(200).json({ updated: hotel_id });
+          await sql`DELETE FROM room_amenities WHERE room_id = ${room_id}`;
+          await sql`DELETE FROM rooms WHERE room_id = ${room_id}`;
+          res.status(200).json({ updated: room_id });
         } catch (err) {
           res.status(422).json({ error: "Couldn't save" });
         }
@@ -193,25 +190,55 @@ export default async function handler(
       break;
     }
     case 'GET': {
-      res.status(200).json(
-        await sql<Hotel[]>`
+      if (!hotelId) {
+        return res.status(422).json({ error: 'Missing hotelId' });
+      }
+      const rooms: Room[] = await sql<Room[]>`
+        SELECT 
+            r.room_id,
+            r.hotel_id,
+            r.price,
+            r.view,
+            COALESCE(r.damages, ''),
+            r.extendable,
+            r.capacity,
+            rt.name,
+            COALESCE(ARRAY_AGG(DISTINCT a.amenity_id) FILTER (WHERE a.amenity_id IS NOT NULL), '{}') AS amenities
+        FROM rooms r
+        LEFT JOIN room_types rt on rt.room_type_id = r.room_type_id
+        LEFT JOIN room_amenities ra on r.room_id = ra.room_id
+        LEFT JOIN amenities a on a.amenity_id = ra.amenity_id
+        WHERE hotel_id = ${hotelId}
+        GROUP BY r.room_id, r.hotel_id, r.price, r.view, r.damages, r.extendable, r.capacity, rt.name
+        ORDER BY room_id`;
+
+      const hotels = await sql<{ hotel_id: number; name: string }[]>`
         SELECT 
             h.hotel_id,
-            h.chain_id, 
-            h.name, 
-            h.address,
-            h.stars,
-            h.zone,
-            COALESCE(ARRAY_AGG(DISTINCT ce.email) FILTER (WHERE ce.email IS NOT NULL), '{}') AS emails,
-            COALESCE(ARRAY_AGG(DISTINCT cpn.phone_number) FILTER (WHERE cpn.phone_number IS NOT NULL), '{}') AS phone_numbers,
-            COALESCE(ARRAY_AGG(DISTINCT hi.url) FILTER (WHERE hi.url IS NOT NULL), '{}') AS images
+            h.name
         FROM hotels h
-        LEFT JOIN hotel_emails ce on ce.hotel_id = h.hotel_id
-        LEFT JOIN hotel_phone_numbers cpn on cpn.hotel_id = h.hotel_id
-        LEFT JOIN hotel_images hi on h.hotel_id = hi.hotel_id
-        GROUP BY h.hotel_id, h.chain_id, h.name, h.address, h.stars, h.zone
-        ORDER BY hotel_id`,
-      );
+        ORDER BY h.hotel_id`;
+
+      const amenities = await sql<{ amenity_id: number; name: string }[]>`
+        SELECT 
+            a.amenity_id,
+            a.name
+        FROM amenities a
+        ORDER BY a.amenity_id`;
+
+      const roomTypes = await sql<{ room_type_id: number; name: string }[]>`
+        SELECT 
+            rt.room_type_id,
+            rt.name
+        FROM room_types rt
+        ORDER BY rt.room_type_id`;
+
+      res.status(200).json({
+        rooms: rooms,
+        hotels: hotels,
+        amenities: amenities,
+        room_types: roomTypes,
+      });
       break;
     }
     default:

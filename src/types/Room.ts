@@ -7,6 +7,7 @@ export interface Room {
   damages?: string;
   view: string;
   room_type_id: number;
+  amenities: number[];
 }
 
 export interface FullRoomData {
