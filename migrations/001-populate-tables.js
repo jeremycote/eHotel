@@ -94,7 +94,33 @@ exports.up = async function (sql) {
   await sql`
     INSERT INTO users (name, address, nas, email, phone_number, created_at, password) VALUES
         ('Art Festival', '300 example rd', '11111111', 'art@example.com', '613 123-1234', '2020-12-20', crypt('hello', gen_salt('bf'))),
-        ('Voyageur Yogourt', '30 alder rd', '1141611', 'yogourt@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf')));
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'yogourt@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'a@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'b@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'c@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'd@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'e@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'f@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'g@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'h@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'i@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'j@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'k@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'l@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'm@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'n@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'o@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'p@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'q@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'r@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 's@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 't@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'u@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'v@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'w@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'x@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'y@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf'))),
+        ('Voyageur Yogourt', '30 alder rd', '1141611', 'z@example.com', '613 123-2234', '2019-12-20', crypt('hello', gen_salt('bf')));
     `;
 
   await sql`
