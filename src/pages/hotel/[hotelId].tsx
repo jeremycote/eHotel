@@ -147,8 +147,8 @@ export default function HotelPage() {
                         <Link
                           href={getBookHotelRoute(
                             `${hotelId}`,
-                            `${startDate!.toDateString()}`,
-                            `${endDate!.toDateString()}`,
+                            `${startDate?.toDateString()}`,
+                            `${endDate?.toDateString()}`,
                             avail.room_type_id,
                           )}
                           className='text-gray-700 bg-white hover:bg-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none'
@@ -173,8 +173,10 @@ export default function HotelPage() {
               />
               <span className='sr-only'>Warning</span>
               <div>
-                <span className='font-medium'>Warning!</span> No available Rooms
-                for these dates... Please try other dates or another hotel
+                <span className='font-medium'>Warning!</span>
+                {startDate != null && endDate != null
+                  ? ' No available Rooms for these dates... Please try other dates or another hotel'
+                  : ' Please choose dates.'}
               </div>
             </div>
           )}

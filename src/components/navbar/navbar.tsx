@@ -58,9 +58,9 @@ const NavBar = () => {
             Home
           </Link>
         </div>
-        <div className='hidden lg:flex'>
+        {/* <div className='hidden lg:flex'>
           <SearchBar defaultHeight='2.5em' />
-        </div>
+        </div> */}
         <div className='text-gray-800 text-md'>
           {roles.status === 'success' &&
             roles.data.includes(UserRole.Employee) && (

@@ -1,17 +1,38 @@
 import User from '@/src/types/User';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import TextInput from '../forms/TextInput';
 
-interface UserAccountFormProps {
-  user: User;
-  onSubmit: () => void;
-}
+interface UserAccountFormProps {}
 
-const UserAccountForm = ({ user, onSubmit }: UserAccountFormProps) => {
-  const { register, handleSubmit, reset } = useForm<User>({
-    defaultValues: user,
-  });
+const options = {};
+
+const UserAccountForm = ({}: UserAccountFormProps) => {
+  const [formSubmited, setFormSubmited] = useState(false);
+  const { register, handleSubmit, reset, setValue } = useForm<User>();
+
+  useEffect(() => {
+    setFormSubmited(false);
+    console.log('Getting user');
+    fetch('/api/auth/account')
+      .then((res) => res.json())
+      .then((data: User | any) => {
+        if (data.error) {
+          toast.error('Sorry... An error occurred, could not fetch account.');
+        } else {
+          setValue('id', data.id);
+          setValue('name', data.name);
+          setValue('nas', data.nas);
+          setValue('phone_number', data.phone_number);
+          setValue('address', data.address);
+          setValue('email', data.email);
+        }
+      })
+      .catch(() => {
+        toast.error('Sorry... An error occurred, could not fetch account.');
+      });
+  }, [formSubmited]);
 
   const onSubmitForm = handleSubmit((data) => {
     fetch('/api/auth/account', {
@@ -27,15 +48,19 @@ const UserAccountForm = ({ user, onSubmit }: UserAccountFormProps) => {
         if (data.error) {
           toast.error(
             'Sorry... An error occurred, the account was not updated.',
+            options,
           );
         } else {
           reset();
-          toast.success('Account updated successfully!');
-          onSubmit();
+          toast.success('Account updated successfully!', options);
+          setFormSubmited(true);
         }
       })
       .catch(() => {
-        toast.error('Sorry... An error occurred, the account was not updated.');
+        toast.error(
+          'Sorry... An error occurred, the account was not updated.',
+          options,
+        );
       });
   });
 

@@ -20,47 +20,11 @@ export default function ClientDashboard() {
   //   return <h1>Unauthenticated</h1>;
   // }
 
-  const reloadSession = () => {
-    const event = new Event('visibilitychange');
-    document.dispatchEvent(event);
-  };
-
-  const [user, setUser] = useState<User | null>(null);
-  const [userDirty, setUserDirty] = useState(false);
-
-  useEffect(() => {
-    console.log('Getting user');
-    setUserDirty(false);
-    fetch('/api/auth/account')
-      .then((res) => res.json())
-      .then((data: User | any) => {
-        if (data.error) {
-          toast.error('Sorry... An error occurred, could not fetch account.');
-        } else {
-          toast.success('Fetched account!');
-          setUser(data);
-          console.log(data);
-          reloadSession();
-        }
-      })
-      .catch(() => {
-        toast.error('Sorry... An error occurred, could not fetch account.');
-      });
-  }, [userDirty]);
-
   return (
     <div className='pt-10'>
       <h1>Client Dashboard</h1>
 
-      {user != null && (
-        <UserAccountForm
-          user={user}
-          onSubmit={() => {
-            console.log('Submit');
-            setUserDirty(true);
-          }}
-        />
-      )}
+      <UserAccountForm />
     </div>
   );
 }
