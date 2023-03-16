@@ -176,19 +176,21 @@ const ResultFilter = ({
           </option>
         ))}
       />,
-      <DatePicker
-        selected={filter.startDate}
-        startDate={filter.startDate}
-        endDate={filter.endDate}
-        onChange={onChange}
-        isClearable
-        selectsRange={true}
-        placeholderText='Any'
-        closeOnScroll
-        minDate={new Date()}
-        maxDate={calcEndDate()}
-        // withPortal
-      />,
+      <li>
+        <DatePicker
+          selected={filter.startDate}
+          startDate={filter.startDate}
+          endDate={filter.endDate}
+          onChange={onChange}
+          isClearable
+          selectsRange={true}
+          placeholderText='Any'
+          closeOnScroll
+          minDate={new Date()}
+          maxDate={calcEndDate()}
+          // withPortal
+        />
+      </li>,
     ]);
     setFilterDirty(false);
   }, [
@@ -239,6 +241,10 @@ const ResultFilter = ({
 
     setNFiltersOnScreen(n);
   }, [actualWidth, itemWidth, itemSpacing, componentRef]);
+
+  console.log(
+    `filterIndex: ${filterIndex}, nFiltersOnScreen: ${nFiltersOnScreen}`,
+  );
 
   return (
     <ul

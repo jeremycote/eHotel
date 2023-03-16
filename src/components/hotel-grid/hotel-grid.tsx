@@ -34,7 +34,7 @@ const HotelGrid = () => {
       <div>
         <ResultFilter
           height='5em'
-          itemWidth={6}
+          itemWidth={10}
           itemSpacing={0.5}
           onFilterChange={onFilterChange}
         />
