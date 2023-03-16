@@ -54,3 +54,11 @@ export function getEmployeeDashboardRoute() {
 export function getEmployeeDashboardStatsRoute() {
   return '/api/employees/get-dashboard-stats';
 }
+
+export function getZonesRoute() {
+  return '/api/zones';
+}
+
+export function getHotelFilterOptionsRoute() {
+  return '/api/hotel-filter';
+}

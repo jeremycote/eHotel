@@ -10,26 +10,24 @@ const HotelGrid = () => {
 
   const [filter, setFilter] = useState<HotelFilter | null>(null);
 
+  const [filterDirty, setFilterDirty] = useState(false);
+
   const onFilterChange = (f: HotelFilter) => {
     setFilter(f);
+    setFilterDirty(true);
   };
 
   useEffect(() => {
+    setFilterDirty(false);
     setLoading(true);
-    fetch(
-      `api/get-hotels?getImages=true${
-        filter != null ? '&' + hotelFilterToString(filter) : ''
-      }`,
-    )
+
+    fetch(`api/get-hotels?getImages=true&${hotelFilterToString(filter)}`)
       .then((res) => res.json())
       .then((data) => {
         setHotels(data);
         setLoading(false);
       });
-  }, [filter]);
-
-  if (isLoading) return <p>Loading...</p>;
-  if (!hotels.length) return <p>No hotels found</p>;
+  }, [filter, filterDirty]);
 
   return (
     <div>
@@ -41,12 +39,14 @@ const HotelGrid = () => {
           onFilterChange={onFilterChange}
         />
       </div>
-
-      <div className='results-grid'>
-        {hotels.map((hotel) => (
-          <HotelCard className='result' hotel={hotel} key={hotel.hotel_id} />
-        ))}
-      </div>
+      {isLoading && <p>Loading...</p>}
+      {!isLoading && (
+        <div className='results-grid'>
+          {hotels.map((hotel) => (
+            <HotelCard className='result' hotel={hotel} key={hotel.hotel_id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
