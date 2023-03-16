@@ -21,16 +21,17 @@ export default async function handler(
           MAX(r.price) AS max_price
           
           FROM zones z, rooms r, hotel_chains ch, categories ca, (SELECT COUNT(room_id) AS size FROM rooms GROUP BY hotel_id) AS sizes
-    `;
+      `;
 
       if (filters.length) {
         res.status(200).json(filters[0]);
+      } else {
+        res.status(500).json({ error: true });
       }
+      break;
     }
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-
-  res.status(500).json({ error: true });
 }
