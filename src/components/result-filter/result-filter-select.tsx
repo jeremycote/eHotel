@@ -18,7 +18,7 @@ const ResultFilterSelect = ({
 }: ResultFilterSelectProps) => {
   return (
     <li style={{ minWidth }}>
-      <p>{label}</p>
+      <p className='mr-1'>{label}</p>
       <select onChange={onChange}>
         {includeAny && (
           <option key={'Any'} value={'Any'}>
