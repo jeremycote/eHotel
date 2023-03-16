@@ -12,6 +12,11 @@ const UserAccountForm = ({}: UserAccountFormProps) => {
   const [formSubmited, setFormSubmited] = useState(false);
   const { register, handleSubmit, reset, setValue } = useForm<User>();
 
+  const reloadSession = () => {
+    const event = new Event('visibilitychange');
+    document.dispatchEvent(event);
+  };
+
   useEffect(() => {
     setFormSubmited(false);
     console.log('Getting user');
@@ -27,6 +32,7 @@ const UserAccountForm = ({}: UserAccountFormProps) => {
           setValue('phone_number', data.phone_number);
           setValue('address', data.address);
           setValue('email', data.email);
+          reloadSession();
         }
       })
       .catch(() => {
