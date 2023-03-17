@@ -9,6 +9,7 @@ import { AsyncStateStates } from '../types/AsyncState';
 import EmployeeDashboardStats from '../types/EmployeeDashboardStats';
 import UserRole from '../types/UserRole';
 import Link from 'next/link';
+import EmployeeDashboardReservationTable from "@/src/components/employee-dashboard/EmployeeDashboardReservationTable";
 
 export default function EmployeeDashboard() {
   const router = useRouter();
@@ -26,33 +27,40 @@ export default function EmployeeDashboard() {
 
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [stats, setStats] = useState<EmployeeDashboardStats | null>(null);
 
-  useEffect(() => {
+  const refreshReservations = () => {
     setLoading(true);
     fetch(`/api/employees/get-hotel-reservations`)
-      .then((res) => res.json())
-      .then((data) => {
-        setReservations(data);
-        setLoading(false);
-      });
-  }, [user]);
+        .then((res) => res.json())
+        .then((data) => {
+          setReservations(data);
+          setLoading(false);
+        });
+  }
 
-  const [stats, setStats] = useState<EmployeeDashboardStats | null>(null);
-  const [isLoadingStats, setLoadingStats] = useState(false);
+  const refreshStats = () => {
+    setLoading(true);
+    fetch(getEmployeeDashboardStatsRoute())
+        .then((res) => res.json())
+        .then((data) => {
+          setStats(data);
+          setLoading(false);
+        });
+  }
+
+  const refreshData = () => {
+    refreshReservations();
+    refreshStats();
+  }
 
   useEffect(() => {
-    setLoadingStats(true);
-    fetch(getEmployeeDashboardStatsRoute())
-      .then((res) => res.json())
-      .then((data) => {
-        setStats(data);
-        setLoadingStats(false);
-      });
+    refreshData();
   }, [user]);
 
   return (
     <div className='p-3'>
-      <div className='my-3 flex gap-3'>
+      <div className='my-3 flex gap-2'>
         <Link
           href='/admin/hotel_chains'
           className='rounded p-3 bg-gray-800 text-slate-50'
@@ -68,20 +76,26 @@ export default function EmployeeDashboard() {
       </div>
       {user.status === AsyncStateStates.Success && (
         <>
-          <div className='w-100 grid h-64 grid-cols-6 gap-4 m-8'>
+          <div className='flex items-center justify-center gap-5'>
             <DashboardStatCell
-              isLoading={isLoading}
-              label={'Handeld Leases'}
-              value={stats?.leases ?? 0}
+                isLoading={isLoading}
+                label={'Pending Reservations'}
+                value={stats?.reservations ?? 0}
+            />
+            <DashboardStatCell
+                isLoading={isLoading}
+                label={'Lease waiting for Payment'}
+                value={stats?.unpaid_leases ?? 0}
             />
             <DashboardStatCell
               isLoading={isLoading}
-              label={'Pending Reservations'}
-              value={stats?.reservations ?? 0}
+              label={'Handled Leases'}
+              value={stats?.paid_leases ?? 0}
             />
           </div>
 
           <h1>{`Employee id: ${user.data.name}`}</h1>
+          <EmployeeDashboardReservationTable reservations={reservations} refreshTables={() => refreshData()} />
           <p>{JSON.stringify(reservations)}</p>
         </>
       )}

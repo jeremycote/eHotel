@@ -19,7 +19,6 @@ const UserAccountForm = ({}: UserAccountFormProps) => {
 
   useEffect(() => {
     setFormSubmited(false);
-    console.log('Getting user');
     fetch('/api/auth/account')
       .then((res) => res.json())
       .then((data: User | any) => {
@@ -72,11 +71,11 @@ const UserAccountForm = ({}: UserAccountFormProps) => {
 
   return (
     <>
-      <div className='p-3'>
-        <h1 className='text-2xl font-bold'>Sign Up</h1>
+      <div>
+        <h1 className='text-2xl font-bold'>Edit Account</h1>
         <div className='my-2'>
           <form className='py-3' onSubmit={onSubmitForm}>
-            <section className='px-4 py-3 bg-slate-50 rounded'>
+            <section className='px-4 pb-3 pt-5 bg-slate-50 rounded'>
               <TextInput register={register} name={'name'} label='Full name' />
               <TextInput register={register} name={'address'} label='address' />
               {/* <TextInput register={register} name={'email'} label='email' /> */}

@@ -1,9 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import {
-  getBookHotelRoute,
   getLoginRoute,
-  getPostBookRoute,
 } from '@/src/config/routes';
 import { useEffect, useState } from 'react';
 import { FullRoomData } from '@/src/types/Room';
@@ -11,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
-import Link from 'next/link';
+import {toast, ToastContainer} from "react-toastify";
 
 interface BookingFormData {
   numberGuests: number;
@@ -49,8 +47,9 @@ export default function ClientDashboard() {
       .then((data) => {
         if (data) {
           router.push('/');
+          toast.success("The reservation has been successfully created! Thank you for booking with us!")
         } else {
-          console.error('Error');
+          toast.error("An error occurred while creating the reservation. Please try again later...")
         }
       });
   });
@@ -160,6 +159,7 @@ export default function ClientDashboard() {
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -1,5 +1,3 @@
-import styles from './dashboard-stat-cell.module.css';
-
 interface DashboardStatCellProps {
   isLoading?: boolean;
   value: number;
@@ -14,9 +12,9 @@ const DashboardStatCell = ({
   className,
 }: DashboardStatCellProps) => {
   return (
-    <div className={`${className} ${styles.cell}`}>
-      <p>{isLoading ? 'loading' : value}</p>
-      <p>{label}</p>
+    <div className={`${className} flex flex-col items-center rounded-lg p-3 bg-gray-700 w-64`}>
+      <div className="text-2xl text-bold text-white">{isLoading ? 'loading' : value}</div>
+      <div className="text-lg text-bold text-white">{label}</div>
     </div>
   );
 };

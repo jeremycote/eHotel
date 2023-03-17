@@ -12,7 +12,7 @@ export default async function handler(
 
   if (session?.user?.email != null) {
     const reservations: Reservation[] = await sql<Reservation[]>`
-              SELECT r.reservation_id, r.room_id, r.price, r.archived, r.number_guests, json_agg(u.*) as user, json_agg(ro.*) as room
+              SELECT r.reservation_id, r.room_id, r.price, r.archived, r.number_guests, r.start_date, r.end_date, json_agg(u.*) as client, json_agg(ro.*) as room
               FROM reservations r
                        LEFT JOIN users u on u.user_id = r.user_id
                        LEFT JOIN rooms ro on ro.room_id = r.room_id

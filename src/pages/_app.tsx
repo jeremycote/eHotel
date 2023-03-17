@@ -15,6 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import NavBar from '../components/navbar/navbar';
+import {ToastContainer} from "react-toastify";
 
 config.autoAddCss = false;
 
@@ -35,6 +36,7 @@ export default function App({
           <NavBar />
           <div>
             <Component {...pageProps} />
+            <ToastContainer />
           </div>
         </main>
       </SessionProvider>

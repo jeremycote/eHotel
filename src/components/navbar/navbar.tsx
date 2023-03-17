@@ -4,12 +4,10 @@ import {
   getLoginRoute,
   getSignupRoute,
 } from '@/src/config/routes';
-import useResizeObserver from '@/src/hooks/use-resize-observer';
 import useRoles from '@/src/hooks/use-roles';
 import UserRole from '@/src/types/UserRole';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import SearchBar from '../searchbar/searchbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';

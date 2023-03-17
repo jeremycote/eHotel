@@ -21,10 +21,12 @@ export default function ClientDashboard() {
   // }
 
   return (
-    <div className='pt-10'>
-      <h1>Client Dashboard</h1>
+      <div className="flex justify-center">
+          <div className='pt-3 w-1/2'>
+              <h1 className="text-3xl font-bold">Client Dashboard</h1>
 
-      <UserAccountForm />
-    </div>
+              <UserAccountForm />
+          </div>
+      </div>
   );
 }
