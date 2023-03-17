@@ -167,17 +167,17 @@ export default function HotelChains() {
             <TextInput register={register} name={'name'} label={'Chain Name'} />
             <TextInput register={register} name={'address'} label={'Address'} />
             <div className='grid md:grid-cols-2 md:gap-6 mb-6'>
-              {/* @ts-expect-error */}
               <MultiTextInputWithDelete
                 register={register}
+                /* @ts-ignore */
                 setValue={(n, a) => setValue(n, a)}
                 name={'phone_numbers'}
                 label={'Phone Number'}
                 array={phoneNumbers}
               />
-              {/* @ts-expect-error */}
               <MultiTextInputWithDelete
                 register={register}
+                /* @ts-ignore */
                 setValue={(n, a) => setValue(n, a)}
                 name={'emails'}
                 label={'Email Address'}

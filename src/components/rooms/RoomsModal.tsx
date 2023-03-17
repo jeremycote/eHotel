@@ -28,6 +28,11 @@ interface RoomCollapseProps {
   a: { amenity_id: number; name: string }[];
 }
 
+interface SelectType {
+  label: string;
+  value: string;
+}
+
 const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
   Modal.setAppElement('.main');
 
@@ -61,12 +66,10 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
   }, [hotelId]);
 
   const RoomCollapse = ({ newRoom, room, rt, a }: RoomCollapseProps) => {
-    const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<number | null>(
+    const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<{value: number | undefined, label: string | undefined} | null>(
         {value: room?.room_type_id, label: rt.find(t => t.room_type_id === room?.room_type_id)?.name},
     );
-    const [selectedAmentitiesId, setSelectedAmentitiesId] = useState<
-      { label: string; value: string }[]
-    >(
+    const [selectedAmentitiesId, setSelectedAmenitiesId] = useState<SelectType[]>(
       a
         .filter((am) => room?.amenities.includes(am.amenity_id))
         .map((am) => {
@@ -213,7 +216,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                 setAmenities(data);
                 setLoadingAmenities(false);
               });
-            setSelectedAmentitiesId([
+            setSelectedAmenitiesId([
               ...selectedAmentitiesId,
               {
                 value: data.created,
@@ -275,7 +278,9 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                 isClearable
                 isDisabled={isLoading || isLoadingRoomTypes}
                 isLoading={isLoading || isLoadingRoomTypes}
+                /* @ts-ignore */
                 onChange={(newValue: number) => {
+                  /* @ts-ignore */
                   setSelectedRoomTypeId(newValue);
                   setValue('room_type_id', newValue);
                 }}
@@ -301,13 +306,13 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                     'amenities',
                     newValue.map((am) => Number(am.value)),
                   );
-                  setSelectedAmentitiesId(newValue);
+                  setSelectedAmenitiesId(newValue.map(l => l));
                 }}
                 onCreateOption={handleCreateAmenities}
                 options={a.map((rt) => {
                   return {
                     label: rt.name,
-                    value: rt.amenity_id,
+                    value: String(rt.amenity_id),
                   };
                 })}
                 value={selectedAmentitiesId}

@@ -1,4 +1,4 @@
-import Category from './Category';
+import { Category } from './Category';
 import HotelChain from './HotelChain';
 import Zone from './Zone';
 

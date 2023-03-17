@@ -1,6 +1,6 @@
-import { getHotelFilterOptionsRoute, getZonesRoute } from '@/src/config/routes';
+import { getHotelFilterOptionsRoute } from '@/src/config/routes';
 import useContainerDimensions from '@/src/hooks/use-container-dimensions';
-import Category from '@/src/types/Category';
+import {Category} from '@/src/types/Category';
 import HotelChain from '@/src/types/HotelChain';
 import HotelFilter, { HotelFilterAttribute } from '@/src/types/HotelFilter';
 import HotelFilterOptions from '@/src/types/HotelFilterOptions';
