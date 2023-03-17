@@ -10,6 +10,8 @@ import EmployeeDashboardStats from '../types/EmployeeDashboardStats';
 import UserRole from '../types/UserRole';
 import Link from 'next/link';
 import EmployeeDashboardReservationTable from "@/src/components/employee-dashboard/EmployeeDashboardReservationTable";
+import {FullLease} from "@/src/types/Lease";
+import EmployeeDashboardLeaseTable from "@/src/components/employee-dashboard/EmployeeDashboardLeaseTable";
 
 export default function EmployeeDashboard() {
   const router = useRouter();
@@ -26,6 +28,8 @@ export default function EmployeeDashboard() {
   const user = useUser();
 
   const [reservations, setReservations] = useState<Reservation[]>([]);
+  const [paidLeases, setPaidLeases] = useState<FullLease[]>([]);
+  const [unpaidLeases, setUnpaidLeases] = useState<FullLease[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [stats, setStats] = useState<EmployeeDashboardStats | null>(null);
 
@@ -35,6 +39,17 @@ export default function EmployeeDashboard() {
         .then((res) => res.json())
         .then((data) => {
           setReservations(data);
+          setLoading(false);
+        });
+  }
+
+  const refreshLeases = () => {
+    setLoading(true);
+    fetch(`/api/admin/leases`)
+        .then((res) => res.json())
+        .then((data: FullLease[]) => {
+          setUnpaidLeases(data.filter(l => !l.paid));
+          setPaidLeases(data.filter(l => l.paid));
           setLoading(false);
         });
   }
@@ -51,6 +66,7 @@ export default function EmployeeDashboard() {
 
   const refreshData = () => {
     refreshReservations();
+    refreshLeases();
     refreshStats();
   }
 
@@ -76,7 +92,7 @@ export default function EmployeeDashboard() {
       </div>
       {user.status === AsyncStateStates.Success && (
         <>
-          <div className='flex items-center justify-center gap-5'>
+          <div className='flex items-center justify-center gap-5 mb-3'>
             <DashboardStatCell
                 isLoading={isLoading}
                 label={'Pending Reservations'}
@@ -94,9 +110,22 @@ export default function EmployeeDashboard() {
             />
           </div>
 
-          <h1>{`Employee id: ${user.data.name}`}</h1>
-          <EmployeeDashboardReservationTable reservations={reservations} refreshTables={() => refreshData()} />
-          <p>{JSON.stringify(reservations)}</p>
+          <div className="mx-[5%] flex flex-col gap-y-10">
+            <div>
+              <h1 className="text-xl font-bold mb-2">Pending Reservations</h1>
+              <EmployeeDashboardReservationTable reservations={reservations} refreshTables={() => refreshData()} />
+            </div>
+
+            <div>
+              <h1 className="text-xl font-bold mb-2">Lease Waiting for Payment</h1>
+              <EmployeeDashboardLeaseTable leases={unpaidLeases} refreshTables={() => refreshData()} />
+            </div>
+
+            <div>
+              <h1 className="text-xl font-bold mb-2">Handled Leases</h1>
+              <EmployeeDashboardLeaseTable leases={paidLeases} refreshTables={() => refreshData()} />
+            </div>
+          </div>
         </>
       )}
     </div>

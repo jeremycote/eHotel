@@ -14,15 +14,16 @@ export default async function handler(
     const reservations: Reservation[] = await sql<Reservation[]>`
               SELECT r.reservation_id, r.room_id, r.price, r.archived, r.number_guests, r.start_date, r.end_date, json_agg(u.*) as client, json_agg(ro.*) as room
               FROM reservations r
-                       LEFT JOIN users u on u.user_id = r.user_id
-                       LEFT JOIN rooms ro on ro.room_id = r.room_id
+              LEFT JOIN users u on u.user_id = r.user_id
+              LEFT JOIN rooms ro on ro.room_id = r.room_id
+              LEFT JOIN leases l on r.reservation_id = l.reservation_id
               WHERE ro.hotel_id = (SELECT hotel_id FROM employees WHERE employee_id IN (
                 SELECT employee_id FROM employees WHERE employee_id IN (
                     SELECT user_id FROM users WHERE email = ${
                       session!.user.email
                     }
                 ) LIMIT 1
-              ) LIMIT 1)
+              ) LIMIT 1) AND l.reservation_id is null
               GROUP BY r.reservation_id
           `;
 

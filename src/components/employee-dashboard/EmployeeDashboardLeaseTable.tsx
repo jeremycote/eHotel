@@ -1,37 +1,41 @@
-import Reservation from "@/src/types/Reservation";
 import dayjs from "dayjs";
 import {toast} from "react-toastify";
+import {FullLease} from "@/src/types/Lease";
 
-interface EmployeeDashboardReservationTableProps {
-    reservations: Reservation[];
+interface EmployeeDashboardLeaseTableProps {
+    leases: FullLease[];
     refreshTables: () => void;
 }
-const EmployeeDashboardReservationTable = ({reservations, refreshTables}: EmployeeDashboardReservationTableProps) => {
 
-    const changeToLease = (reservation_id: number) => {
-        fetch(`/api/admin/leases/${reservation_id}`, {
-            method: 'POST',
+const EmployeeDashboardReservationTable = ({leases, refreshTables}: EmployeeDashboardLeaseTableProps) => {
+
+    const markAsPaid = (lease_id: number) => {
+        fetch(`/api/admin/leases`, {
+            method: 'PUT',
             headers: new Headers({
                 'Content-Type': 'application/json',
                 Accept: 'application/json',
-            })
+            }),
+            body: JSON.stringify({
+                lease_id: lease_id
+            }),
         })
             .then((r) => r.json())
             .then((data) => {
                 if (data) {
                     toast.success(
-                        'The reservation has been successfully migrated to a Lease.',
+                        'The Lease has been marked as Paid.',
                     );
                     refreshTables();
                 } else {
                     toast.error(
-                        'Sorry... An error occurred, the reservation has not been saved.',
+                        'Sorry... An error occurred, the lease has not been marked as paid.',
                     );
                 }
             })
             .catch(() => {
                 toast.error(
-                    'Sorry... An error occurred, the reservation has not been saved.',
+                    'Sorry... An error occurred, the lease has not been marked as paid.',
                 );
             });
     }
@@ -60,51 +64,67 @@ const EmployeeDashboardReservationTable = ({reservations, refreshTables}: Employ
                         Number of Guests
                     </th>
                     <th scope='col' className='px-6 py-3'>
-                        Action
+                        Approved By
                     </th>
+                    <th scope='col' className='px-6 py-3'>
+                        Paid
+                    </th>
+                    { leases.filter(l => !l.paid).length &&
+                        <th scope='col' className='px-6 py-3'>
+                            Action
+                        </th>
+                    }
                 </tr>
                 </thead>
                 <tbody>
-                {reservations.map((r) => (
+                {leases.map((l) => (
                     <tr
-                        key={r.reservation_id}
+                        key={l.lease_id}
                         className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
                     >
                         <th
                             scope='row'
                             className='px-6 py-4 font-medium text-white whitespace-nowrap'
                         >
-                            {r.reservation_id}
+                            {l.reservation.reservation_id}
                         </th>
                         <th
                             scope='row'
                             className='px-6 py-4 font-medium text-white whitespace-nowrap'
                         >
-                            {dayjs(r.start_date).format('DD/MM/YYYY')} to {dayjs(r.end_date).format('DD/MM/YYYY')}
+                            {dayjs(l.reservation.start_date).format('DD/MM/YYYY')} to {dayjs(l.reservation.end_date).format('DD/MM/YYYY')}
                         </th>
                         <th
                             scope='row'
                             className='px-6 py-4 font-medium text-white whitespace-nowrap'
                         >
-                            {r.client[0]?.name}
+                            {l.reservation.client[0]?.name}
                         </th>
                         <th
                             scope='row'
                             className='px-6 py-4 font-medium text-white whitespace-nowrap'
                         >
-                            {r.room[0].room_id}
+                            {l.reservation.room[0].room_id}
                         </th>
                         <td className='px-6 py-4 text-white'>
-                            ${r.price}
+                            ${l.reservation.price}
                         </td>
                         <td className='px-6 py-4 text-white'>
-                            {r.number_guests}
+                            {l.reservation.number_guests}
                         </td>
                         <td className='px-6 py-4 text-white'>
-                            <button onClick={() => changeToLease(r.reservation_id)} type="button" className="button-dark">
-                                Change to lease
-                            </button>
+                            {l.employee.name} (ID: {l.employee.id})
                         </td>
+                        <td className='px-6 py-4 text-white'>
+                            {l.paid ? 'True' : 'False'}
+                        </td>
+                        { !l.paid &&
+                            <td className='px-6 py-4 text-white'>
+                                <button onClick={() => markAsPaid(l.lease_id)} type="button" className="button-dark">
+                                    Mark as Paid
+                                </button>
+                            </td>
+                        }
                     </tr>
                 ))}
                 </tbody>

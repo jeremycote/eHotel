@@ -271,7 +271,7 @@ export default function Hotels() {
             </button>
           </div>
         </section>
-        {hotel && (
+        {hotel && isExpanded && (
           <RoomsModal
             isOpen={modalIsOpen}
             closeModal={() => setModalIsOpen(false)}

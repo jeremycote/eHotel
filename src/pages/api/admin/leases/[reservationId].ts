@@ -28,7 +28,7 @@ export default async function handler(
   const { query, method } = req;
 
   switch (method) {
-    case 'POST':
+    case 'POST': {
       if (query.reservationId && employees && employees[0].employee_id) {
         const lease: CreateResponse[] = await sql<CreateResponse[]>`
                     INSERT INTO leases (reservation_id, employee_id, paid) VALUES (${query.reservationId}, ${employees[0].employee_id}, false) RETURNING lease_id;
@@ -37,7 +37,13 @@ export default async function handler(
         if (lease.length) {
           res.status(200).json(lease[0]);
         }
+      } else {
+        res
+          .status(422)
+          .json({ error: 'missing reservation ID or Employee ID session' });
       }
+      break;
+    }
     default:
       res.setHeader('Allow', ['POST']);
       res.status(405).end(`Method ${method} Not Allowed`);

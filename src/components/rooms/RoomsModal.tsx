@@ -251,7 +251,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
             </div>
             <div className='text-left'>
               <h2 className='text-xl'>
-                {`Room ID: ${room?.room_id}` ?? 'New Room'}
+                {!newRoom ? `Room ID: ${room?.room_id}` : 'New Room'}
               </h2>
             </div>
           </div>
