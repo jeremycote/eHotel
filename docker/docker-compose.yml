@@ -1,0 +1,25 @@
+version: "0.1"
+name: "eHotel"
+services:
+  eHotel:
+    image: local/e-hotel
+    ports:
+      - "3000:3000"
+    build:
+      context: "../"
+      dockerfile: "Dockerfile"
+    env_file: "../.env.docker.local"
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - ".env.docker.local"
+  pgadmin:
+    image: dpage/pgadmin4
+    profiles: ["debug"]
+    ports:
+      - "80:4000"
+    env_file:
+      - ".env.docker.local"
