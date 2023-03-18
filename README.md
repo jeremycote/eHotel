@@ -18,6 +18,8 @@ Third, load the migrations into your database with
 yarn migrate:up
 ```
 
+You also have `yarn migrate:fresh` to reset the Database back it the default values or `yarn migrate:down` to go down one migration.
+
 Lastly, run the development server:
 
 ```bash

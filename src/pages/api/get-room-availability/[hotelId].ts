@@ -18,7 +18,7 @@ export default async function handler(
     if (startDate && endDate) {
       where += ' AND r.room_id ';
       where += available === 'true' ? 'NOT IN ' : 'IN ';
-      where += `(SELECT rooms.room_id FROM rooms JOIN reservations ON rooms.room_id = reservations.room_id WHERE reservations.start_date >= '${startDate}' AND (reservations.start_date <= '${endDate}'))`;
+      where += `(SELECT rooms.room_id FROM rooms JOIN reservations ON rooms.room_id = reservations.room_id WHERE (daterange(reservations.start_date, reservations.end_date) && daterange('${startDate}', '${endDate}')))`;
     }
 
     if (roomTypeId) {

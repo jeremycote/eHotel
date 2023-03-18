@@ -48,8 +48,10 @@ export default async function handler(
         if (lease.length) {
           res.status(200).json(lease[0]);
         } else {
-          res.status(422).json({ error: 'error while saving' });
+          res.status(500).json({ error: 'error while saving' });
         }
+      } else {
+        res.status(422).json({ error: 'missing lease_id' });
       }
       break;
     }
@@ -117,6 +119,4 @@ export default async function handler(
       res.setHeader('Allow', ['POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-
-  res.status(500).json({ error: true });
 }

@@ -13,7 +13,6 @@ const HotelGrid = () => {
   const [filterDirty, setFilterDirty] = useState(false);
 
   const onFilterChange = (f: HotelFilter) => {
-    console.log('onFilterChange grid');
     setFilter(f);
     setFilterDirty(true);
   };

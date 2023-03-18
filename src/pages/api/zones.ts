@@ -18,11 +18,11 @@ export default async function handler(
       res
         .status(200)
         .json(await sql<Zone[]>`SELECT * FROM zones ORDER BY zone_id`);
+      break;
     }
     default:
       res.setHeader('Allow', ['GET']);
       res.status(405).end(`Method ${method} Not Allowed`);
+      break;
   }
-
-  res.status(500).json({ error: true });
 }

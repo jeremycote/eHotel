@@ -69,7 +69,7 @@ const EmployeeDashboardReservationTable = ({leases, refreshTables}: EmployeeDash
                     <th scope='col' className='px-6 py-3'>
                         Paid
                     </th>
-                    { leases.filter(l => !l.paid).length &&
+                    { leases.filter(l => !l.paid).length > 0 &&
                         <th scope='col' className='px-6 py-3'>
                             Action
                         </th>

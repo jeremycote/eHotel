@@ -3,6 +3,7 @@
   list-style: none;
   display: flex;
   overflow: hidden;
+  gap: 0.5em;
 }
 
 .resultFilter > li {

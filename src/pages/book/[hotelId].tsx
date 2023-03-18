@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Room } from '@/src/types/Room';
 import useCollapse from 'react-collapsed';
 import { Hotel } from '@/src/types/Hotel';
-import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import {faCaretDown, faCaretUp, faCircleExclamation} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getBookHotelRoomRoute, getBookHotelRoute } from '@/src/config/routes';
 import Link from 'next/link';
@@ -90,60 +90,75 @@ export default function BookingPage() {
             </div>
           </div>
         </button>
-        <section className='p-3' {...getCollapseProps()}>
-          <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-            <table className='w-full text-sm text-left text-gray-500'>
-              <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
-                <tr>
-                  <th scope='col' className='px-6 py-3'>
-                    Price/night
-                  </th>
-                  <th scope='col' className='px-6 py-3'>
-                    Capacity
-                  </th>
-                  <th scope='col' className='px-6 py-3'>
-                    View
-                  </th>
-                  <th scope='col' className='px-6 py-3'>
-                    Book
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rooms.map((r) => (
-                  <tr
-                    key={r.room_id}
-                    className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
-                  >
-                    <th
-                      scope='row'
-                      className='px-6 py-4 font-bold text-white whitespace-nowrap'
-                    >
-                      ${r.price}/night
+        <section className='px-3 py-1' {...getCollapseProps()}>
+          {rooms.length ? (
+              <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+                <table className='w-full text-sm text-left text-gray-500'>
+                  <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+                  <tr>
+                    <th scope='col' className='px-6 py-3'>
+                      Price/night
                     </th>
-                    <td className='px-6 py-4 text-white'>
-                      {r.capacity} people
-                    </td>
-                    <td className='px-6 py-4 text-white'>{r.view}</td>
-                    <td className='px-6 py-4 text-white'>
-                      <Link
-                        href={getBookHotelRoomRoute(
-                          r.room_id,
-                          String(startDate),
-                          String(endDate),
-                        )}
-                        className='text-gray-700 bg-white hover:bg-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none'
-                      >
-                        Book
-                      </Link>
-                    </td>
+                    <th scope='col' className='px-6 py-3'>
+                      Capacity
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      View
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Book
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {!rooms.length && (
-            <div>Sorry... All rooms of that type have been booked.</div>
+                  </thead>
+                  <tbody>
+                  {rooms.map((r) => (
+                      <tr
+                          key={r.room_id}
+                          className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
+                      >
+                        <th
+                            scope='row'
+                            className='px-6 py-4 font-bold text-white whitespace-nowrap'
+                        >
+                          ${r.price}/night
+                        </th>
+                        <td className='px-6 py-4 text-white'>
+                          {r.capacity} people
+                        </td>
+                        <td className='px-6 py-4 text-white'>{r.view}</td>
+                        <td className='px-6 py-4 text-white'>
+                          <Link
+                              href={getBookHotelRoomRoute(
+                                  r.room_id,
+                                  String(startDate),
+                                  String(endDate),
+                              )}
+                              className='text-gray-700 bg-white hover:bg-white focus:ring-4 focus:ring-white font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none'
+                          >
+                            Book
+                          </Link>
+                        </td>
+                      </tr>
+                  ))}
+                  </tbody>
+                </table>
+              </div>
+          ) : (
+              <div
+                  className='flex p-4 mb-4 text-sm bg-gray-800 text-yellow-300 border-yellow-800 items-center rounded-lg'
+                  role='alert'
+              >
+                <FontAwesomeIcon
+                    className='mr-2'
+                    icon={faCircleExclamation}
+                    size='lg'
+                />
+                <span className='sr-only'>Warning</span>
+                <div>
+                  <span className='font-medium mr-1'>Sorry!</span>
+                  All rooms of that type have been booked.
+                </div>
+              </div>
           )}
         </section>
       </div>

@@ -112,7 +112,6 @@ export default async function handler(
   let query = `SELECT ${columns} FROM ${from} ${
     where != 'WHERE' ? where : ''
   } GROUP BY hotels.hotel_id ORDER BY hotels.hotel_id`;
-  console.log(query);
 
   res.status(200).json(await sql.unsafe(query));
 }

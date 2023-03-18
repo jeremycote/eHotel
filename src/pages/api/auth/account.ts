@@ -24,8 +24,6 @@ export default async function handler(
   // TODO: Pass password in a more secure manor.
   const { name, address, nas, email, phone_number, password } = req.body;
 
-  console.log(req.body);
-
   switch (method) {
     case 'POST': {
       if (name && address && nas && email && phone_number && password) {

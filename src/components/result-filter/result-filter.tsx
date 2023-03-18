@@ -180,6 +180,7 @@ const ResultFilter = ({
       />,
       <li style={{ width: itemWidth }} key={'dateFilter'}>
         <DatePicker
+          className="border px-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
           selected={filter.startDate}
           startDate={filter.startDate}
           endDate={filter.endDate}
@@ -236,10 +237,6 @@ const ResultFilter = ({
     setNFiltersOnScreen(n);
   }, [actualWidth, itemWidth, itemSpacing, componentRef]);
 
-  console.log(
-    `filterIndex: ${filterIndex}, nFiltersOnScreen: ${nFiltersOnScreen}`,
-  );
-
   return (
     <ul
       className={styles.resultFilter}
@@ -253,7 +250,9 @@ const ResultFilter = ({
             paginate(-nFiltersOnScreen);
           }}
         >
-          <i>Back</i>
+          <button className="border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+            Back
+          </button>
         </li>
       )}
 
@@ -271,7 +270,9 @@ const ResultFilter = ({
             paginate(nFiltersOnScreen);
           }}
         >
-          <i>Next</i>
+          <button className="border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+            Next
+          </button>
         </li>
       )}
     </ul>

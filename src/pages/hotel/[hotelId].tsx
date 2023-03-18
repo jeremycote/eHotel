@@ -93,6 +93,7 @@ export default function HotelPage() {
             Available Room Types for selected dates
           </h2>
           <DatePicker
+            className="border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
             selected={startDate}
             startDate={startDate}
             endDate={endDate}
@@ -163,7 +164,7 @@ export default function HotelPage() {
             </div>
           ) : (
             <div
-              className='flex p-4 mb-4 text-sm bg-gray-800 text-yellow-300 border-yellow-800 items-center rounded-lg'
+              className='flex p-4 my-2 mb-4 text-sm bg-gray-800 text-yellow-300 border-yellow-800 items-center rounded-lg'
               role='alert'
             >
               <FontAwesomeIcon
