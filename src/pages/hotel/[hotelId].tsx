@@ -10,6 +10,7 @@ import { faStar, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
 import DatePicker from 'react-datepicker';
 import { calcEndDate } from '@/src/utils/date-utils';
+import { HotelRoomCapacity } from '@/src/types/HotelRoomCapacity';
 
 export default function HotelPage() {
   const router = useRouter();
@@ -29,6 +30,9 @@ export default function HotelPage() {
 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+
+  const [roomCapacities, setRoomCapacities] = useState<HotelRoomCapacity[]>([]);
+  const [isLoadingRoomCapacities, setLoadingRoomCapacities] = useState(false);
 
   useEffect(() => {
     if (hotelId != null) {
@@ -55,6 +59,18 @@ export default function HotelPage() {
         });
     }
   }, [hotelId, startDate, endDate]);
+
+  useEffect(() => {
+    if (hotelId != null) {
+      setLoadingRoomCapacities(true);
+      fetch(`/api/hotel-capacity/${hotelId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setRoomCapacities(data);
+          setLoadingRoomCapacities(false);
+        });
+    }
+  }, [hotelId]);
 
   useEffect(() => {
     setLoading(true);
@@ -93,7 +109,7 @@ export default function HotelPage() {
             Available Room Types for selected dates
           </h2>
           <DatePicker
-            className="border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+            className='border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
             selected={startDate}
             startDate={startDate}
             endDate={endDate}
@@ -178,6 +194,64 @@ export default function HotelPage() {
                 {startDate != null && endDate != null
                   ? ' No available Rooms for these dates... Please try other dates or another hotel'
                   : ' Please choose dates.'}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!isLoading && (
+        <div className='px-5 pt-10'>
+          <h1 className='text-2xl font-semibold mb-2'>Hotel Details</h1>
+          <h2 className='text-xl font-semibold mb-2'>Room Capacities</h2>
+
+          {roomCapacities.length ? (
+            <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+              <table className='w-full text-sm text-left text-gray-500'>
+                <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+                  <tr>
+                    <th scope='col' className='px-6 py-3'>
+                      Room Type
+                    </th>
+                    <th scope='col' className='px-6 py-3'>
+                      Capacity
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {roomCapacities.map((capacity, i) => (
+                    <tr
+                      key={capacity.room_id}
+                      className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
+                    >
+                      <th
+                        scope='row'
+                        className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                      >
+                        {capacity.type}
+                      </th>
+                      <td className='px-6 py-4 text-white'>
+                        {capacity.capacity}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div
+              className='flex p-4 my-2 mb-4 text-sm bg-gray-800 text-yellow-300 border-yellow-800 items-center rounded-lg'
+              role='alert'
+            >
+              <FontAwesomeIcon
+                className='mr-2'
+                icon={faCircleExclamation}
+                size='lg'
+              />
+              <span className='sr-only'>Warning</span>
+              <div>
+                <span className='font-medium'>Warning!</span>
+                No Rooms Found...
               </div>
             </div>
           )}
