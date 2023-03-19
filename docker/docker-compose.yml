@@ -9,7 +9,7 @@ services:
       context: '../'
       dockerfile: 'Dockerfile'
     env_file: '.env.docker.local'
-
+    profiles: ['next']
   db:
     image: postgres
     ports:
