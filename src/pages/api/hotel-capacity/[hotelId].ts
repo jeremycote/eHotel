@@ -14,10 +14,9 @@ export default async function handler(
       HotelRoomCapacity[]
     >`SELECT * FROM room_capacities_by_hotel WHERE hotel_id = ${hotelId} ORDER BY room_id`;
 
-    if (capacities?.length) {
+    if (capacities) {
       res.status(200).json(capacities);
     }
   }
-
   res.status(404);
 }

@@ -251,7 +251,7 @@ export default function HotelPage() {
               <span className='sr-only'>Warning</span>
               <div>
                 <span className='font-medium'>Warning!</span>
-                No Rooms Found...
+                {' No Rooms Found...'}
               </div>
             </div>
           )}
