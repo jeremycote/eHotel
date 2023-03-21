@@ -1,6 +1,6 @@
 import { getHotelFilterOptionsRoute } from '@/src/config/routes';
 import useContainerDimensions from '@/src/hooks/use-container-dimensions';
-import {Category} from '@/src/types/Category';
+import { Category } from '@/src/types/Category';
 import HotelChain from '@/src/types/HotelChain';
 import HotelFilter, { HotelFilterAttribute } from '@/src/types/HotelFilter';
 import HotelFilterOptions from '@/src/types/HotelFilterOptions';
@@ -75,6 +75,9 @@ const ResultFilter = ({
         setCategoryOptions(data.categories);
         setSizeOptions(createNumberOptions(data.max_size, 1, 1));
         setFilterDirty(true);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 
@@ -180,7 +183,7 @@ const ResultFilter = ({
       />,
       <li style={{ width: itemWidth }} key={'dateFilter'}>
         <DatePicker
-          className="border px-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+          className='border px-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'
           selected={filter.startDate}
           startDate={filter.startDate}
           endDate={filter.endDate}
@@ -250,7 +253,7 @@ const ResultFilter = ({
             paginate(-nFiltersOnScreen);
           }}
         >
-          <button className="border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+          <button className='border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'>
             Back
           </button>
         </li>
@@ -270,7 +273,7 @@ const ResultFilter = ({
             paginate(nFiltersOnScreen);
           }}
         >
-          <button className="border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">
+          <button className='border px-2 my-2 h-8 text-sm rounded-lg block bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500'>
             Next
           </button>
         </li>

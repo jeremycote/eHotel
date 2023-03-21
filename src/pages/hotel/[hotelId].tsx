@@ -42,6 +42,9 @@ export default function HotelPage() {
         .then((data) => {
           setHotel(data);
           setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   }, [hotelId]);
@@ -56,6 +59,9 @@ export default function HotelPage() {
         .then((data) => {
           setRoomAvailabilities(data);
           setLoadingRoomAvailabilties(false);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   }, [hotelId, startDate, endDate]);
@@ -68,6 +74,9 @@ export default function HotelPage() {
         .then((data) => {
           setRoomCapacities(data);
           setLoadingRoomCapacities(false);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   }, [hotelId]);
@@ -79,6 +88,9 @@ export default function HotelPage() {
       .then((data) => {
         setRoomTypes(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
 

@@ -21,7 +21,7 @@ import TextInput from '@/src/components/forms/TextInput';
 import SimpleSelect from '@/src/components/forms/SimpleSelect';
 import MultiTextInputWithDelete from '@/src/components/forms/MultiTextInputWithDelete';
 import RoomsModal from '@/src/components/rooms/RoomsModal';
-import Zone from "@/src/types/Zone";
+import Zone from '@/src/types/Zone';
 
 interface HotelCollapseProps {
   newHotel?: boolean;
@@ -53,6 +53,9 @@ export default function Hotels() {
       .then((data) => {
         setHotels(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -63,17 +66,23 @@ export default function Hotels() {
       .then((data) => {
         setHotelsChains(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
   const refreshHotelZones = () => {
     setLoading(true);
     fetch(`/api/zones`)
-        .then((res) => res.json())
-        .then((data) => {
-          setZones(data);
-          setLoading(false);
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        setZones(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -203,12 +212,12 @@ export default function Hotels() {
             <TextInput register={register} name={'name'} label={'Name'} />
             <TextInput register={register} name={'address'} label={'Address'} />
             <SimpleSelect
-                register={register}
-                name={'zone_id'}
-                label={'Zone'}
-                array={zones.map((z) => {
-                  return { id: z.zone_id, value: z.name };
-                })}
+              register={register}
+              name={'zone_id'}
+              label={'Zone'}
+              array={zones.map((z) => {
+                return { id: z.zone_id, value: z.name };
+              })}
             />
             <TextInput
               register={register}

@@ -9,9 +9,9 @@ import { AsyncStateStates } from '../types/AsyncState';
 import EmployeeDashboardStats from '../types/EmployeeDashboardStats';
 import UserRole from '../types/UserRole';
 import Link from 'next/link';
-import EmployeeDashboardReservationTable from "@/src/components/employee-dashboard/EmployeeDashboardReservationTable";
-import {FullLease} from "@/src/types/Lease";
-import EmployeeDashboardLeaseTable from "@/src/components/employee-dashboard/EmployeeDashboardLeaseTable";
+import EmployeeDashboardReservationTable from '@/src/components/employee-dashboard/EmployeeDashboardReservationTable';
+import { FullLease } from '@/src/types/Lease';
+import EmployeeDashboardLeaseTable from '@/src/components/employee-dashboard/EmployeeDashboardLeaseTable';
 
 export default function EmployeeDashboard() {
   const router = useRouter();
@@ -36,39 +36,48 @@ export default function EmployeeDashboard() {
   const refreshReservations = () => {
     setLoading(true);
     fetch(`/api/employees/get-hotel-reservations`)
-        .then((res) => res.json())
-        .then((data) => {
-          setReservations(data);
-          setLoading(false);
-        });
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        setReservations(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const refreshLeases = () => {
     setLoading(true);
     fetch(`/api/admin/leases`)
-        .then((res) => res.json())
-        .then((data: FullLease[]) => {
-          setUnpaidLeases(data.filter(l => !l.paid));
-          setPaidLeases(data.filter(l => l.paid));
-          setLoading(false);
-        });
-  }
+      .then((res) => res.json())
+      .then((data: FullLease[]) => {
+        setUnpaidLeases(data.filter((l) => !l.paid));
+        setPaidLeases(data.filter((l) => l.paid));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const refreshStats = () => {
     setLoading(true);
     fetch(getEmployeeDashboardStatsRoute())
-        .then((res) => res.json())
-        .then((data) => {
-          setStats(data);
-          setLoading(false);
-        });
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        setStats(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const refreshData = () => {
     refreshReservations();
     refreshLeases();
     refreshStats();
-  }
+  };
 
   useEffect(() => {
     refreshData();
@@ -94,14 +103,14 @@ export default function EmployeeDashboard() {
         <>
           <div className='flex items-center justify-center gap-5 mb-3'>
             <DashboardStatCell
-                isLoading={isLoading}
-                label={'Pending Reservations'}
-                value={stats?.reservations ?? 0}
+              isLoading={isLoading}
+              label={'Pending Reservations'}
+              value={stats?.reservations ?? 0}
             />
             <DashboardStatCell
-                isLoading={isLoading}
-                label={'Lease waiting for Payment'}
-                value={stats?.unpaid_leases ?? 0}
+              isLoading={isLoading}
+              label={'Lease waiting for Payment'}
+              value={stats?.unpaid_leases ?? 0}
             />
             <DashboardStatCell
               isLoading={isLoading}
@@ -110,20 +119,31 @@ export default function EmployeeDashboard() {
             />
           </div>
 
-          <div className="mx-[5%] flex flex-col gap-y-10">
+          <div className='mx-[5%] flex flex-col gap-y-10'>
             <div>
-              <h1 className="text-xl font-bold mb-2">Pending Reservations</h1>
-              <EmployeeDashboardReservationTable reservations={reservations} refreshTables={() => refreshData()} />
+              <h1 className='text-xl font-bold mb-2'>Pending Reservations</h1>
+              <EmployeeDashboardReservationTable
+                reservations={reservations}
+                refreshTables={() => refreshData()}
+              />
             </div>
 
             <div>
-              <h1 className="text-xl font-bold mb-2">Lease Waiting for Payment</h1>
-              <EmployeeDashboardLeaseTable leases={unpaidLeases} refreshTables={() => refreshData()} />
+              <h1 className='text-xl font-bold mb-2'>
+                Lease Waiting for Payment
+              </h1>
+              <EmployeeDashboardLeaseTable
+                leases={unpaidLeases}
+                refreshTables={() => refreshData()}
+              />
             </div>
 
             <div>
-              <h1 className="text-xl font-bold mb-2">Handled Leases</h1>
-              <EmployeeDashboardLeaseTable leases={paidLeases} refreshTables={() => refreshData()} />
+              <h1 className='text-xl font-bold mb-2'>Handled Leases</h1>
+              <EmployeeDashboardLeaseTable
+                leases={paidLeases}
+                refreshTables={() => refreshData()}
+              />
             </div>
           </div>
         </>

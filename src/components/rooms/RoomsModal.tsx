@@ -58,6 +58,9 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
         setDefaultAmenities(data.amenities);
         setDefaultRoomTypes(data.room_types);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -66,10 +69,16 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
   }, [hotelId]);
 
   const RoomCollapse = ({ newRoom, room, rt, a }: RoomCollapseProps) => {
-    const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<{value: number | undefined, label: string | undefined} | null>(
-        {value: room?.room_type_id, label: rt.find(t => t.room_type_id === room?.room_type_id)?.name},
-    );
-    const [selectedAmentitiesId, setSelectedAmenitiesId] = useState<SelectType[]>(
+    const [selectedRoomTypeId, setSelectedRoomTypeId] = useState<{
+      value: number | undefined;
+      label: string | undefined;
+    } | null>({
+      value: room?.room_type_id,
+      label: rt.find((t) => t.room_type_id === room?.room_type_id)?.name,
+    });
+    const [selectedAmentitiesId, setSelectedAmenitiesId] = useState<
+      SelectType[]
+    >(
       a
         .filter((am) => room?.amenities.includes(am.amenity_id))
         .map((am) => {
@@ -85,7 +94,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
     const [amenities, setAmenities] = useState(a);
     const { getToggleProps, getCollapseProps, isExpanded } = useCollapse();
     const { register, handleSubmit, reset, setValue } = useForm<Room>({
-      defaultValues: {...room},
+      defaultValues: { ...room },
     });
 
     const deleteRoom = (room_id: number) => {
@@ -180,7 +189,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                 setRoomTypes(data);
                 setLoadingRoomTypes(false);
               });
-            setSelectedRoomTypeId({value: data.created, label: inputValue})
+            setSelectedRoomTypeId({ value: data.created, label: inputValue });
             setValue('room_type_id', data.created);
           }
         })
@@ -223,7 +232,10 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                 label: inputValue,
               },
             ]);
-            setValue('amenities', [...selectedAmentitiesId.map(sa => sa.value), data.created]);
+            setValue('amenities', [
+              ...selectedAmentitiesId.map((sa) => sa.value),
+              data.created,
+            ]);
           }
         })
         .catch(() => {
@@ -306,7 +318,7 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
                     'amenities',
                     newValue.map((am) => Number(am.value)),
                   );
-                  setSelectedAmenitiesId(newValue.map(l => l));
+                  setSelectedAmenitiesId(newValue.map((l) => l));
                 }}
                 onCreateOption={handleCreateAmenities}
                 options={a.map((rt) => {
@@ -391,8 +403,8 @@ const RoomsModal = ({ isOpen, closeModal, hotelId }: RoomsModalProps) => {
             rt={defaultRoomTypes}
           />
         </div>
-        <div className="flex justify-end">
-          <button onClick={closeModal} className="button-dark">
+        <div className='flex justify-end'>
+          <button onClick={closeModal} className='button-dark'>
             Close
           </button>
         </div>

@@ -26,6 +26,9 @@ const HotelGrid = () => {
       .then((data) => {
         setHotels(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [filter, filterDirty]);
 

@@ -48,6 +48,9 @@ export default function HotelChains() {
       .then((data) => {
         setHotelChains(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
