@@ -45,7 +45,6 @@ ENV NODE_ENV e-hotel
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
-
 # Pull the built files out of BUILD_IMAGE - we need:
 # 1. the package.json and yarn.lock
 # 2. the Next build output and static files
