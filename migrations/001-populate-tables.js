@@ -414,7 +414,7 @@ exports.up = async function (sql) {
         (27, 162, 2, TRUE, NULL, 'Ocean View', 2, 25),
         (27, 174, 4, TRUE, NULL, 'Ocean View', 2, 30),
         (27, 254, 2, False, TRUE, 'Ocean View', 3, 25),
-        (28 100, 2, False, NULL, 'Ocean View', 1, 25),
+        (28, 100, 2, False, NULL, 'Ocean View', 1, 25),
         (28, 110, 2, TRUE, FALSE, 'Mountain View', 1, 35),
         (28, 135, 2, TRUE, FALSE, 'Mountain View', 2, 25),
         (28, 155, 4, TRUE, NULL, 'Mountain View', 2, 30),
