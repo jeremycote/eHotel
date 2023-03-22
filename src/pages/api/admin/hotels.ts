@@ -44,22 +44,15 @@ export default async function handler(
 
   switch (method) {
     case 'PUT': {
-      if (
-        hotel_id &&
-        name &&
-        address &&
-        phone_numbers.length &&
-        emails.length
-      ) {
+      if (name && hotel_id && chain_id && stars && address && zone_id) {
         const hotel: UpdatedResponse[] = await sql<
           UpdatedResponse[]
         >`UPDATE hotels SET name = ${name}, address = ${address}, zone_id = ${zone_id}, stars = ${stars}, chain_id = ${chain_id} WHERE hotel_id = ${hotel_id} RETURNING hotel_id as updated`;
 
         if (hotel[0].updated) {
           await sql`DELETE FROM hotel_phone_numbers WHERE hotel_id = ${hotel_id}`;
-          const phoneNumbersResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
+          if (phone_numbers && phone_numbers.length) {
+            await sql<UpdatedResponse[]>`
                         INSERT INTO hotel_phone_numbers ${sql(
                           phone_numbers.map((p: string) => {
                             return {
@@ -69,11 +62,11 @@ export default async function handler(
                           }),
                         )};
                     `;
+          }
 
           await sql`DELETE FROM hotel_emails WHERE hotel_id = ${hotel_id}`;
-          const emailsResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
+          if (emails && emails.length) {
+            await sql<UpdatedResponse[]>`
                     INSERT INTO hotel_emails ${sql(
                       emails.map((e: string) => {
                         return {
@@ -83,53 +76,42 @@ export default async function handler(
                       }),
                     )};
                 `;
+          }
 
           await sql`DELETE FROM hotel_images WHERE hotel_id = ${hotel_id}`;
-          const imagesResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
-                    INSERT INTO hotel_images ${sql(
-                      images.map((e: string) => {
-                        return {
-                          url: e,
-                          hotel_id: hotel[0].updated,
-                        };
-                      }),
-                    )};
+          if (images && images.length) {
+            await sql<UpdatedResponse[]>`
+                  INSERT INTO hotel_images ${sql(
+                    images.map((e: string) => {
+                      return {
+                        url: e,
+                        hotel_id: hotel[0].updated,
+                      };
+                    }),
+                  )};
                 `;
+          }
 
-          if (
-            hotel.length &&
-            phoneNumbersResponse &&
-            emailsResponse &&
-            imagesResponse
-          ) {
+          if (hotel.length) {
             res.status(200).json(hotel[0]);
           }
         } else {
           res.status(422).json({ error: 'error while saving' });
         }
+      } else {
+        res.status(422).json({ error: 'missing params' });
       }
       break;
     }
     case 'POST': {
-      if (
-        name &&
-        address &&
-        chain_id &&
-        zone_id &&
-        stars &&
-        phone_numbers.length &&
-        emails.length
-      ) {
+      if (name && address && chain_id && zone_id && stars) {
         const hotel: CreateResponse[] = await sql<
           CreateResponse[]
         >`INSERT INTO hotels (name, address, zone_id, stars, chain_id) VALUES (${name}, ${address}, ${zone_id}, ${stars}, ${chain_id}) RETURNING hotel_id as created`;
 
         if (hotel[0].created) {
-          const phoneNumbersResponse: CreateResponse[] = await sql<
-            CreateResponse[]
-          >`
+          if (phone_numbers && phone_numbers.length) {
+            await sql<CreateResponse[]>`
                         INSERT INTO hotel_phone_numbers ${sql(
                           phone_numbers.map((p: string) => {
                             return {
@@ -139,8 +121,10 @@ export default async function handler(
                           }),
                         )};
                     `;
+          }
 
-          const emailsResponse: CreateResponse[] = await sql<CreateResponse[]>`
+          if (emails && emails.length) {
+            await sql<CreateResponse[]>`
                     INSERT INTO hotel_emails ${sql(
                       emails.map((e: string) => {
                         return {
@@ -150,10 +134,10 @@ export default async function handler(
                       }),
                     )};
                 `;
+          }
 
-          const imagesResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
+          if (images && images.length) {
+            await sql<UpdatedResponse[]>`
                     INSERT INTO hotel_images ${sql(
                       images.map((e: string) => {
                         return {
@@ -163,18 +147,16 @@ export default async function handler(
                       }),
                     )};
                 `;
+          }
 
-          if (
-            hotel.length &&
-            phoneNumbersResponse &&
-            emailsResponse &&
-            imagesResponse
-          ) {
+          if (hotel.length) {
             res.status(200).json(hotel[0]);
           }
         } else {
           res.status(422).json({ error: 'error while saving' });
         }
+      } else {
+        res.status(422).json({ error: 'missing params' });
       }
       break;
     }
