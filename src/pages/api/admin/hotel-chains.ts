@@ -34,22 +34,15 @@ export default async function handler(
 
   switch (method) {
     case 'PUT': {
-      if (
-        chain_id &&
-        name &&
-        address &&
-        phone_numbers.length &&
-        emails.length
-      ) {
+      if (chain_id && name && address) {
         const hotelChain: UpdatedResponse[] = await sql<
           UpdatedResponse[]
         >`UPDATE hotel_chains SET name = ${name}, address = ${address} WHERE chain_id = ${chain_id} RETURNING chain_id as updated`;
 
         if (hotelChain[0].updated) {
           await sql`DELETE FROM chain_phone_numbers WHERE chain_id = ${chain_id}`;
-          const phoneNumbersResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
+          if (phone_numbers && phone_numbers.length) {
+            await sql<UpdatedResponse[]>`
                         INSERT INTO chain_phone_numbers ${sql(
                           phone_numbers.map((p: string) => {
                             return {
@@ -57,13 +50,12 @@ export default async function handler(
                               chain_id: hotelChain[0].updated,
                             };
                           }),
-                        )};
-                    `;
+                        )};`;
+          }
 
           await sql`DELETE FROM chain_emails WHERE chain_id = ${chain_id}`;
-          const emailsResponse: UpdatedResponse[] = await sql<
-            UpdatedResponse[]
-          >`
+          if (emails && emails.length) {
+            await sql<UpdatedResponse[]>`
                     INSERT INTO chain_emails ${sql(
                       emails.map((e: string) => {
                         return {
@@ -71,10 +63,10 @@ export default async function handler(
                           chain_id: hotelChain[0].updated,
                         };
                       }),
-                    )};
-                `;
+                    )};`;
+          }
 
-          if (hotelChain.length && phoneNumbersResponse && emailsResponse) {
+          if (hotelChain.length) {
             res.status(200).json(hotelChain[0]);
           }
         } else {
@@ -84,15 +76,14 @@ export default async function handler(
       break;
     }
     case 'POST': {
-      if (name && address && phone_numbers.length && emails.length) {
+      if (name && address) {
         const hotelChain: CreateResponse[] = await sql<
           CreateResponse[]
         >`INSERT INTO hotel_chains (name, address) VALUES (${name}, ${address}) RETURNING chain_id as created`;
 
         if (hotelChain[0].created) {
-          const phoneNumbersResponse: CreateResponse[] = await sql<
-            CreateResponse[]
-          >`
+          if (phone_numbers && phone_numbers.length) {
+            await sql<CreateResponse[]>`
                         INSERT INTO chain_phone_numbers ${sql(
                           phone_numbers.map((p: string) => {
                             return {
@@ -100,10 +91,11 @@ export default async function handler(
                               chain_id: hotelChain[0].created,
                             };
                           }),
-                        )};
-                    `;
+                        )};`;
+          }
 
-          const emailsResponse: CreateResponse[] = await sql<CreateResponse[]>`
+          if (emails && emails.length) {
+            await sql<CreateResponse[]>`
                     INSERT INTO chain_emails ${sql(
                       emails.map((e: string) => {
                         return {
@@ -111,10 +103,10 @@ export default async function handler(
                           chain_id: hotelChain[0].created,
                         };
                       }),
-                    )};
-                `;
+                    )};`;
+          }
 
-          if (hotelChain.length && phoneNumbersResponse && emailsResponse) {
+          if (hotelChain.length) {
             res.status(200).json(hotelChain[0]);
           }
         } else {
