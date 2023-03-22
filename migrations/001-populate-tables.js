@@ -68,9 +68,9 @@ exports.up = async function (sql) {
             (5, 'Best Western Cabrillo Garden Inn', 2, '840 A Street, San Diego, California 92101, USA', 1),
             (5, 'Best Western Parkway Hotel Toronto North', 3, '600 Highway 7, Richmond Hill, ON L4B 1B2, Canada', 1),
             (5, 'Best Western King George Inn & Suites', 3, '8033 King George Blvd, Surrey, British-Colombia V3W 5B4, Canada', 1),
---             (5, 'Hotel L'Horset Opera, BW Premier Collection', 4, '18 Rue d'Antin, Paris, 75002, France', 2),
+            (5, 'Hotel L Horset Opera, BW Premier Collection', 4, '18 Rue d Antin, Paris, 75002, France', 2),
             (5, 'Best Western Alba Hotel', 4, '41 Av. Jean Médecin, Nice, 06000, France', 2),
---             (5, 'Best Western Saint Antoine', 3, '4 Rue de l'Ancienne Préfecture, Lyon, 69002, France', 2),
+            (5, 'Best Western Saint Antoine', 3, '4 Rue de l Ancienne Préfecture, Lyon, 69002, France', 2),
             (5, 'Best Western Premier Sonasea Phu Quoc', 5, 'Duong Bao Hamlet, Phu Quoc, 920000, Vietnam', 3),
             (5, 'Best Western Premier Sapphire Halong', 5, 'S2 Building, Lot HH05, Ben Doan High Class Area, Hong Gai Ward, Ha Long, 200000, Vietnam', 3);
     `;
