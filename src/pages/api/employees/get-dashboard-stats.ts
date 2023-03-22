@@ -13,18 +13,20 @@ export default async function handler(
   if (session?.user?.email != null) {
     const statRows = await sql.unsafe<EmployeeDashboardStats[]>(`
         SELECT lAgg.*, rAgg.reservations FROM (
-            SELECT COUNT(l) filter ( where l.paid = true) AS paid_leases, COUNT(l) filter ( where l.paid = false) AS unpaid_leases, e.employee_id  FROM leases as l, employees AS e
-            WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = '${
+            SELECT COUNT(l) filter ( where l.paid = true) AS paid_leases, COUNT(l) filter ( where l.paid = false) AS unpaid_leases, e.employee_id
+            FROM employees e
+            LEFT JOIN leases l on l.employee_id IN (SELECT user_id FROM users WHERE email = '${
               session.user.email as string
-            }')
-            AND (l.employee_id = e.employee_id) GROUP BY e.employee_id) AS lAgg
+            }') and l.employee_id = e.employee_id
+            GROUP BY e.employee_id) AS lAgg
         JOIN (
-            SELECT COUNT(r) as reservations, e.employee_id  FROM reservations as r, employees AS e
+            SELECT COUNT(r) as reservations, e.employee_id
+            FROM employees e
+                     LEFT JOIN reservations r on r.room_id IN (SELECT room_id FROM rooms WHERE hotel_id = e.hotel_id) and r.reservation_id NOT IN (SELECT reservation_id FROM leases)
             WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = '${
               session.user.email as string
             }')
-            AND r.room_id IN (SELECT room_id FROM rooms WHERE hotel_id = e.hotel_id)
-            AND r.reservation_id NOT IN (SELECT reservation_id FROM leases) GROUP BY e.employee_id) AS rAgg
+            group by e.employee_id) AS rAgg
         ON lAgg.employee_id = rAgg.employee_id;
     `);
 
