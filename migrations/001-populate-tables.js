@@ -114,12 +114,20 @@ exports.up = async function (sql) {
 
   await sql`
     INSERT INTO chain_emails (email, chain_id) VALUES
-        ('contact@hilton.com', 1);
+        ('contact@marriott.com', 1),
+        ('contact@hilton.com', 2),
+        ('contact@whyndham.com', 3),
+        ('contact@accor.com', 4),
+        ('contact@bestwestern.com', 5);
     `;
 
   await sql`
     INSERT INTO chain_phone_numbers (phone_number, chain_id) VALUES
-        ('613 123-1234', 1);
+        ('240 123-1234', 1),
+        ('703 123-1234', 2),
+        ('973 123-1234', 3),
+        ('303 123-1234', 4),
+        ('506 123-1234', 5);
     `;
 
   await sql`
