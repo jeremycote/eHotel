@@ -84,6 +84,11 @@ exports.up = async function (sql) {
   `;
 
   await sql`
+  INSERT INTO hotel_images (hotel_id, url)
+    SELECT hotel_id, 'https://unsplash.it/400/400?hotel' FROM hotels WHERE hotel_id NOT IN (SELECT hotel_id FROM hotel_images);
+  `;
+
+  await sql`
         INSERT INTO amenities (name) VALUES
             ('Double Size Bed'),
             ('Queen Size Bed'),

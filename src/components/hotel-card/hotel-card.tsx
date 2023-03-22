@@ -21,6 +21,7 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
       <div className={styles.imageCarousel}>
         <img
           src={hotel.images?.length! > 0 ? hotel.images![0] : '/vercel.svg'}
+          loading='lazy'
         />
       </div>
       <div className={styles.description}>
