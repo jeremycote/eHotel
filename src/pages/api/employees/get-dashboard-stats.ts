@@ -13,14 +13,14 @@ export default async function handler(
   if (session?.user?.email != null) {
     const statRows = await sql.unsafe<EmployeeDashboardStats[]>(`
         SELECT lAgg.*, rAgg.reservations FROM (
-            SELECT COUNT(l) filter ( where l.paid = true) AS paid_leases, COUNT(l) filter ( where l.paid = false) AS unpaid_leases, e.employee_id
+            SELECT COUNT(l) filter ( where l.paid = true) AS paid_leases, COUNT(l) filter ( where l.paid = false) AS unpaid_leases, e.employee_id, e.hotel_id
             FROM employees e
             LEFT JOIN leases l on l.employee_id IN (SELECT user_id FROM users WHERE email = '${
               session.user.email as string
             }') and l.employee_id = e.employee_id
             GROUP BY e.employee_id) AS lAgg
         JOIN (
-            SELECT COUNT(r) as reservations, e.employee_id
+            SELECT COUNT(r) as reservations, e.employee_id, e.hotel_id
             FROM employees e
                      LEFT JOIN reservations r on r.room_id IN (SELECT room_id FROM rooms WHERE hotel_id = e.hotel_id) and r.reservation_id NOT IN (SELECT reservation_id FROM leases)
             WHERE e.employee_id IN (SELECT user_id FROM users WHERE email = '${

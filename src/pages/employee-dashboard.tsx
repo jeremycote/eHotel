@@ -12,6 +12,9 @@ import Link from 'next/link';
 import EmployeeDashboardReservationTable from '@/src/components/employee-dashboard/EmployeeDashboardReservationTable';
 import { FullLease } from '@/src/types/Lease';
 import EmployeeDashboardLeaseTable from '@/src/components/employee-dashboard/EmployeeDashboardLeaseTable';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import NewLeaseModal from "@/src/components/lease-modal/NewLeaseModal";
 
 export default function EmployeeDashboard() {
   const router = useRouter();
@@ -32,6 +35,8 @@ export default function EmployeeDashboard() {
   const [unpaidLeases, setUnpaidLeases] = useState<FullLease[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [stats, setStats] = useState<EmployeeDashboardStats | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [hotelId, setHotelId] = useState(null);
 
   const refreshReservations = () => {
     setLoading(true);
@@ -66,6 +71,7 @@ export default function EmployeeDashboard() {
       .then((res) => res.json())
       .then((data) => {
         setStats(data);
+        setHotelId(data.hotel_id);
         setLoading(false);
       })
       .catch((err) => {
@@ -85,19 +91,22 @@ export default function EmployeeDashboard() {
 
   return (
     <div className='p-3'>
-      <div className='my-3 flex gap-2'>
+      <div className='flex gap-2 my-3'>
         <Link
-          href='/admin/hotel_chains'
-          className='rounded p-3 bg-gray-800 text-slate-50'
+            href='/admin/hotel_chains'
+            className='rounded p-3 bg-gray-800 text-slate-50'
         >
           Edit Hotel Chains
         </Link>
         <Link
-          href='/admin/hotels'
-          className='rounded p-3 bg-gray-800 text-slate-50'
+            href='/admin/hotels'
+            className='rounded p-3 bg-gray-800 text-slate-50'
         >
           Edit Hotels
         </Link>
+        <button onClick={() => setShowModal(true)} type="button" className="rounded p-3 bg-gray-800 text-slate-50">
+          <FontAwesomeIcon icon={faPlus} size="lg" /> New Lease
+        </button>
       </div>
       {user.status === AsyncStateStates.Success && (
         <>
@@ -148,6 +157,11 @@ export default function EmployeeDashboard() {
           </div>
         </>
       )}
+      { hotelId && <NewLeaseModal isOpen={showModal} closeModal={() => {
+        setShowModal(false);
+        refreshData();
+      }
+      } hotelId={hotelId} />}
     </div>
   );
 }
