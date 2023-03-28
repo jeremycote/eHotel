@@ -38,16 +38,17 @@ export default function ClientDashboard() {
   }, [data]);
 
   return (
-    <div className='flex justify-center flex-col'>
-      <div className='pt-3 w-1/2'>
-        <h1 className='text-3xl font-bold'>Client Dashboard</h1>
+    <div className='flex justify-center'>
+      <div className="w-2/3">
+        <div className='pt-3'>
+          <h1 className='text-3xl font-bold'>Client Dashboard</h1>
 
-        <UserAccountForm />
-      </div>
+          <UserAccountForm />
+        </div>
 
-      <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-        <table className='w-full text-sm text-left text-gray-500'>
-          <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+        <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+          <table className='w-full text-sm text-left text-gray-500'>
+            <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
             <tr>
               <th scope='col' className='px-6 py-3'>
                 Hotel Name
@@ -68,36 +69,37 @@ export default function ClientDashboard() {
                 End Date
               </th>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             {reservations.map((res, i) => (
-              <tr
-                key={res.reservation_id}
-                className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
-              >
-                <th
-                  scope='row'
-                  className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                <tr
+                    key={res.reservation_id}
+                    className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
                 >
-                  {res.hotel_name};
-                </th>
-                <td className='px-6 py-4 text-white'>{res.room_type}</td>
-                <td className='px-6 py-4 text-white'>{res.number_guests}</td>
-                <td className='px-6 py-4 text-white'>
-                  {res.end_date
-                    ? `$${
-                        Math.round(
-                          dayjs(res.end_date).diff(res.start_date, 'days'),
-                        ) * res.price
-                      } Total`
-                    : `$${res.price}/night`}
-                </td>
-                <td className='px-6 py-4 text-white'>{res.start_date}</td>
-                <td className='px-6 py-4 text-white'>{res.end_date ?? ''}</td>
-              </tr>
+                  <th
+                      scope='row'
+                      className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                  >
+                    {res.hotel_name}
+                  </th>
+                  <td className='px-6 py-4 text-white'>{res.room_type}</td>
+                  <td className='px-6 py-4 text-white'>{res.number_guests}</td>
+                  <td className='px-6 py-4 text-white'>
+                    {res.end_date
+                        ? `$${
+                            Math.round(
+                                dayjs(res.end_date).diff(res.start_date, 'days'),
+                            ) * res.price
+                        } Total`
+                        : `$${res.price}/night`}
+                  </td>
+                  <td className='px-6 py-4 text-white'>{dayjs(res.start_date).format('YYYY/MM/DD')}</td>
+                  <td className='px-6 py-4 text-white'>{dayjs(res.end_date).format('YYYY/MM/DD') ?? ''}</td>
+                </tr>
             ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
