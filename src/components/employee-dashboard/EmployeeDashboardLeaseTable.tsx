@@ -78,54 +78,57 @@ const EmployeeDashboardReservationTable = ({leases, refreshTables}: EmployeeDash
                 </thead>
                 <tbody>
                 {leases.map((l) => (
-                    <tr
-                        key={l.lease_id}
-                        className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
-                    >
-                        <th
-                            scope='row'
-                            className='px-6 py-4 font-medium text-white whitespace-nowrap'
-                        >
-                            {l.reservation.reservation_id}
-                        </th>
-                        <th
-                            scope='row'
-                            className='px-6 py-4 font-medium text-white whitespace-nowrap'
-                        >
-                            {dayjs(l.reservation.start_date).format('DD/MM/YYYY')} to {dayjs(l.reservation.end_date).format('DD/MM/YYYY')}
-                        </th>
-                        <th
-                            scope='row'
-                            className='px-6 py-4 font-medium text-white whitespace-nowrap'
-                        >
-                            {l.reservation.client[0]?.name}
-                        </th>
-                        <th
-                            scope='row'
-                            className='px-6 py-4 font-medium text-white whitespace-nowrap'
-                        >
-                            {l.reservation.room[0].room_id}
-                        </th>
-                        <td className='px-6 py-4 text-white'>
-                            ${l.reservation.price}
-                        </td>
-                        <td className='px-6 py-4 text-white'>
-                            {l.reservation.number_guests}
-                        </td>
-                        <td className='px-6 py-4 text-white'>
-                            {l.employee.name} (ID: {l.employee.id})
-                        </td>
-                        <td className='px-6 py-4 text-white'>
-                            {l.paid ? 'True' : 'False'}
-                        </td>
-                        { !l.paid &&
-                            <td className='px-6 py-4 text-white'>
-                                <button onClick={() => markAsPaid(l.lease_id)} type="button" className="button-dark">
-                                    Mark as Paid
-                                </button>
-                            </td>
-                        }
-                    </tr>
+                    l.reservation &&
+                            <tr
+                                key={l.lease_id}
+                                className='border-b bg-gray-800 border-gray-700 hover:bg-gray-600'
+                            >
+                                <th
+                                    scope='row'
+                                    className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                                >
+                                    {l.reservation.reservation_id}
+                                </th>
+                                <th
+                                    scope='row'
+                                    className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                                >
+                                    {dayjs(l.reservation.start_date).format('DD/MM/YYYY')} to {dayjs(l.reservation.end_date).format('DD/MM/YYYY')}
+                                </th>
+                                <th
+                                    scope='row'
+                                    className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                                >
+                                    {/* @ts-ignore */}
+                                    {l.reservation.client[0]?.name}
+                                </th>
+                                <th
+                                    scope='row'
+                                    className='px-6 py-4 font-medium text-white whitespace-nowrap'
+                                >
+                                    {/* @ts-ignore */}
+                                    {l.reservation.room[0].room_id}
+                                </th>
+                                <td className='px-6 py-4 text-white'>
+                                    ${l.reservation.price}
+                                </td>
+                                <td className='px-6 py-4 text-white'>
+                                    {l.reservation.number_guests}
+                                </td>
+                                <td className='px-6 py-4 text-white'>
+                                    {l.employee.name} (ID: {l.employee.id})
+                                </td>
+                                <td className='px-6 py-4 text-white'>
+                                    {l.paid ? 'True' : 'False'}
+                                </td>
+                                { !l.paid &&
+                                    <td className='px-6 py-4 text-white'>
+                                        <button onClick={() => markAsPaid(l.lease_id)} type="button" className="button-dark">
+                                            Mark as Paid
+                                        </button>
+                                    </td>
+                                }
+                            </tr>
                 ))}
                 </tbody>
             </table>
