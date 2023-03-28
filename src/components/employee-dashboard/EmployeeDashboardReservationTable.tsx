@@ -86,12 +86,14 @@ const EmployeeDashboardReservationTable = ({reservations, refreshTables}: Employ
                             scope='row'
                             className='px-6 py-4 font-medium text-white whitespace-nowrap'
                         >
+                            {/* @ts-ignore */}
                             {r.client[0]?.name}
                         </th>
                         <th
                             scope='row'
                             className='px-6 py-4 font-medium text-white whitespace-nowrap'
                         >
+                            {/* @ts-ignore */}
                             {r.room[0].room_id}
                         </th>
                         <td className='px-6 py-4 text-white'>
