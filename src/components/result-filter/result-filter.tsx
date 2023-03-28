@@ -10,6 +10,7 @@ import ResultFilterSelect from './result-filter-select';
 import styles from './result-filter.module.css';
 import DatePicker from 'react-datepicker';
 import { calcEndDate } from '@/src/utils/date-utils';
+import HotelByZone from '@/src/types/HotelByZone';
 
 interface ResultFilterProps {
   height: string; // css style
@@ -43,6 +44,9 @@ const ResultFilter = ({
   const [chainOptions, setChainOptions] = useState<HotelChain[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<Category[]>([]);
   const [sizeOptions, setSizeOptions] = useState<number[]>([]);
+  const [nHotelsByZone, setNHotelsByZone] = useState<{ [key: string]: number }>(
+    {},
+  );
 
   const [filterDirty, setFilterDirty] = useState(false);
 
@@ -81,6 +85,24 @@ const ResultFilter = ({
       });
   }, []);
 
+  useEffect(() => {
+    fetch('/api/hotel-by-zone')
+      .then((res) => res.json())
+      .then((data) => {
+        let d: { [key: string]: number } = {};
+
+        data.map((row: HotelByZone) => {
+          d[row.zone] = row.n_hotels;
+        });
+
+        console.log(d);
+        setNHotelsByZone(d);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const onChangeStringFilterOption = (
     attribute: HotelFilterAttribute,
     value: string,
@@ -113,6 +135,8 @@ const ResultFilter = ({
         options={zoneOptions.map((zone, i) => (
           <option key={zone.name} value={zone.name}>
             {zone.name}
+            {nHotelsByZone[zone.name] != null &&
+              ` (${nHotelsByZone[zone.name]} hotels in zone)`}
           </option>
         ))}
       />,

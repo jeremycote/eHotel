@@ -11,8 +11,8 @@ import Link from 'next/link';
 import DatePicker from 'react-datepicker';
 import { calcEndDate } from '@/src/utils/date-utils';
 import { HotelRoomCapacity } from '@/src/types/HotelRoomCapacity';
-import {addDays} from "date-fns";
-import dayjs from "dayjs";
+import { addDays } from 'date-fns';
+import dayjs from 'dayjs';
 
 export default function HotelPage() {
   const router = useRouter();
@@ -130,10 +130,14 @@ export default function HotelPage() {
             onChange={(dates) => {
               const [start, end] = dates;
               setStartDate(start);
-              if (start && end && Math.round(dayjs(String(end)).diff(String(start), 'days')) === 0) {
-                  setEndDate(addDays(start, 1))
+              if (
+                start &&
+                end &&
+                Math.round(dayjs(String(end)).diff(String(start), 'days')) === 0
+              ) {
+                setEndDate(addDays(start, 1));
               } else {
-                  setEndDate(end)
+                setEndDate(end);
               }
             }}
             selectsRange={true}
