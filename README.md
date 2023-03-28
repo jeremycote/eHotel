@@ -1,43 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# eHotel
 
 ## Getting Started
 
-Make sure you have yarn, postgres and nodeJS (min. v16) installed.
+1. Install [NodeJS](https://nodejs.org/en/) (V16 or greater).
+2. Install Yarn
 
-First, install all dependencies:
+```bash
+npm install --global yarn
+```
+
+3. Create a postgres database named: <b>eHotel</b>
+4. Create a copy of .env.local.example named .env.local and change the parameters to connect to your database.
+5. Install packages
 
 ```bash
 yarn install
 ```
 
-Second, configure your database by creating a `.env.local` file and adding your PostgreSQL config inside.
-
-Third, load the migrations into your database with
+6. Populate the database with sample data
 
 ```bash
 yarn migrate:up
 ```
 
-You also have `yarn migrate:fresh` to reset the Database back it the default values or `yarn migrate:down` to go down one migration.
-
-Lastly, run the development server:
+7. Start the webserver
 
 ```bash
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+8. Access the server at localhost:3000. The following users already exist:
+<table>
+<tr>
+    <th>email</th>
+    <th>password</th>
+</tr>
+<tr>
+    <td>employee@hotel.com</td>
+    <td>employee</td>
+</tr>
+<tr>
+    <td>employee2@hotel.com</td>
+    <td>employee</td>
+</tr>
+<tr>
+    <td>client@hotel.com</td>
+    <td>client</td>
+</tr>
+<tr>
+    <td>client2@hotel.com</td>
+    <td>client</td>
+</tr>
+</table>
