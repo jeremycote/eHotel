@@ -75,17 +75,31 @@ exports.up = async function (sql) {
             (5, 'Best Western Premier Sapphire Halong', 5, 'S2 Building, Lot HH05, Ben Doan High Class Area, Hong Gai Ward, Ha Long, 200000, Vietnam', 3);
     `;
 
-  await sql`
-    INSERT INTO hotel_images (hotel_id, url) VALUES
-        (1, 'https://unsplash.it/400/400'),
-        (1, 'https://unsplash.it/400/400'),
-        (2, 'https://unsplash.it/400/400'),
-        (3, 'https://unsplash.it/400/400');
-  `;
+  // await sql`
+  //   INSERT INTO hotel_images (hotel_id, url) VALUES
+  //       (1, 'https://unsplash.com/photos/Yrxr3bsPdS0/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjgwMTE0NTUz'),
+  //       (1, 'https://unsplash.com/photos/-27u_GzlAFw/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MTB8fGhvdGVsfGVufDB8fHx8MTY4MDA4ODQ1Ng'),
+  //       (2, 'https://unsplash.com/photos/lw3Lqe2K7xc/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8Mjh8fGhvdGVsfGVufDB8fHx8MTY4MDA0NTAyNA'),
+  //       (3, 'https://unsplash.com/photos/lTrbjFd8Iwo/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MzV8fGhvdGVsfGVufDB8fHx8MTY4MDA0NTAyNA'),
+  //       (3, 'https://unsplash.com/photos/2LzqR50_NTw/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjgwMTE1Nzgx&force=true');
+  // `;
 
+  // Insert a filler image from unsplash if no image was specified
   await sql`
   INSERT INTO hotel_images (hotel_id, url)
-    SELECT hotel_id, 'https://unsplash.it/400/400?hotel' FROM hotels WHERE hotel_id NOT IN (SELECT hotel_id FROM hotel_images);
+    SELECT hotel_id, 'https://picsum.photos/seed/' || hotel_id FROM hotels WHERE hotel_id NOT IN (SELECT hotel_id FROM hotel_images);
+  `;
+  await sql`
+    INSERT INTO hotel_images (hotel_id, url)
+    SELECT hotel_id, 'https://picsum.photos/seed/' || 'i2' || hotel_id FROM hotels GROUP BY hotel_id HAVING COUNT(hotel_id) < 2;
+  `;
+  await sql`
+    INSERT INTO hotel_images (hotel_id, url)
+    SELECT hotel_id, 'https://picsum.photos/seed/' || 'i3' || hotel_id FROM hotels GROUP BY hotel_id HAVING COUNT(hotel_id) < 3;
+  `;
+  await sql`
+    INSERT INTO hotel_images (hotel_id, url)
+    SELECT hotel_id, 'https://picsum.photos/seed/' || 'i4' || hotel_id FROM hotels GROUP BY hotel_id HAVING COUNT(hotel_id) < 4;
   `;
 
   await sql`

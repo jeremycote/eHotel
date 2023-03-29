@@ -42,7 +42,14 @@ export default function HotelPage() {
       fetch(`/api/get-hotel/${hotelId}`)
         .then((res) => res.json())
         .then((data) => {
-          setHotel(data);
+          var d = data;
+          data.images.map((s: string, i: number) => {
+            d.images[i] = s + '/1920';
+          });
+
+          setHotel(d);
+          console.log(d.images);
+
           setLoading(false);
         })
         .catch((err) => {
@@ -110,7 +117,7 @@ export default function HotelPage() {
       </div>
       <div className='block'>
         <ImageCarousel
-          height='auto'
+          height='20vw'
           width='auto'
           images={hotel?.images ?? []}
           isLoading={isLoading}

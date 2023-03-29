@@ -33,7 +33,7 @@ export default async function handler(
 
   if (getImages === 'true') {
     columns +=
-      ", COALESCE(ARRAY_AGG(DISTINCT hotel_images.url) FILTER (WHERE hotel_images.url IS NOT NULL), '{}') AS images";
+      ", COALESCE(ARRAY_AGG(hotel_images.url) FILTER (WHERE hotel_images.url IS NOT NULL), '{}') AS images";
     from +=
       ' LEFT JOIN hotel_images ON hotels.hotel_id = hotel_images.hotel_id';
   }

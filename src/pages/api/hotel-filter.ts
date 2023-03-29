@@ -9,8 +9,6 @@ export default async function handler(
 ) {
   const { method } = req;
 
-  console.log('Received');
-
   switch (method) {
     case 'GET': {
       const filters = await sql<HotelFilterOptions[]>`
@@ -27,7 +25,6 @@ export default async function handler(
       `;
 
       if (filters.length) {
-        console.log('Responded');
         res.status(200).json(filters[0]);
       } else {
         res.status(500).json({ error: true });

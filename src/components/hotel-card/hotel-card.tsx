@@ -10,6 +10,7 @@ interface HotelCardProps {
 
 const HotelCard = ({ className, hotel }: HotelCardProps) => {
   const router = useRouter();
+  const imgWidth = 400;
 
   return (
     <div
@@ -20,7 +21,11 @@ const HotelCard = ({ className, hotel }: HotelCardProps) => {
     >
       <div className={styles.imageCarousel}>
         <img
-          src={hotel.images?.length! > 0 ? hotel.images![0] : '/vercel.svg'}
+          src={
+            hotel.images?.length! > 0
+              ? `${hotel.images![0]}/${imgWidth}`
+              : '/vercel.svg'
+          }
           loading='lazy'
         />
       </div>
