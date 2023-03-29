@@ -9,21 +9,25 @@ export default async function handler(
 ) {
   const { method } = req;
 
+  console.log('Received');
+
   switch (method) {
     case 'GET': {
       const filters = await sql<HotelFilterOptions[]>`
-      SELECT 	json_agg(DISTINCT z.*) AS zones,
+      SELECT
+          get_zones_json() AS zones,
           MAX(r.capacity) AS max_capacity,
           MAX(r.area) AS max_area,
-          json_agg(DISTINCT ch.*) AS chains,
-          json_agg(DISTINCT ca.*) AS categories,
+          get_hotel_chains_json() AS chains,
+          get_categories_json() AS categories,
           MAX(sizes.size) AS max_size,
           MAX(r.price) AS max_price
-          
-          FROM zones z, rooms r, hotel_chains ch, categories ca, (SELECT COUNT(room_id) AS size FROM rooms GROUP BY hotel_id) AS sizes
+  
+          FROM rooms r, (SELECT COUNT(room_id) AS size FROM rooms GROUP BY hotel_id) AS sizes
       `;
 
       if (filters.length) {
+        console.log('Responded');
         res.status(200).json(filters[0]);
       } else {
         res.status(500).json({ error: true });
