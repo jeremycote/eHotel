@@ -91,9 +91,6 @@ const NavBar = () => {
             </>
           )}
         </div>
-        <div className='lg:hidden flex'>
-          <SearchBar defaultHeight='2.5em' />
-        </div>
       </div>
     </nav>
   );
