@@ -8,7 +8,6 @@ import useRoles from '@/src/hooks/use-roles';
 import UserRole from '@/src/types/UserRole';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import SearchBar from '../searchbar/searchbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
