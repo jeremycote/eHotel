@@ -52,3 +52,7 @@ yarn dev
     <td>client</td>
 </tr>
 </table>
+
+## SQL
+
+All SQL queries are found in the migrations folder.
